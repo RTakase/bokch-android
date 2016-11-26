@@ -1,25 +1,19 @@
-package tv.bokch;
+package tv.bokch.android;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.hardware.Camera;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.view.View;
-import android.widget.Toast;
 
 import com.google.zxing.ResultPoint;
 import com.journeyapps.barcodescanner.BarcodeCallback;
 import com.journeyapps.barcodescanner.BarcodeResult;
-import com.journeyapps.barcodescanner.BarcodeView;
 import com.journeyapps.barcodescanner.CompoundBarcodeView;
 
 import java.util.List;
 
-import timber.log.Timber;
+import tv.bokch.R;
 
 public class CameraDialog extends BaseDialog {
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package tv.bokch;
+package tv.bokch.util;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

@@ -1,4 +1,4 @@
-package tv.bokch;
+package tv.bokch.android;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,10 +8,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import timber.log.Timber;
-
-/**
- * Created by takase.ryohei on 2016/11/26.
- */
+import tv.bokch.R;
+import tv.bokch.util.ViewServer;
 
 public class BaseActivity extends AppCompatActivity {
 	@Override
@@ -46,6 +44,17 @@ public class BaseActivity extends AppCompatActivity {
 		return true;
 	}
 
+	protected MenuItem addMenuItem(Menu menu, int itemId, int titleRes, int iconRes, int actionEnum) {
+		MenuItem item = menu.add(Menu.NONE, itemId, Menu.NONE, titleRes);
+		if (iconRes != 0) {
+			item.setIcon(iconRes);
+		}
+		if (actionEnum != 0) {
+			item.setShowAsAction(actionEnum);
+		}
+		return item;
+	}
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle action bar item clicks here. The action bar will
@@ -54,7 +63,8 @@ public class BaseActivity extends AppCompatActivity {
 		int id = item.getItemId();
 
 		//noinspection SimplifiableIfStatement
-		if (id == R.id.action_settings) {
+		switch (id) {
+		case R.id.action_settings:
 			return true;
 		}
 

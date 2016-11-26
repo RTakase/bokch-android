@@ -1,9 +1,13 @@
 <resources>
     <string name="app_name">BooksChannel</string>
     <string name="action_settings">設定</string>
+    <string name="action_search">検索</string>
+    <string name="action_mypage">マイページ</string>
 
     <string name="ranking_more">もっと見る</string>
     <string name="ranking_recent_title">最近社内で読まれた本は？</string>
     <string name="ranking_user_weekly_title">社内で読まれた本ランキング</string>
     <string name="ranking_book_weekly_title">社内で本を読んだ人ランキング</string>
+
+    <string name="unexpected_data_found">予期せぬデータが見つかりました</string>
 </resources>

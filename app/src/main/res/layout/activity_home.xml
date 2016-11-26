@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="tv.bokch.HomeActivity">
+    tools:context="tv.bokch.android.HomeActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -29,17 +29,17 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         >
         <include
-            layout="@layout/partial_home_ranking"
+            layout="@layout/partial_home_recent"
             android:id="@+id/recent"
             />
 
         <include
-            layout="@layout/partial_home_ranking"
+            layout="@layout/partial_home_ranking_book"
             android:id="@+id/ranking_book_weekly"
             />
 
         <include
-            layout="@layout/partial_home_ranking"
+            layout="@layout/partial_home_ranking_user"
             android:id="@+id/ranking_user_weekly"
             />
 

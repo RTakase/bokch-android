@@ -1,4 +1,4 @@
-package tv.bokch;
+package tv.bokch.android;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -15,6 +15,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import timber.log.Timber;
+import tv.bokch.R;
 
 public class BaseDialog extends DialogFragment {
 	protected Activity mParentActivity;
