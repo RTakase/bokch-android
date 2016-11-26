@@ -3,6 +3,7 @@ package tv.bokch.widget;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 import tv.bokch.R;
 import tv.bokch.data.History;
 
-public class RecentListView extends HorizontalListView<History> {
+public abstract class RecentListView extends RecyclerView<History> {
 
 	public RecentListView(Context context) {
 		super(context);
@@ -27,37 +28,33 @@ public class RecentListView extends HorizontalListView<History> {
 
 	private void initialize(Context context) {
 	}
-	
+
 	public void setData(ArrayList<History> histories) {
 		super.setData(histories);
 	}
 
-	@Override
-	protected int getLayoutResId() {
-		return R.layout.row_home_recent;
-	}
-
-	@Override
-	protected HorizontalListView<History>.Row createRow(View view) {
-		return new HomeRecentRow(view);
-	}
-	
-	protected class HomeRecentRow extends Row {
+	protected class RecentRow extends Row {
 		private TextView mTitle;
 		private CircleNetworkImageView mUserIcon;
 		private NetworkImageView mJacket;
-		
-		public HomeRecentRow(View view) {
+
+		public RecentRow(View view) {
 			super(view);
 			mTitle = (TextView)view.findViewById(R.id.title);
 			mJacket = (NetworkImageView)view.findViewById(R.id.jacket);
 			mUserIcon = (CircleNetworkImageView)view.findViewById(R.id.user_icon);
 			mUserIcon.setDefaultImageResId(R.drawable.mysteryman);
 		}
-		
+
 		public void bindView(History history, int position) {
 			super.bindView(history, position);
 			mTitle.setText(history.book.title);
+			ViewGroup.LayoutParams params = mJacket.getLayoutParams();
+			if (params != null) {
+				params.width = history.book.largeImageWidth;
+				params.height = history.book.largeImageHeight;
+				mJacket.setLayoutParams(params);
+			}
 			mJacket.setImageUrl(history.book.largeImageUrl);
 			mUserIcon.setImageUrl(history.user.iconUrl);
 		}

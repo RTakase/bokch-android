@@ -2,7 +2,7 @@ package tv.bokch.android;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,21 +22,18 @@ import tv.bokch.data.Book;
 import tv.bokch.data.History;
 import tv.bokch.data.User;
 import tv.bokch.util.ApiRequest;
-import tv.bokch.widget.HomeBookRankingListView;
-import tv.bokch.widget.RecentListView;
-import tv.bokch.widget.HomeUserRankingListView;
+import tv.bokch.widget.SummarizedBookRankingListView;
+import tv.bokch.widget.SummarizedUserRankingListView;
+import tv.bokch.widget.SummarizedRecentListView;
 
 public class HomeActivity extends BaseActivity {
 
 	protected static final int MENU_ID_SEARCH = Menu.FIRST + 1;
 	protected static final int MENU_ID_MYPAGE = Menu.FIRST + 2;
-	public static final int REQUEST_CODE_CAMERA = 1;
 
-	private RecentListView mRecentListView;
-	private HomeUserRankingListView mHomeUserRankingListView;
-	private HomeBookRankingListView mHomeBookRankingListView;
-
-	private CameraDialog mCameraDialog;
+	private SummarizedRecentListView mRecentListView;
+	private SummarizedUserRankingListView mUserRankingView;
+	private SummarizedBookRankingListView mBookRankingView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,19 +48,19 @@ public class HomeActivity extends BaseActivity {
 	private void initViews() {
 		View partial;
 		partial = findViewById(R.id.recent);
-		mRecentListView = (RecentListView)partial.findViewById(R.id.listview);
+		mRecentListView = (SummarizedRecentListView)partial.findViewById(R.id.listview);
 		initHeader(partial, R.string.ranking_recent_title, mRecentMoreClickListener);
 		
 		partial = findViewById(R.id.ranking_user_weekly);
-		mHomeUserRankingListView = (HomeUserRankingListView)partial.findViewById(R.id.listview);
+		mUserRankingView = (SummarizedUserRankingListView)partial.findViewById(R.id.listview);
 		initHeader(partial, R.string.ranking_user_weekly_title, null);
 		
 		partial = findViewById(R.id.ranking_book_weekly);
-		mHomeBookRankingListView = (HomeBookRankingListView)partial.findViewById(R.id.listview);
+		mBookRankingView = (SummarizedBookRankingListView)partial.findViewById(R.id.listview);
 		initHeader(partial, R.string.ranking_book_weekly_title, null);
 		
-		FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab);
-		fab.setOnClickListener(mFabClickListener);
+		Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+		setSupportActionBar(toolbar);
 	}
 
 	private void initHeader(View partial, int resId, View.OnClickListener listener) {
@@ -86,24 +83,6 @@ public class HomeActivity extends BaseActivity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		if (mCameraDialog != null) {
-			mCameraDialog.dismiss();
-		}
-		mCameraDialog = null;
-	}
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-
-		switch (requestCode) {
-		case REQUEST_CODE_CAMERA:
-			if (resultCode == RESULT_OK) {
-				String isbn = data.getStringExtra("barcode");
-				String str = String.format("ISBNコードをよみとりました！（%s）", isbn);
-				Toast.makeText(this,  str, Toast.LENGTH_SHORT).show();
-			}
-		}
 	}
 
 	@Override
@@ -120,19 +99,12 @@ public class HomeActivity extends BaseActivity {
 		request.ranking_book_weekly(mBookRankingApiListener);		
 	}
 
-	private View.OnClickListener mFabClickListener = new View.OnClickListener() {
-		@Override
-		public void onClick(View v) {
-			mCameraDialog = CameraDialog.newInstance();
-			mCameraDialog.setTargetFragment(null, REQUEST_CODE_CAMERA);
-			mCameraDialog.show(getFragmentManager(), "CameraDialog");
-		}
-	};
-
 	private View.OnClickListener mRecentMoreClickListener = new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			//star
+			Intent intent = new Intent(HomeActivity.this, RecentActivity.class);
+			intent.putExtra("data", mRecentListView.getData());
+			startActivity(intent);
 		}
 	};
 
@@ -190,7 +162,7 @@ public class HomeActivity extends BaseActivity {
 						}
 					}
 				}
-				mHomeBookRankingListView.setData(books);
+				mBookRankingView.setData(books);
 			} catch (JSONException e) {
 				Toast.makeText(HomeActivity.this, getString(R.string.unexpected_data_found), Toast.LENGTH_SHORT).show();
 				Timber.w(e, null);
@@ -219,7 +191,7 @@ public class HomeActivity extends BaseActivity {
 						users.add(user);
 					}
 				}
-				mHomeUserRankingListView.setData(users);
+				mUserRankingView.setData(users);
 			} catch (JSONException e) {
 				Toast.makeText(HomeActivity.this, getString(R.string.unexpected_data_found), Toast.LENGTH_SHORT).show();
 				Timber.w(e, null);

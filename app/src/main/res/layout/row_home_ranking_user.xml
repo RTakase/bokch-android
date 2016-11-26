@@ -31,7 +31,7 @@
         android:visibility="invisible"
         />
 
-    <tv.bokch.widget.TextView
+    <tv.bokch.widget.FilteredTextView
         android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

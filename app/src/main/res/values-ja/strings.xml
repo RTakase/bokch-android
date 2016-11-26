@@ -8,6 +8,8 @@
     <string name="ranking_recent_title">最近社内で読まれた本は？</string>
     <string name="ranking_user_weekly_title">社内で読まれた本ランキング</string>
     <string name="ranking_book_weekly_title">社内で本を読んだ人ランキング</string>
-
     <string name="unexpected_data_found">予期せぬデータが見つかりました</string>
+    <string name="user_list_with_book">この本を読んだ人</string>
+
+    <string name="acitivity_title_recent">最近社内で読まれた本</string>
 </resources>

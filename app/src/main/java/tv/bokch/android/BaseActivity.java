@@ -1,17 +1,25 @@
 package tv.bokch.android;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import timber.log.Timber;
 import tv.bokch.R;
 import tv.bokch.util.ViewServer;
 
 public class BaseActivity extends AppCompatActivity {
+	public static final int REQUEST_CODE_CAMERA = 1;
+	private CameraDialog mCameraDialog;
+	protected FloatingActionButton fab;
+
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -20,8 +28,8 @@ public class BaseActivity extends AppCompatActivity {
 
 		Timber.plant(new Timber.DebugTree());
 
-		Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
-		setSupportActionBar(toolbar);
+		fab = (FloatingActionButton)findViewById(R.id.fab);
+		fab.setOnClickListener(mFabClickListener);
 	}
 
 
@@ -35,6 +43,24 @@ public class BaseActivity extends AppCompatActivity {
 	protected void onDestroy() {
 		super.onDestroy();
 		ViewServer.get(this).removeWindow(this);
+		if (mCameraDialog != null) {
+			mCameraDialog.dismiss();
+		}
+		mCameraDialog = null;
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+
+		switch (requestCode) {
+		case REQUEST_CODE_CAMERA:
+			if (resultCode == RESULT_OK) {
+				String isbn = data.getStringExtra("barcode");
+				String str = String.format("ISBNコードをよみとりました！（%s）", isbn);
+				Toast.makeText(this,  str, Toast.LENGTH_SHORT).show();
+			}
+		}
 	}
 
 	@Override
@@ -70,4 +96,24 @@ public class BaseActivity extends AppCompatActivity {
 
 		return super.onOptionsItemSelected(item);
 	}
+
+	protected void setActionBarTitle(int resId) {
+		setActionBarTitle(getString(resId));
+	}
+	protected void setActionBarTitle(String title) {
+		ActionBar actionBar = getSupportActionBar();
+		if (actionBar != null) {
+			actionBar.setTitle(title);
+		}
+	}
+
+	private View.OnClickListener mFabClickListener = new View.OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			mCameraDialog = CameraDialog.newInstance();
+			mCameraDialog.setTargetFragment(null, REQUEST_CODE_CAMERA);
+			mCameraDialog.show(getFragmentManager(), "CameraDialog");
+		}
+	};
+
 }

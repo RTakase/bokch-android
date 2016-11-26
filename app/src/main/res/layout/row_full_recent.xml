@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/list_devider_height"
+    android:layout_marginLeft="6dp"
+    android:layout_marginRight="6dp"
+    android:paddingTop="4dp"
+    android:paddingBottom="4dp"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:background="@drawable/bg_card"
+    >
+    <RelativeLayout
+        android:id="@+id/icon_container"
+        android:layout_width="64dp"
+        android:layout_height="72dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
+        >
+        <tv.bokch.widget.NetworkImageView
+            android:id="@+id/jacket"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerInside"
+            android:layout_marginRight="6dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="4dp"
+            android:layout_centerInParent="true"
+            />
+
+        <tv.bokch.widget.CircleNetworkImageView
+            android:id="@+id/user_icon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:gravity="center_vertical|left"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@id/icon_container"
+        />
+
+    <TextView
+        android:id="@+id/user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:maxLines="1"
+        android:gravity="center_vertical|left"
+        android:layout_toRightOf="@id/icon_container"
+        android:layout_below="@id/title"
+        />
+
+    <TextView
+        android:id="@+id/comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:maxLines="1"
+        android:gravity="center_vertical|left"
+        android:layout_toRightOf="@id/icon_container"
+        android:layout_below="@id/user_name"
+        />
+
+    <TextView
+        android:id="@+id/rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:maxLines="1"
+        android:gravity="center_vertical|left"
+        android:layout_toRightOf="@id/icon_container"
+        android:layout_below="@id/comment"
+        />
+
+    <TextView
+        android:id="@+id/created"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:maxLines="1"
+        android:gravity="center_vertical|left"
+        android:layout_toRightOf="@id/icon_container"
+        android:layout_below="@id/rating"
+        />
+
+    <Button
+        android:id="@+id/more_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/user_list_with_book"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/created"
+        />
+
+
+</RelativeLayout>

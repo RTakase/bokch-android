@@ -6,22 +6,22 @@ import android.util.AttributeSet;
 
 import tv.bokch.util.TextFilter;
 
-public class TextView extends android.widget.TextView {
+public class FilteredTextView extends android.widget.TextView {
 	
 	private CharSequence mOrgText = "";
 	private BufferType mOrgBufferType = BufferType.NORMAL;
 	
-	public TextView(Context context) {
+	public FilteredTextView(Context context) {
 		super(context);
 		setFilters(new InputFilter[] {new TextFilter(this) });
 	}
 	
-	public TextView(Context context, AttributeSet attrs) {
+	public FilteredTextView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		setFilters(new InputFilter[] { new TextFilter(this) });
 	}
 	
-	public TextView(Context context, AttributeSet attrs, int defStyle) {
+	public FilteredTextView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		setFilters(new InputFilter[] { new TextFilter(this) });
 	}

@@ -10,22 +10,23 @@ import java.util.ArrayList;
 import tv.bokch.R;
 import tv.bokch.data.Book;
 
-public class HomeBookRankingListView extends RankingListView<Book> {
+public class SummarizedBookRankingListView extends RankingListView<Book> {
 
-	public HomeBookRankingListView(Context context) {
+	public SummarizedBookRankingListView(Context context) {
 		super(context);
 		initialize(context);
 	}
-	public HomeBookRankingListView(Context context, AttributeSet attrs) {
+	public SummarizedBookRankingListView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		initialize(context);
 	}
-	public HomeBookRankingListView(Context context, AttributeSet attrs, int defStyleAttr) {
+	public SummarizedBookRankingListView(Context context, AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
 		initialize(context);
 	}
 	
 	private void initialize(Context context) {
+		setOrientation(Orientation.Horizontal);
 	}
 
 	@Override
@@ -35,18 +36,34 @@ public class HomeBookRankingListView extends RankingListView<Book> {
 
 	@Override
 	protected RankingRow createRow(View view) {
-		return new HomeBookRankingRow(view);
+		return new SummarizedBookRankingRow(view);
 	}
 
-	public void setData(ArrayList<Book> books) {
-		super.setData(books);
+	@Override
+	protected int getFooterResId() {
+		return R.layout.row_dummy;
 	}
-	
-	protected class HomeBookRankingRow extends RankingRow {
+
+	@Override
+	protected Row createFooterRow(View view) {
+		return new DummyRow(view);
+	}
+
+	@Override
+	protected int getHeaderResId() {
+		return R.layout.row_dummy;
+	}
+
+	@Override
+	protected Row createHeaderRow(View view) {
+		return new DummyRow(view);
+	}
+
+	protected class SummarizedBookRankingRow extends RankingRow {
 		private TextView mTitle;
 		private NetworkImageView mJacket;
 		
-		public HomeBookRankingRow(View view) {
+		public SummarizedBookRankingRow(View view) {
 			super(view);
 			mTitle = (TextView)view.findViewById(R.id.title);
 			mJacket = (NetworkImageView)view.findViewById(R.id.jacket);

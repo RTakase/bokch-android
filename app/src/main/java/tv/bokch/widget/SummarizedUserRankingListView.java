@@ -10,26 +10,23 @@ import java.util.ArrayList;
 import tv.bokch.R;
 import tv.bokch.data.User;
 
-public class HomeUserRankingListView extends RankingListView<User> {
+public class SummarizedUserRankingListView extends RankingListView<User> {
 
-	public HomeUserRankingListView(Context context) {
+	public SummarizedUserRankingListView(Context context) {
 		super(context);
 		initialize(context);
 	}
-	public HomeUserRankingListView(Context context, AttributeSet attrs) {
+	public SummarizedUserRankingListView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		initialize(context);
 	}
-	public HomeUserRankingListView(Context context, AttributeSet attrs, int defStyleAttr) {
+	public SummarizedUserRankingListView(Context context, AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
 		initialize(context);
 	}
 	
 	private void initialize(Context context) {
-	}
-
-	public void setData(ArrayList<User> data) {
-		super.setData(data);
+		setOrientation(Orientation.Horizontal);
 	}
 
 	@Override
@@ -39,14 +36,34 @@ public class HomeUserRankingListView extends RankingListView<User> {
 
 	@Override
 	protected RankingRow createRow(View view) {
-		return new HomeUserRankingRankingRow(view);
+		return new SummarizedUserRankingRow(view);
 	}
 
-	protected class HomeUserRankingRankingRow extends RankingRow {
+	@Override
+	protected int getFooterResId() {
+		return R.layout.row_dummy;
+	}
+
+	@Override
+	protected Row createFooterRow(View view) {
+		return new DummyRow(view);
+	}
+
+	@Override
+	protected int getHeaderResId() {
+		return R.layout.row_dummy;
+	}
+
+	@Override
+	protected Row createHeaderRow(View view) {
+		return new DummyRow(view);
+	}
+
+	protected class SummarizedUserRankingRow extends RankingRow {
 		private TextView mName;
 		private NetworkImageView mUserIcon;
 		
-		public HomeUserRankingRankingRow(View view) {
+		public SummarizedUserRankingRow(View view) {
 			super(view);
 			mName = (TextView)view.findViewById(R.id.name);
 			mUserIcon = (NetworkImageView)view.findViewById(R.id.user_icon);
