@@ -13,7 +13,6 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -23,9 +22,9 @@ import tv.bokch.data.Book;
 import tv.bokch.data.History;
 import tv.bokch.data.User;
 import tv.bokch.util.ApiRequest;
-import tv.bokch.widget.BookRankingListView;
+import tv.bokch.widget.HomeBookRankingListView;
 import tv.bokch.widget.RecentListView;
-import tv.bokch.widget.UserRankingListView;
+import tv.bokch.widget.HomeUserRankingListView;
 
 public class HomeActivity extends BaseActivity {
 
@@ -34,8 +33,8 @@ public class HomeActivity extends BaseActivity {
 	public static final int REQUEST_CODE_CAMERA = 1;
 
 	private RecentListView mRecentListView;
-	private UserRankingListView mUserRankingListView;
-	private BookRankingListView mBookRankingListView;
+	private HomeUserRankingListView mHomeUserRankingListView;
+	private HomeBookRankingListView mHomeBookRankingListView;
 
 	private CameraDialog mCameraDialog;
 
@@ -56,11 +55,11 @@ public class HomeActivity extends BaseActivity {
 		initHeader(partial, R.string.ranking_recent_title, mRecentMoreClickListener);
 		
 		partial = findViewById(R.id.ranking_user_weekly);
-		mUserRankingListView = (UserRankingListView)partial.findViewById(R.id.listview);
+		mHomeUserRankingListView = (HomeUserRankingListView)partial.findViewById(R.id.listview);
 		initHeader(partial, R.string.ranking_user_weekly_title, null);
 		
 		partial = findViewById(R.id.ranking_book_weekly);
-		mBookRankingListView = (BookRankingListView)partial.findViewById(R.id.listview);
+		mHomeBookRankingListView = (HomeBookRankingListView)partial.findViewById(R.id.listview);
 		initHeader(partial, R.string.ranking_book_weekly_title, null);
 		
 		FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab);
@@ -191,7 +190,7 @@ public class HomeActivity extends BaseActivity {
 						}
 					}
 				}
-				mBookRankingListView.setData(books);
+				mHomeBookRankingListView.setData(books);
 			} catch (JSONException e) {
 				Toast.makeText(HomeActivity.this, getString(R.string.unexpected_data_found), Toast.LENGTH_SHORT).show();
 				Timber.w(e, null);
@@ -220,7 +219,7 @@ public class HomeActivity extends BaseActivity {
 						users.add(user);
 					}
 				}
-				mUserRankingListView.setData(users);
+				mHomeUserRankingListView.setData(users);
 			} catch (JSONException e) {
 				Toast.makeText(HomeActivity.this, getString(R.string.unexpected_data_found), Toast.LENGTH_SHORT).show();
 				Timber.w(e, null);
