@@ -29,18 +29,19 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:background="@color/activity_background"
         >
+
         <include
-            layout="@layout/partial_summarized_recent"
+            layout="@layout/partial_list_summarized"
             android:id="@+id/recent"
             />
 
         <include
-            layout="@layout/partial_home_ranking_user"
+            layout="@layout/partial_list_summarized"
             android:id="@+id/ranking_user_weekly"
             />
 
         <include
-            layout="@layout/partial_home_ranking_book"
+            layout="@layout/partial_list_summarized"
             android:id="@+id/ranking_book_weekly"
             />
 

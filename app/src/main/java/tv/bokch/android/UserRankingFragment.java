@@ -9,13 +9,14 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
-import tv.bokch.R;
 import tv.bokch.data.User;
 import tv.bokch.widget.FullUserRankingListView;
 import tv.bokch.widget.RecyclerView;
 import tv.bokch.widget.StatableListView;
 
 public class UserRankingFragment extends Fragment {
+
+	public boolean loaded;
 
 	public static UserRankingFragment newInstance(String title) {
 		return newInstance(title, null);
@@ -39,24 +40,19 @@ public class UserRankingFragment extends Fragment {
 		Bundle arguments = getArguments();
 		ArrayList<User> data = arguments.getParcelableArrayList("data");
 
-		StatableListView<User> view = new StatableListView<>(getContext());
+		StatableListView<User> content = new StatableListView<>(getContext());
 		RecyclerView<User> listview = new FullUserRankingListView(getContext());
-		view.addListView(listview);
-		onData(view, data);
-		return view;
+		content.addListView(listview);
+		loaded = content.onData(data);
+		return content;
 	}
 
-	public void onData(ArrayList<User> data) {
-		onData((StatableListView)getView(), data);
-	}
-	public void onData(StatableListView view, ArrayList<User> data) {
-		if (data == null) {
-			view.setState(StatableListView.State.Loading);
-		} else if (data.size() == 0) {
-			view.setState(StatableListView.State.Failed);
-		} else {
-			view.setData(data);
-			view.setState(StatableListView.State.OK);
+	public boolean onData(ArrayList<User> data) {
+		StatableListView content = (StatableListView)getView();
+		boolean res = false;
+		if (content != null) {
+			res = content.onData(data);
 		}
+		return res;
 	}
 }

@@ -5,7 +5,7 @@
     <string name="action_mypage">マイページ</string>
 
     <string name="ranking_more">もっと見る</string>
-    <string name="ranking_recent_title">最近社内で読まれた本</string>
+    <string name="recent_title">最近社内で読まれた本</string>
     <string name="ranking_user_weekly_title">本を読んでる人ランキング</string>
     <string name="ranking_book_weekly_title">社内で読まれた本ランキング</string>
     <string name="failed_data_set">予期せぬデータが見つかりました</string>

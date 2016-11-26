@@ -8,18 +8,9 @@
     <include
         layout="@layout/partial_home_header"
         />
-    <tv.bokch.widget.SummarizedRecentListView
-        android:id="@+id/listview"
+    <tv.bokch.widget.StatableListView
+        android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        />
-    <TextView
-        android:id="@+id/empty"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/notify_list_empty"
-        android:paddingTop="12dp"
-        android:paddingBottom="12dp"
-        android:gravity="center"
         />
 </LinearLayout>

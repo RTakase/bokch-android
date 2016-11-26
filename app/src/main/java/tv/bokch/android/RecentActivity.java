@@ -37,7 +37,7 @@ public class RecentActivity extends BaseActivity {
 		mContent = (StatableListView<History>)findViewById(R.id.main);
 		FullRecentListView listview = new FullRecentListView(this);
 		mContent.addListView(listview);
-		onData(data);
+		mLoaded = mContent.onData(data);
 	}
 	
 	@Override
@@ -46,21 +46,6 @@ public class RecentActivity extends BaseActivity {
 		if (!mLoaded) {
 			ApiRequest request = new ApiRequest();
 			request.recent(mRecentApiListener);
-		}
-	}
-	
-	public void onData(ArrayList<History> data) {
-		if (mContent == null) {
-			return;
-		}
-		if (data == null) {
-			mContent.setState(StatableListView.State.Loading);
-		} else if (data.size() == 0) {
-			mContent.setState(StatableListView.State.Failed);
-		} else {
-			mContent.setData(data);
-			mContent.setState(StatableListView.State.OK);
-			mLoaded = true;
 		}
 	}
 	
@@ -84,7 +69,7 @@ public class RecentActivity extends BaseActivity {
 						}
 					}
 				}
-				onData(histories);
+				mLoaded = mContent.onData(histories);
 			} catch (JSONException e) {
 				Toast.makeText(RecentActivity.this, getString(R.string.failed_data_set), Toast.LENGTH_SHORT).show();
 				Timber.w(e, null);

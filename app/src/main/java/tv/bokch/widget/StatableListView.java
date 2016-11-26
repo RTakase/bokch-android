@@ -11,6 +11,7 @@ import android.widget.ProgressBar;
 import java.util.ArrayList;
 
 import tv.bokch.R;
+import tv.bokch.data.History;
 
 public class StatableListView<Data> extends FrameLayout {
 
@@ -40,20 +41,31 @@ public class StatableListView<Data> extends FrameLayout {
 
 	private void initialize(Context context) {
 		mEmptyView = LayoutInflater.from(context).inflate(R.layout.partial_empty, this, false);
+		mEmptyView.setVisibility(INVISIBLE);
 		addView(mEmptyView, createLayoutParams());
 
 		mProgress = new ProgressBar(context);
+		mProgress.setVisibility(VISIBLE);
 		addView(mProgress, createLayoutParams());
 	}
 
 	public void addListView(RecyclerView<Data> listview) {
 		mListView = listview;
+		mListView.setVisibility(INVISIBLE);
 		addView(mListView, createLayoutParams());
 	}
 
 	public void setData(ArrayList<Data> data) {
 		if (mListView != null) {
 			mListView.setData(data);
+		}
+	}
+	
+	public ArrayList<Data> getData() {
+		if (mListView != null) {
+			return mListView.getData();
+		} else {
+			return null;
 		}
 	}
 
@@ -82,6 +94,20 @@ public class StatableListView<Data> extends FrameLayout {
 			mProgress.setVisibility(INVISIBLE);
 			mEmptyView.setVisibility(VISIBLE);
 			mListView.setVisibility(INVISIBLE);
+		}
+	}
+	
+	public boolean  onData(ArrayList<Data> data) {
+		if (data == null) {
+			setState(StatableListView.State.Loading);
+			return false;
+		} else if (data.size() == 0) {
+			setState(StatableListView.State.Failed);
+			return false;
+		} else {
+			setData(data);
+			setState(StatableListView.State.OK);
+			return true;
 		}
 	}
 }

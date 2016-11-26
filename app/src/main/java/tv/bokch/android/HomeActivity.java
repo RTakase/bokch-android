@@ -22,6 +22,8 @@ import tv.bokch.data.Book;
 import tv.bokch.data.History;
 import tv.bokch.data.User;
 import tv.bokch.util.ApiRequest;
+import tv.bokch.widget.RecyclerView;
+import tv.bokch.widget.StatableListView;
 import tv.bokch.widget.SummarizedBookRankingListView;
 import tv.bokch.widget.SummarizedUserRankingListView;
 import tv.bokch.widget.SummarizedRecentListView;
@@ -30,10 +32,15 @@ public class HomeActivity extends BaseActivity {
 
 	protected static final int MENU_ID_SEARCH = Menu.FIRST + 1;
 	protected static final int MENU_ID_MYPAGE = Menu.FIRST + 2;
+	
+	private StatableListView<History> mRecentView;
+	private StatableListView<User> mUserRankingView;
+	private StatableListView<Book> mBookRankingView;	
+	
 
-	private SummarizedRecentListView mRecentListView;
-	private SummarizedUserRankingListView mUserRankingView;
-	private SummarizedBookRankingListView mBookRankingView;
+	private boolean mLoadedRecent;
+	private boolean mLoadedUserRanking;
+	private boolean mLoadedBookRanking;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,19 +54,25 @@ public class HomeActivity extends BaseActivity {
 
 	private void initViews() {
 		View partial;
-		View empty;
+		RecyclerView listview;
+		
 		partial = findViewById(R.id.recent);
-		mRecentListView = (SummarizedRecentListView)partial.findViewById(R.id.listview);
-		initHeader(partial, R.string.ranking_recent_title, mRecentMoreClickListener);
-
+		initHeader(partial, R.string.recent_title, mRecentMoreClickListener);
+		mRecentView = (StatableListView<History>)partial.findViewById(R.id.content);
+		listview = new SummarizedRecentListView(this);
+		mRecentView.addListView(listview);
+		
 		partial = findViewById(R.id.ranking_user_weekly);
-		mUserRankingView = (SummarizedUserRankingListView)partial.findViewById(R.id.listview);
 		initHeader(partial, R.string.ranking_user_weekly_title, mUserRankingMoreClickListener);
-
+		mUserRankingView = (StatableListView<User>)partial.findViewById(R.id.content);
+		listview = new SummarizedUserRankingListView(this);
+		mUserRankingView.addListView(listview);
+		
 		partial = findViewById(R.id.ranking_book_weekly);
-		mBookRankingView = (SummarizedBookRankingListView)partial.findViewById(R.id.listview);
-		initHeader(partial, R.string.ranking_book_weekly_title, null);
-
+		initHeader(partial, R.string.ranking_book_weekly_title, mBookRankingMoreClickListener);
+		mBookRankingView = (StatableListView<Book>)partial.findViewById(R.id.content);
+		listview = new SummarizedBookRankingListView(this);
+		mBookRankingView.addListView(listview);
 		
 		Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
@@ -97,9 +110,15 @@ public class HomeActivity extends BaseActivity {
 	private void loadData() {
 		Timber.d("tks, on load data.");
 		ApiRequest request = new ApiRequest();
-		request.recent(mRecentApiListener);
-		request.ranking_user_weekly(mUserRankingApiListener);
-		request.ranking_book_weekly(mBookRankingApiListener);
+		if (!mLoadedRecent) {
+			request.recent(mRecentApiListener);
+		}
+		if (!mLoadedBookRanking) {
+			request.ranking_book_weekly(mBookRankingApiListener);
+		}
+		if (!mLoadedUserRanking) {
+			request.ranking_user_weekly(mUserRankingApiListener);
+		}
 	}
 
 	private View.OnClickListener mUserRankingMoreClickListener = new View.OnClickListener() {
@@ -111,10 +130,19 @@ public class HomeActivity extends BaseActivity {
 		}
 	};
 
+	private View.OnClickListener mBookRankingMoreClickListener = new View.OnClickListener() {
+		@Override
+		public void onClick(View v) {
+//			Intent intent = new Intent(HomeActivity.this, BookRankingActivity.class);
+//			intent.putExtra("data", mBookRankingView.getData());
+//			startActivity(intent);
+		}
+	};
+
 	private View.OnClickListener mRecentMoreClickListener = new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			ArrayList<History> data = mRecentListView.getData();
+			ArrayList<History> data = mRecentView.getData();
 			if (data != null) {
 				Intent intent = new Intent(HomeActivity.this, RecentActivity.class);
 				intent.putExtra("data", data);
@@ -144,7 +172,7 @@ public class HomeActivity extends BaseActivity {
 						}
 					}
 				}
-				mRecentListView.setData(histories);
+				mLoadedRecent = mRecentView.onData(histories);
 			} catch (JSONException e) {
 				Toast.makeText(HomeActivity.this, getString(R.string.failed_data_set), Toast.LENGTH_SHORT).show();
 				Timber.w(e, null);
@@ -177,7 +205,7 @@ public class HomeActivity extends BaseActivity {
 						}
 					}
 				}
-				mBookRankingView.setData(books);
+				mBookRankingView.onData(books);
 			} catch (JSONException e) {
 				Toast.makeText(HomeActivity.this, getString(R.string.failed_data_set), Toast.LENGTH_SHORT).show();
 				Timber.w(e, null);
@@ -206,7 +234,7 @@ public class HomeActivity extends BaseActivity {
 						users.add(user);
 					}
 				}
-				mUserRankingView.setData(users);
+				mUserRankingView.onData(users);
 			} catch (JSONException e) {
 				Toast.makeText(HomeActivity.this, getString(R.string.failed_data_set), Toast.LENGTH_SHORT).show();
 				Timber.w(e, null);

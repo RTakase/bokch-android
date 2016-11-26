@@ -127,8 +127,7 @@ public class UserRankingActivity extends BaseActivity {
 						users.add(user);
 					}
 				}
-				mPages[mKind].onData(users);
-				mLoaded[mKind] = true;
+				mLoaded[mKind] = mPages[mKind].onData(users);
 			} catch (JSONException e) {
 				Toast.makeText(UserRankingActivity.this, getString(R.string.failed_data_set), Toast.LENGTH_SHORT).show();
 				Timber.w(e, null);

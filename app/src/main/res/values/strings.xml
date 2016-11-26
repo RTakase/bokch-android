@@ -3,7 +3,7 @@
     <string name="action_settings">Settings</string>
 
     <string name="ranking_more">もっと見る</string>
-    <string name="ranking_recent_title">最近社内で読まれた本は？</string>
+    <string name="recent_title">最近社内で読まれた本は？</string>
     <string name="ranking_user_weekly_title">社内で読まれた本ランキング</string>
     <string name="ranking_book_weekly_title">社内で本を読んだ人ランキング</string>
 </resources>
