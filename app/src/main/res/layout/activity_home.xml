@@ -35,15 +35,20 @@
             />
 
         <include
-            layout="@layout/partial_home_ranking_book"
-            android:id="@+id/ranking_book_weekly"
-            />
-
-        <include
             layout="@layout/partial_home_ranking_user"
             android:id="@+id/ranking_user_weekly"
             />
 
+        <include
+            layout="@layout/partial_home_ranking_book"
+            android:id="@+id/ranking_book_weekly"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:background="#000000"
+            />
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton

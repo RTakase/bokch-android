@@ -47,17 +47,19 @@ public class HomeActivity extends BaseActivity {
 
 	private void initViews() {
 		View partial;
+		View empty;
 		partial = findViewById(R.id.recent);
 		mRecentListView = (SummarizedRecentListView)partial.findViewById(R.id.listview);
 		initHeader(partial, R.string.ranking_recent_title, mRecentMoreClickListener);
-		
+
 		partial = findViewById(R.id.ranking_user_weekly);
 		mUserRankingView = (SummarizedUserRankingListView)partial.findViewById(R.id.listview);
-		initHeader(partial, R.string.ranking_user_weekly_title, null);
-		
+		initHeader(partial, R.string.ranking_user_weekly_title, mUserRankingMoreClickListener);
+
 		partial = findViewById(R.id.ranking_book_weekly);
 		mBookRankingView = (SummarizedBookRankingListView)partial.findViewById(R.id.listview);
 		initHeader(partial, R.string.ranking_book_weekly_title, null);
+
 		
 		Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
@@ -77,7 +79,7 @@ public class HomeActivity extends BaseActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		loadRankings();
+		loadData();
 	}
 
 	@Override
@@ -92,19 +94,32 @@ public class HomeActivity extends BaseActivity {
 		return super.onCreateOptionsMenu(menu);
 	}
 
-	private void loadRankings() {
+	private void loadData() {
+		Timber.d("tks, on load data.");
 		ApiRequest request = new ApiRequest();
 		request.recent(mRecentApiListener);
 		request.ranking_user_weekly(mUserRankingApiListener);
-		request.ranking_book_weekly(mBookRankingApiListener);		
+		request.ranking_book_weekly(mBookRankingApiListener);
 	}
+
+	private View.OnClickListener mUserRankingMoreClickListener = new View.OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			Intent intent = new Intent(HomeActivity.this, UserRankingActivity.class);
+			intent.putExtra("data", mUserRankingView.getData());
+			startActivity(intent);
+		}
+	};
 
 	private View.OnClickListener mRecentMoreClickListener = new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			Intent intent = new Intent(HomeActivity.this, RecentActivity.class);
-			intent.putExtra("data", mRecentListView.getData());
-			startActivity(intent);
+			ArrayList<History> data = mRecentListView.getData();
+			if (data != null) {
+				Intent intent = new Intent(HomeActivity.this, RecentActivity.class);
+				intent.putExtra("data", data);
+				startActivity(intent);
+			}
 		}
 	};
 

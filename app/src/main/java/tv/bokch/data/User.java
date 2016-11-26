@@ -11,6 +11,7 @@ public class User extends Data implements Parcelable {
 	public String name;
 	public String email;
 	public String iconUrl;
+	public String tag;
 	public int score;
 
 	public User(JSONObject obj) throws JSONException {
@@ -21,7 +22,8 @@ public class User extends Data implements Parcelable {
 		name = obj.optString("name");
 		email = obj.optString("email");
 		iconUrl = obj.optString("icon_url");
-		score = obj.optInt("score");
+		tag = optString(obj, "tag");
+		score = obj.optInt("score", -1);
 	}
 
 	public User(String userId) {
@@ -33,6 +35,7 @@ public class User extends Data implements Parcelable {
 		name = in.readString();
 		email = in.readString();
 		iconUrl = in.readString();
+		tag = in.readString();
 		score = in.readInt();
 	}
 
@@ -42,6 +45,7 @@ public class User extends Data implements Parcelable {
 		dest.writeString(name);
 		dest.writeString(email);
 		dest.writeString(iconUrl);
+		dest.writeString(tag);
 		dest.writeInt(score);
 	}
 

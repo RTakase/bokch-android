@@ -64,7 +64,7 @@ public class FullRecentListView extends RecentListView {
 		private TextView mComment;
 		private TextView mRating;
 		private Button mMoreButton;
-		private android.widget.TextView mCreated;
+		private TextView mCreated;
 		private TextView mUserName;
 		
 		public FullRecentRow(View view) {

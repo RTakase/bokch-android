@@ -13,6 +13,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+import tv.bokch.android.UserRankingActivity;
 
 public class ApiRequest {
 
@@ -75,8 +76,18 @@ public class ApiRequest {
 	public void ranking_book_weekly(ApiListener<JSONObject> listener) {
 		HttpUrl.Builder url = getUrlBuilder(API_RANKING_BOOK_WEEKLY);
 		getJsonObject(url.build(), listener);
-	}	
-
+	}
+	
+	public void ranking_user_total(ApiListener<JSONObject> listener) {
+		HttpUrl.Builder url = getUrlBuilder(API_RANKING_USER_TOTAL);
+		getJsonObject(url.build(), listener);
+	}
+	
+	public void ranking_book_total(ApiListener<JSONObject> listener) {
+		HttpUrl.Builder url = getUrlBuilder(API_RANKING_BOOK_TOTAL);
+		getJsonObject(url.build(), listener);
+	}
+	
 	public interface ApiListener<T> {
 		// 通信がステータスコード200系で成功した場合に呼び出される
 		void onSuccess(T response);

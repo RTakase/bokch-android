@@ -29,10 +29,6 @@ public abstract class RecentListView extends RecyclerView<History> {
 	private void initialize(Context context) {
 	}
 
-	public void setData(ArrayList<History> histories) {
-		super.setData(histories);
-	}
-
 	protected class RecentRow extends Row {
 		private TextView mTitle;
 		private CircleNetworkImageView mUserIcon;

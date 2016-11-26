@@ -12,17 +12,18 @@
     android:paddingRight="8dp"
     android:background="@drawable/bg_full_list_cell"
     >
+
     <RelativeLayout
         android:id="@+id/icon_container"
         android:layout_width="64dp"
-        android:layout_height="72dp"
+        android:layout_height="64dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
         android:layout_centerVertical="true"
         >
         <tv.bokch.widget.NetworkImageView
-            android:id="@+id/jacket"
+            android:id="@+id/user_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scaleType="centerInside"
@@ -31,25 +32,17 @@
             android:layout_marginBottom="4dp"
             android:layout_centerInParent="true"
             />
+            />
 
-        <tv.bokch.widget.CircleNetworkImageView
-            android:id="@+id/user_icon"
+        <ImageView
+            android:id="@+id/medal"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
+            android:visibility="invisible"
             />
     </RelativeLayout>
-
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:gravity="center_vertical|left"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@id/icon_container"
-        />
 
     <TextView
         android:id="@+id/user_name"
@@ -58,51 +51,39 @@
         android:textSize="14sp"
         android:maxLines="1"
         android:gravity="center_vertical|left"
+        android:layout_alignParentTop="true"
         android:layout_toRightOf="@id/icon_container"
-        android:layout_below="@id/title"
         />
 
     <TextView
-        android:id="@+id/comment"
+        android:id="@+id/tag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="14sp"
         android:maxLines="1"
         android:gravity="center_vertical|left"
-        android:layout_toRightOf="@id/icon_container"
         android:layout_below="@id/user_name"
-        />
-
-    <TextView
-        android:id="@+id/rating"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:maxLines="1"
-        android:gravity="center_vertical|left"
         android:layout_toRightOf="@id/icon_container"
-        android:layout_below="@id/comment"
-        />
-
-    <TextView
-        android:id="@+id/created"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:maxLines="1"
-        android:gravity="center_vertical|left"
-        android:layout_toRightOf="@id/icon_container"
-        android:layout_below="@id/rating"
         />
 
     <Button
         android:id="@+id/more_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/user_list_with_book"
+        android:text="@string/book_list_with_user"
         android:layout_alignParentRight="true"
-        android:layout_below="@id/created"
+        android:layout_alignParentBottom="true"
         />
 
+    <TextView
+        android:id="@+id/score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:maxLines="1"
+        android:gravity="center_vertical|left"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        />
 
 </RelativeLayout>

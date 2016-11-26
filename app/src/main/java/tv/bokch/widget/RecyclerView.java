@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
-import timber.log.Timber;
 import tv.bokch.util.Display;
 
 public abstract class RecyclerView<Data> extends android.support.v7.widget.RecyclerView {
@@ -64,20 +63,26 @@ public abstract class RecyclerView<Data> extends android.support.v7.widget.Recyc
 
 	public void setData(ArrayList<Data> data) {
 		mDataSet.clear();
-		mDataSet.addAll(data);
-		mDataSet.add(0, null); //ヘッダーを認識するためのダミーデータ
-		mDataSet.add(null); //フッターを認識するためのダミーデータ
-		mAdapter.notifyDataSetChanged();
+		if (data.size() == 0) {
+		} else {
+			mDataSet.addAll(data);
+			mDataSet.add(0, null); //ヘッダーを認識するためのダミーデータ
+			mDataSet.add(null); //フッターを認識するためのダミーデータ
+			mAdapter.notifyDataSetChanged();
+		}
 	}
 
 	public ArrayList<Data> getData() {
-		return new ArrayList<>(mDataSet.subList(1, mDataSet.size() - 1));
+		if (mDataSet.size() == 0) {
+			return new ArrayList<>();
+		} else {
+			return new ArrayList<>(mDataSet.subList(1, mDataSet.size() - 1));
+		}
 	}
 
 	public int getDataSetSize() {
 		return mDataSet.size() - 2; //ダミーデータの分だけ引く
 	}
-
 
 	protected abstract int getLayoutResId();
 	protected abstract int getFooterResId();
