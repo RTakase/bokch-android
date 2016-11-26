@@ -146,13 +146,13 @@ public class HomeActivity extends BaseActivity {
 				}
 				mRecentListView.setData(histories);
 			} catch (JSONException e) {
-				Toast.makeText(HomeActivity.this, getString(R.string.unexpected_data_found), Toast.LENGTH_SHORT).show();
+				Toast.makeText(HomeActivity.this, getString(R.string.failed_data_set), Toast.LENGTH_SHORT).show();
 				Timber.w(e, null);
 			}
 		}
 		@Override
 		public void onError(ApiRequest.ApiError error) {
-			Timber.d("tks, api error, %s", error.getLocalizedMessage());
+			Toast.makeText(HomeActivity.this, getString(R.string.failed_load), Toast.LENGTH_SHORT).show();
 		}
 	};
 
@@ -179,13 +179,13 @@ public class HomeActivity extends BaseActivity {
 				}
 				mBookRankingView.setData(books);
 			} catch (JSONException e) {
-				Toast.makeText(HomeActivity.this, getString(R.string.unexpected_data_found), Toast.LENGTH_SHORT).show();
+				Toast.makeText(HomeActivity.this, getString(R.string.failed_data_set), Toast.LENGTH_SHORT).show();
 				Timber.w(e, null);
 			}
 		}
 		@Override
 		public void onError(ApiRequest.ApiError error) {
-			Timber.d("tks, api error, %s", error.getLocalizedMessage());
+			Toast.makeText(HomeActivity.this, getString(R.string.failed_load), Toast.LENGTH_SHORT).show();
 		}
 	};
 	
@@ -208,13 +208,13 @@ public class HomeActivity extends BaseActivity {
 				}
 				mUserRankingView.setData(users);
 			} catch (JSONException e) {
-				Toast.makeText(HomeActivity.this, getString(R.string.unexpected_data_found), Toast.LENGTH_SHORT).show();
+				Toast.makeText(HomeActivity.this, getString(R.string.failed_data_set), Toast.LENGTH_SHORT).show();
 				Timber.w(e, null);
 			}
 		}
 		@Override
 		public void onError(ApiRequest.ApiError error) {
-			Timber.d("tks, api error, %s", error.getLocalizedMessage());
+			Toast.makeText(HomeActivity.this, getString(R.string.failed_load), Toast.LENGTH_SHORT).show();
 		}
 	};
 }

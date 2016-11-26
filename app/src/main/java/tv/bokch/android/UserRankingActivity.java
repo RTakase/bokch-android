@@ -130,7 +130,7 @@ public class UserRankingActivity extends BaseActivity {
 				mPages[mKind].onData(users);
 				mLoaded[mKind] = true;
 			} catch (JSONException e) {
-				Toast.makeText(UserRankingActivity.this, getString(R.string.unexpected_data_found), Toast.LENGTH_SHORT).show();
+				Toast.makeText(UserRankingActivity.this, getString(R.string.failed_data_set), Toast.LENGTH_SHORT).show();
 				Timber.w(e, null);
 			}
 		}

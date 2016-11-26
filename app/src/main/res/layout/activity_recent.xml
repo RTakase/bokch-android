@@ -14,8 +14,8 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:background="@color/activity_background"
         >
-        <tv.bokch.widget.FullRecentListView
-            android:id="@+id/listview"
+        <tv.bokch.widget.StatableListView
+            android:id="@+id/main"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             />
