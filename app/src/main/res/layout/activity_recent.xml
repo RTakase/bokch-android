@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:background="#eeeeee"
+        android:background="@color/activity_background"
         >
         <tv.bokch.widget.FullRecentListView
             android:id="@+id/listview"

@@ -10,7 +10,7 @@
     android:paddingBottom="4dp"
     android:paddingLeft="8dp"
     android:paddingRight="8dp"
-    android:background="@drawable/bg_card"
+    android:background="@drawable/bg_full_list_cell"
     >
     <RelativeLayout
         android:id="@+id/icon_container"

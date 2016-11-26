@@ -12,10 +12,6 @@ import tv.bokch.R;
 import tv.bokch.data.History;
 import tv.bokch.widget.FullRecentListView;
 
-/**
- * Created by takase.ryohei on 2016/11/26.
- */
-
 public class RecentActivity extends BaseActivity {
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {

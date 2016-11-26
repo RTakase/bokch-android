@@ -5,8 +5,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 import tv.bokch.R;
 import tv.bokch.data.User;
 
@@ -31,7 +29,7 @@ public class SummarizedUserRankingListView extends RankingListView<User> {
 
 	@Override
 	protected int getLayoutResId() {
-		return R.layout.row_home_ranking_user;
+		return R.layout.row_summarized_ranking_user;
 	}
 
 	@Override
