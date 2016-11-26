@@ -9,41 +9,43 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
+import tv.bokch.data.Book;
 import tv.bokch.data.User;
+import tv.bokch.widget.FullBookRankingListView;
 import tv.bokch.widget.FullUserRankingListView;
 import tv.bokch.widget.RecyclerView;
 import tv.bokch.widget.StatableListView;
 
-public class UserRankingFragment extends Fragment {
-	public static UserRankingFragment newInstance() {
+public class BookRankingFragment extends Fragment {
+	public static BookRankingFragment newInstance() {
 		return newInstance(null);
 	}
-	public static UserRankingFragment newInstance(ArrayList<User> data) {
-		UserRankingFragment fragment = new UserRankingFragment();
+	public static BookRankingFragment newInstance(ArrayList<Book> data) {
+		BookRankingFragment fragment = new BookRankingFragment();
 		Bundle args = new Bundle();
 		args.putParcelableArrayList("data", data);
 		fragment.setArguments(args);
 		return fragment;
 	}
-
+	
 	@Override
 	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 	}
-
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		Bundle arguments = getArguments();
-		ArrayList<User> data = arguments.getParcelableArrayList("data");
-
-		StatableListView<User> content = new StatableListView<>(getContext());
-		RecyclerView<User> listview = new FullUserRankingListView(getContext());
+		ArrayList<Book> data = arguments.getParcelableArrayList("data");
+		
+		StatableListView<Book> content = new StatableListView<>(getContext());
+		RecyclerView<Book> listview = new FullBookRankingListView(getContext());
 		content.addListView(listview);
 		content.onData(data);
 		return content;
 	}
-
-	public boolean onData(ArrayList<User> data) {
+	
+	public boolean onData(ArrayList<Book> data) {
 		StatableListView content = (StatableListView)getView();
 		boolean res = false;
 		if (content != null) {

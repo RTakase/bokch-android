@@ -45,11 +45,6 @@
             android:id="@+id/ranking_book_weekly"
             />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="400dp"
-            android:background="#000000"
-            />
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton

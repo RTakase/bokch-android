@@ -32,7 +32,7 @@ public class FullUserRankingListView extends RankingListView<User> {
 
 	@Override
 	protected int getLayoutResId() {
-		return R.layout.row_full_user_ranking;
+		return R.layout.row_full_ranking_user;
 	}
 
 	@Override

@@ -108,7 +108,6 @@ public class HomeActivity extends BaseActivity {
 	}
 
 	private void loadData() {
-		Timber.d("tks, on load data.");
 		ApiRequest request = new ApiRequest();
 		if (!mLoadedRecent) {
 			request.recent(mRecentApiListener);
@@ -133,9 +132,9 @@ public class HomeActivity extends BaseActivity {
 	private View.OnClickListener mBookRankingMoreClickListener = new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
-//			Intent intent = new Intent(HomeActivity.this, BookRankingActivity.class);
-//			intent.putExtra("data", mBookRankingView.getData());
-//			startActivity(intent);
+			Intent intent = new Intent(HomeActivity.this, BookRankingActivity.class);
+			intent.putExtra("data", mBookRankingView.getData());
+			startActivity(intent);
 		}
 	};
 
