@@ -15,7 +15,7 @@
         android:background="@color/activity_background"
         >
         <tv.bokch.widget.StatableListView
-            android:id="@+id/main"
+            android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             />

@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">BooksChannel</string>
-    <string name="action_settings">設定</string>
+    <string name="action_settings">ログアウト</string>
     <string name="action_search">検索</string>
     <string name="action_mypage">マイページ</string>
 
@@ -13,10 +13,16 @@
     <string name="user_list_with_book">この本を読んだ人</string>
     <string name="book_list_with_user">この人の読んでいる本</string>
     <string name="acitivity_title_recent">最近社内で読まれた本</string>
+    <string name="acitivity_title_user_list">ユーザ一覧</string>
     <string name="acitivity_title_user_ranking">本を読んでる人ランキング</string>
     <string name="acitivity_title_book_ranking">読まれている本ランキング</string>
     <string name="ranking_weekly">週間ランキング</string>
     <string name="ranking_total">総合ランキング</string>
     <string name="notify_list_empty">データがありません</string>
+    <string name="prompt_login">あなたの名前を教えてください。</string>
+    <string name="login_google">Googleアカウントでログインする</string>
+    <string name="loging_in">ログインしています</string>
+    <string name="failed_login">ログインできませんでした...</string>
+    <string name="successed_login">ログインに成功しました！</string>
 
 </resources>

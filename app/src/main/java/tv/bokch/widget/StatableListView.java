@@ -11,7 +11,6 @@ import android.widget.ProgressBar;
 import java.util.ArrayList;
 
 import tv.bokch.R;
-import tv.bokch.data.History;
 
 public class StatableListView<Data> extends FrameLayout {
 
@@ -20,6 +19,7 @@ public class StatableListView<Data> extends FrameLayout {
 		Failed,
 		OK
 	}
+
 	private ProgressBar mProgress;
 	private View mEmptyView;
 	private RecyclerView<Data> mListView;

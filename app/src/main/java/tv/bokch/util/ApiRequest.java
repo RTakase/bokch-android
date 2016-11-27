@@ -13,7 +13,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
-import tv.bokch.android.UserRankingActivity;
 
 public class ApiRequest {
 
@@ -24,6 +23,8 @@ public class ApiRequest {
 	public static String API_RANKING_BOOK_WEEKLY = "ranking/book/weekly";
 	public static String API_RANKING_USER_TOTAL = "ranking/user/total";
 	public static String API_RANKING_BOOK_TOTAL = "ranking/book/total";
+
+	public static String API_LOGIN = "login";
 
 	public static String PREFIX = ".json";
 	
@@ -63,8 +64,29 @@ public class ApiRequest {
 
 	/******************************************************************************************/
 
+	public void login(String userId, String code, ApiListener<JSONObject> listener) {
+		HttpUrl.Builder url = getUrlBuilder(API_LOGIN);
+		if (userId != null) {
+			url.addQueryParameter("user_id", userId);
+		}
+		if (code != null) {
+			url.addQueryParameter("code", code);
+		}
+		getJsonObject(url.build(), listener);
+	}
+
 	public void recent(ApiListener<JSONObject> listener) {
+		recent(null, null, listener);
+	}
+
+	public void recent(String bookId, String userId, ApiListener<JSONObject> listener) {
 		HttpUrl.Builder url = getUrlBuilder(API_RECENT);
+		if (bookId != null) {
+			url.addQueryParameter("book_id", bookId);
+		}
+		if (userId != null) {
+			url.addQueryParameter("user_id", userId);
+		}
 		getJsonObject(url.build(), listener);
 	}
 	

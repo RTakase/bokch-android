@@ -1,6 +1,7 @@
 package tv.bokch.widget;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import timber.log.Timber;
 import tv.bokch.R;
+import tv.bokch.android.BookListActivity;
 import tv.bokch.data.User;
 
 public class FullUserRankingListView extends RankingListView<User> {
@@ -77,7 +79,7 @@ public class FullUserRankingListView extends RankingListView<User> {
 			mMoreButton = (Button)view.findViewById(R.id.more_btn);
 		}
 
-		public void bindView(User user, int position) {
+		public void bindView(final User user, int position) {
 			super.bindView(user, position);
 			mUserName.setText(String.format("ユーザ名：%s", user.name));
 			mUserIcon.setImageUrl(user.iconUrl);
@@ -94,7 +96,9 @@ public class FullUserRankingListView extends RankingListView<User> {
 			mMoreButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					Timber.d("tks, hoge");
+					Intent intent = new Intent(getContext(), BookListActivity.class);
+					intent.putExtra("user_id", user.userId);
+					getContext().startActivity(intent);
 				}
 			});
 		}

@@ -1,7 +1,9 @@
 package tv.bokch.android;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -28,15 +30,14 @@ import tv.bokch.widget.SummarizedBookRankingListView;
 import tv.bokch.widget.SummarizedUserRankingListView;
 import tv.bokch.widget.SummarizedRecentListView;
 
-public class HomeActivity extends BaseActivity {
-
+public class HomeActivity extends FabActivity {
 	protected static final int MENU_ID_SEARCH = Menu.FIRST + 1;
 	protected static final int MENU_ID_MYPAGE = Menu.FIRST + 2;
-	
+
 	private StatableListView<History> mRecentView;
 	private StatableListView<User> mUserRankingView;
-	private StatableListView<Book> mBookRankingView;	
-	
+	private StatableListView<Book> mBookRankingView;
+	protected FloatingActionButton mFab;
 
 	private boolean mLoadedRecent;
 	private boolean mLoadedUserRanking;
@@ -49,6 +50,18 @@ public class HomeActivity extends BaseActivity {
 
 		super.onCreate(savedInstanceState);
 
+		SharedPreferences pref = this.getSharedPreferences("bokch", MODE_PRIVATE);
+
+		String userId = pref.getString("user_id", null);
+		Timber.d("tks, userId = %s", userId);
+
+		if (TextUtils.isEmpty(userId)) {
+			startLoginActivity(HomeActivity.this);
+		} else {
+			showProgress(getString(R.string.loging_in));
+			ApiRequest request = new ApiRequest();
+			request.login(userId, null, mLoginApiListener);
+		}
 		initViews();
 	}
 
@@ -150,7 +163,6 @@ public class HomeActivity extends BaseActivity {
 		}
 	};
 
-
 	private ApiRequest.ApiListener<JSONObject> mRecentApiListener = new ApiRequest.ApiListener<JSONObject>() {
 		@Override
 		public void onSuccess(JSONObject response) {
@@ -204,7 +216,7 @@ public class HomeActivity extends BaseActivity {
 						}
 					}
 				}
-				mBookRankingView.onData(books);
+				mLoadedBookRanking = mBookRankingView.onData(books);
 			} catch (JSONException e) {
 				Toast.makeText(HomeActivity.this, getString(R.string.failed_data_set), Toast.LENGTH_SHORT).show();
 				Timber.w(e, null);
@@ -233,7 +245,7 @@ public class HomeActivity extends BaseActivity {
 						users.add(user);
 					}
 				}
-				mUserRankingView.onData(users);
+				mLoadedUserRanking = mUserRankingView.onData(users);
 			} catch (JSONException e) {
 				Toast.makeText(HomeActivity.this, getString(R.string.failed_data_set), Toast.LENGTH_SHORT).show();
 				Timber.w(e, null);
@@ -242,6 +254,31 @@ public class HomeActivity extends BaseActivity {
 		@Override
 		public void onError(ApiRequest.ApiError error) {
 			Toast.makeText(HomeActivity.this, getString(R.string.failed_load), Toast.LENGTH_SHORT).show();
+		}
+	};
+
+	private ApiRequest.ApiListener<JSONObject> mLoginApiListener = new ApiRequest.ApiListener<JSONObject>() {
+		@Override
+		public void onSuccess(JSONObject response) {
+			hideProgress();
+			try {
+				if (response.isNull("user")) {
+					startLoginActivity(HomeActivity.this);
+				} else {
+					mMyUser = new User(response.optJSONObject("user"));
+					SharedPreferences pref = getSharedPreferences("bokch", MODE_PRIVATE);
+					pref.edit().putString("user_id", mMyUser.userId).apply();
+				}
+			} catch (JSONException e) {
+				Timber.w(e, null);
+			}
+		}
+		@Override
+		public void onError(ApiRequest.ApiError error) {
+			hideProgress();
+			Toast.makeText(HomeActivity.this, getString(R.string.failed_load), Toast.LENGTH_SHORT).show();
+			Timber.d("tks, api error, %s", error.getLocalizedMessage());
+			Timber.w(error, null);
 		}
 	};
 }

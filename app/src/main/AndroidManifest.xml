@@ -18,10 +18,10 @@
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
+            android:launchMode="singleTop"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
@@ -29,6 +29,16 @@
         <activity android:name=".android.RecentActivity" android:screenOrientation="portrait"/>
         <activity android:name=".android.UserRankingActivity" android:screenOrientation="portrait"/>
         <activity android:name=".android.BookRankingActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".android.UserListActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".android.BookListActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".android.LoginActivity" android:launchMode="singleTop" android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="http" android:host="bokch.tv.com" />
+            </intent-filter>
+        </activity>
 
     </application>
 

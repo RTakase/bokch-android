@@ -17,8 +17,10 @@ import android.view.WindowManager;
 import timber.log.Timber;
 import tv.bokch.R;
 
-public class BaseDialog extends DialogFragment {
+public abstract class BaseDialog extends DialogFragment {
 	protected Activity mParentActivity;
+	public static final int SIZE_DEFAULT = -999;
+	
 	@Override
 	public void onAttach(Activity activity) {
 		mParentActivity = activity;
@@ -33,17 +35,27 @@ public class BaseDialog extends DialogFragment {
 		WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
 		int width, height;
 
-		if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-			width = (int)getResources().getDimension(R.dimen.dialog_width_portrait);
-			height = (int)getResources().getDimension(R.dimen.dialog_height_portrait);
+		int orientation = getResources().getConfiguration().orientation;
+		width = getWidth(orientation);
+		if (width == SIZE_DEFAULT) {
+			int resId = orientation == Configuration.ORIENTATION_PORTRAIT ? R.dimen.dialog_width_portrait : R.dimen.dialog_width_landscape;
+			params.width = getResources().getDimensionPixelSize(resId); 
 		} else {
-			width = (int)getResources().getDimension(R.dimen.dialog_width_landscape);
-			height = (int)getResources().getDimension(R.dimen.dialog_height_landscape);
+			params.width = width;
 		}
-		params.width = width;
-		params.height = height;
+		
+		height = getHeight(orientation);
+		if (height == SIZE_DEFAULT) {
+			int resId = orientation == Configuration.ORIENTATION_PORTRAIT ? R.dimen.dialog_height_portrait : R.dimen.dialog_height_landscape;
+			params.height = getResources().getDimensionPixelSize(resId);
+		} else {
+			params.height = height;
+		}
 		dialog.getWindow().setAttributes(params);
 	}
+
+	protected abstract int getWidth(int orientation);
+	protected abstract int getHeight(int orientation);
 
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {

@@ -2,6 +2,7 @@ package tv.bokch.android;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -53,6 +54,16 @@ public class CameraDialog extends BaseDialog {
 		if (mBarcodeView != null) {
 			mBarcodeView.pause();
 		}
+	}
+
+	@Override
+	protected int getWidth(int orientation) {
+		return SIZE_DEFAULT;
+	}
+
+	@Override
+	protected int getHeight(int orientation) {
+		return getResources().getDimensionPixelSize(R.dimen.dialog_width_portrait);
 	}
 
 	private BarcodeCallback mBarcodeCallback = new BarcodeCallback() {

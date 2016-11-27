@@ -1,6 +1,7 @@
 package tv.bokch.widget;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.format.DateFormat;
 import android.util.AttributeSet;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.TextView;
 
 import timber.log.Timber;
 import tv.bokch.R;
+import tv.bokch.android.RecentActivity;
+import tv.bokch.android.UserListActivity;
 import tv.bokch.data.History;
 
 public class FullRecentListView extends RecentListView {
@@ -76,7 +79,7 @@ public class FullRecentListView extends RecentListView {
 			mMoreButton = (Button)view.findViewById(R.id.more_btn);
 		}
 		
-		public void bindView(History history, int position) {
+		public void bindView(final History history, int position) {
 			super.bindView(history, position);
 			mComment.setText(String.format("コメント：%s", history.review.comment));
 			mRating.setText(String.format("評価：%s", history.review.rating));
@@ -85,7 +88,10 @@ public class FullRecentListView extends RecentListView {
 			mMoreButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					Timber.d("tks, hoge");
+					Intent intent = new Intent(getContext(), UserListActivity.class);
+					intent.putExtra("data", getData());
+					intent.putExtra("book_id", history.book.bookId);
+					getContext().startActivity(intent);
 				}
 			});
 		}

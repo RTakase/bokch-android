@@ -35,7 +35,7 @@ public class Book extends Data implements Parcelable {
 		numberOfPages = obj.optInt("number_of_pages");
 		publisher = obj.optString("publisher");
 		inOffice  = obj.optBoolean("in_office");
-		tag = obj.optString("tag");
+		tag = optString(obj, "tag");
 		ratingAverage = (float)obj.optDouble("rating_average");
 		score = obj.optInt("score");
 	}

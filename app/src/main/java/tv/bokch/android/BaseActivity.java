@@ -1,24 +1,30 @@
 package tv.bokch.android;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
+
 
 import timber.log.Timber;
 import tv.bokch.R;
+import tv.bokch.data.User;
 import tv.bokch.util.ViewServer;
 
 public class BaseActivity extends AppCompatActivity {
-	public static final int REQUEST_CODE_CAMERA = 1;
-	private CameraDialog mCameraDialog;
-	protected FloatingActionButton fab;
+	
+	public static final int REQUEST_LOGIN = 1;
+
+	protected User mMyUser;
+
+	protected ProgressDialog mProgressDialog;
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -27,9 +33,6 @@ public class BaseActivity extends AppCompatActivity {
 		ViewServer.get(this).addWindow(this);
 
 		Timber.plant(new Timber.DebugTree());
-
-		fab = (FloatingActionButton)findViewById(R.id.fab);
-		fab.setOnClickListener(mFabClickListener);
 	}
 
 
@@ -43,24 +46,7 @@ public class BaseActivity extends AppCompatActivity {
 	protected void onDestroy() {
 		super.onDestroy();
 		ViewServer.get(this).removeWindow(this);
-		if (mCameraDialog != null) {
-			mCameraDialog.dismiss();
-		}
-		mCameraDialog = null;
-	}
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-
-		switch (requestCode) {
-		case REQUEST_CODE_CAMERA:
-			if (resultCode == RESULT_OK) {
-				String isbn = data.getStringExtra("barcode");
-				String str = String.format("ISBNコードをよみとりました！（%s）", isbn);
-				Toast.makeText(this,  str, Toast.LENGTH_SHORT).show();
-			}
-		}
+		mProgressDialog = null;
 	}
 
 	@Override
@@ -91,10 +77,18 @@ public class BaseActivity extends AppCompatActivity {
 		//noinspection SimplifiableIfStatement
 		switch (id) {
 		case R.id.action_settings:
+			logout();
 			return true;
 		}
 
 		return super.onOptionsItemSelected(item);
+	}
+
+	protected void logout() {
+		SharedPreferences pref = getSharedPreferences("bokch", MODE_PRIVATE);
+		pref.edit().putString("user_id", "").apply();
+		mMyUser = null;
+		startLoginActivity(getBaseContext());
 	}
 
 	protected void setActionBarTitle(int resId) {
@@ -107,13 +101,27 @@ public class BaseActivity extends AppCompatActivity {
 		}
 	}
 
-	private View.OnClickListener mFabClickListener = new View.OnClickListener() {
-		@Override
-		public void onClick(View v) {
-			mCameraDialog = CameraDialog.newInstance();
-			mCameraDialog.setTargetFragment(null, REQUEST_CODE_CAMERA);
-			mCameraDialog.show(getFragmentManager(), "CameraDialog");
+	protected void showProgress(String message) {
+		Timber.d("tks, show progress.");
+		if (mProgressDialog == null) {
+			mProgressDialog = ProgressDialog.show(
+				this,
+				"",
+				message
+			);
 		}
-	};
+	}
 
+	protected void hideProgress() {
+		Timber.d("tks, hide progress.");
+		if (mProgressDialog != null) {
+			mProgressDialog.dismiss();
+		}
+	}
+
+	protected void startLoginActivity(Context context) {
+		Intent intent = new Intent(context, LoginActivity.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivityForResult(intent, REQUEST_LOGIN);
+	}
 }
