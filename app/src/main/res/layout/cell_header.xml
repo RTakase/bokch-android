@@ -2,6 +2,6 @@
 <Space
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="1dp"
-    android:layout_height="@dimen/list_header_height"
+    android:layout_height="@dimen/list_dummy_header_height"
     >
 </Space>

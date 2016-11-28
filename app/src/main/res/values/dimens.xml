@@ -10,6 +10,8 @@
     <dimen name="dialog_height_landscape">270dp</dimen>
 
     <dimen name="list_header_height">46dp</dimen>
+    <dimen name="list_dummy_footer_height">44dp</dimen>
+    <dimen name="list_dummy_header_height">12dp</dimen>
     <dimen name="list_divider_height">12dp</dimen>
     <dimen name="fab_size_normal">56dp</dimen>
     <dimen name="fab_size_mini">40dp</dimen>

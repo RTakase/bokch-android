@@ -37,6 +37,7 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.jakewharton.picasso:picasso2-okhttp3-downloader:1.0.2'
     compile 'com.drivemode:IntentLogger:1.0.4@aar'
+    compile 'info.hoang8f:fbutton:1.0.5'
     testCompile 'junit:junit:4.12'
 
 }

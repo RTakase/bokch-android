@@ -1,93 +1,144 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
-    <RelativeLayout
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/activity_background"
+    >
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:background="@null"
+        app:elevation="0dp"
         >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="236dp"
+            android:paddingTop="12dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingBottom="12dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:background="@drawable/bg_full_list_cell"
+            app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
+            >
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="22sp"
+                android:textColor="#ff555555"
+                android:gravity="left|center_vertical"
+                android:layout_alignParentTop="true"
+                android:maxLines="2"
+                android:ellipsize="end"
+                />
 
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="left|center_vertical"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            />
+            <RelativeLayout
+                android:id="@+id/jacket_container"
+                android:layout_width="96dp"
+                android:layout_height="match_parent"
+                android:layout_below="@id/title"
+                android:layout_alignParentLeft="true"
+                >
+                <tv.bokch.widget.NetworkImageView
+                    android:id="@+id/jacket"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerInside"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentBottom="true"
+                    />
+            </RelativeLayout>
 
-        <tv.bokch.widget.NetworkImageView
-            android:id="@+id/jacket"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentBottom="true"
-            android:layout_below="@id/title"
-            />
+            <RatingBar
+                android:id="@+id/rating_average"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:max="5"
+                android:stepSize="0.01"
+                android:isIndicator="true"
+                android:layout_below="@id/title"
+                android:layout_toRightOf="@id/jacket_container"
+                style="?android:attr/ratingBarStyleIndicator"
+                />
 
-        <TextView
-            android:id="@+id/author"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="left|center_vertical"
-            android:layout_below="@id/title"
-            />
+            <TextView
+                android:id="@+id/author"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left|center_vertical"
+                android:layout_marginTop="4dp"
+                android:layout_marginLeft="8dp"
+                android:textSize="14sp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:layout_below="@id/rating_average"
+                android:layout_alignLeft="@id/rating_average"
+                />
 
-        <TextView
-            android:id="@+id/publisher"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="left|center_vertical"
-            android:layout_below="@id/author"
-            />
+            <TextView
+                android:id="@+id/publisher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textSize="14sp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:gravity="left|center_vertical"
+                android:layout_below="@id/author"
+                android:layout_alignLeft="@id/author"
+                />
 
-        <TextView
-            android:id="@+id/rating_average"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="left|center_vertical"
-            android:layout_below="@id/publisher"
-            />
+            <TextView
+                android:id="@+id/tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="4dp"
+                android:layout_marginBottom="4dp"
+                android:gravity="left|center_vertical"
+                android:textSize="14sp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                />
+        </RelativeLayout>
 
-        <TextView
-            android:id="@+id/tag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="left|center_vertical"
-            android:layout_below="@id/rating_average"
-            />
-
-        <Button
-            android:id="@+id/amazon_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="left|center_vertical"
-            android:layout_below="@id/tag"
-            />
-
-        <Button
+        <info.hoang8f.widget.FButton
             android:id="@+id/add_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
+            android:layout_marginTop="12dp"
+            android:layout_marginLeft="36dp"
+            android:layout_marginRight="36dp"
+            android:textSize="16sp"
+            android:textColor="#ddfafafa"
+            app:buttonColor="#ff225B1E"
             android:text="@string/add_read"
             />
-    </RelativeLayout>
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tab"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#ffffff"
-        />
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:layout_marginTop="12dp"
+            />
+
+    </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         />
 
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

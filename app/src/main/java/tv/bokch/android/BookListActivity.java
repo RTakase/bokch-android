@@ -32,7 +32,7 @@ public class BookListActivity extends BaseActivity {
 		
 		super.onCreate(savedInstanceState);
 		
-		setActionBarTitle(R.string.acitivity_title_user_list);
+		setActionBarTitle(R.string.acitivity_title_book_list);
 		
 		Intent intent = getIntent();
 		mUserId = intent.getStringExtra("user_id");

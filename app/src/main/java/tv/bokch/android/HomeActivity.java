@@ -19,6 +19,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import timber.log.Timber;
+import tv.bokch.App;
 import tv.bokch.R;
 import tv.bokch.data.Book;
 import tv.bokch.data.History;
@@ -265,9 +266,8 @@ public class HomeActivity extends FabActivity {
 				if (response.isNull("user")) {
 					startLoginActivity(HomeActivity.this);
 				} else {
-					mMyUser = new User(response.optJSONObject("user"));
-					SharedPreferences pref = getSharedPreferences("bokch", MODE_PRIVATE);
-					pref.edit().putString("user_id", mMyUser.userId).apply();
+					App app = (App)getApplication();
+					app.setMyUser(new User(response.optJSONObject("user")));
 				}
 			} catch (JSONException e) {
 				Timber.w(e, null);

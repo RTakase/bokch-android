@@ -19,6 +19,7 @@ public class ApiRequest {
 	public static String API_HOME = "http://52.198.155.49/";
 	
 	public static String API_RECENT = "histories";
+	public static String API_REVIEW = "reviews";
 	public static String API_RANKING_USER_WEEKLY = "ranking/user/weekly";
 	public static String API_RANKING_BOOK_WEEKLY = "ranking/book/weekly";
 	public static String API_RANKING_USER_TOTAL = "ranking/user/total";
@@ -81,6 +82,17 @@ public class ApiRequest {
 
 	public void recent(String bookId, String userId, ApiListener<JSONObject> listener) {
 		HttpUrl.Builder url = getUrlBuilder(API_RECENT);
+		if (bookId != null) {
+			url.addQueryParameter("book_id", bookId);
+		}
+		if (userId != null) {
+			url.addQueryParameter("user_id", userId);
+		}
+		getJsonObject(url.build(), listener);
+	}
+
+	public void review(String bookId, String userId, ApiListener<JSONObject> listener) {
+		HttpUrl.Builder url = getUrlBuilder(API_REVIEW);
 		if (bookId != null) {
 			url.addQueryParameter("book_id", bookId);
 		}

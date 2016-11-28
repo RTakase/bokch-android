@@ -16,6 +16,7 @@ import android.widget.Toast;
 import timber.log.Timber;
 import tv.bokch.R;
 import tv.bokch.data.User;
+import tv.bokch.util.Display;
 import tv.bokch.util.ViewServer;
 
 public class BaseActivity extends AppCompatActivity {
@@ -24,15 +25,15 @@ public class BaseActivity extends AppCompatActivity {
 
 	protected User mMyUser;
 
+	protected Display mDisplay;
+
 	protected ProgressDialog mProgressDialog;
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		ViewServer.get(this).addWindow(this);
-
-		Timber.plant(new Timber.DebugTree());
+		mDisplay = new Display(this);
 	}
 
 

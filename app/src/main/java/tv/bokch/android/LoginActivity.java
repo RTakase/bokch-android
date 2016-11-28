@@ -16,6 +16,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import timber.log.Timber;
+import tv.bokch.App;
 import tv.bokch.R;
 import tv.bokch.data.User;
 import tv.bokch.util.ApiRequest;
@@ -116,9 +117,8 @@ public class LoginActivity extends BaseActivity {
 				} else {
 					mMessageTextView.setText(getString(R.string.successed_login));
 					mProgressBar.setVisibility(View.GONE);
-					mMyUser = new User(response.optJSONObject("user"));
-					SharedPreferences pref = getSharedPreferences("bokch", MODE_PRIVATE);
-					pref.edit().putString("user_id", mMyUser.userId).apply();
+					App app = (App)getApplication();
+					app.setMyUser(new User(response.optJSONObject("user")));
 					finish();
 				}
 			} catch (JSONException e) {

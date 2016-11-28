@@ -14,8 +14,8 @@ public class Review extends Data implements Parcelable {
 	public long created;
 	
 	public Review(JSONObject obj) throws JSONException {
-		book = new Book(obj.optString("book_id"));
-		user = new User(obj.optString("user_id"));
+		user = new User(obj.optJSONObject("user"));
+		book = new Book(obj.optJSONObject("book"));
 		comment = obj.optString("comment");
 		rating = obj.optInt("rating");
 		created = obj.optLong("created");
