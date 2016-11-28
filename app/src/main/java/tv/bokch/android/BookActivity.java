@@ -4,18 +4,10 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.RatingBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -24,31 +16,24 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import timber.log.Timber;
 import tv.bokch.R;
 import tv.bokch.data.Book;
-import tv.bokch.data.History;
 import tv.bokch.data.Review;
 import tv.bokch.data.User;
 import tv.bokch.util.ApiRequest;
-import tv.bokch.widget.NetworkImageView;
-import tv.bokch.widget.StatableListView;
+import tv.bokch.widget.BookView;
 
-public class BookActivity extends BaseActivity {
+public class BookActivity extends TabActivity {
 	
 	public static final int INDEX_REVIEW = 0;
 	public static final int INDEX_USERS = 1;
-	public static final int NUMBER_OF_PAGES = 2;
-
-	private Fragment[] mPages;
-	private boolean[] mLoaded;
 
 	private Book mBook;
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_book);
+		super.onCreate(savedInstanceState);
 
 		Intent intent = getIntent();
 		mBook = intent.getParcelableExtra("data");
@@ -60,72 +45,96 @@ public class BookActivity extends BaseActivity {
 	}
 
 	private void initialize() {
-		NetworkImageView jacket = (NetworkImageView)findViewById(R.id.jacket);
-		assert jacket != null;
-		jacket.setDefaultImageResId(R.drawable.mysteryman);
-		ViewGroup.LayoutParams params = jacket.getLayoutParams();
-		if (params != null) {
-			params.width = mDisplay.toPixels(mBook.largeImageWidth);
-			params.height = mDisplay.toPixels(mBook.largeImageHeight);
-			jacket.setLayoutParams(params);
-		}
-		jacket.setImageUrl(mBook.largeImageUrl);
-
-		TextView title = (TextView)findViewById(R.id.title);
-		assert title != null;
-		title.setText(mBook.title);
-
-		TextView author = (TextView)findViewById(R.id.author);
-		assert author != null;
-		author.setText(mBook.author);
-
-		TextView publisher = (TextView)findViewById(R.id.publisher);
-		assert publisher != null;
-		publisher.setText(mBook.publisher);
-
-		RatingBar ratingAverage = (RatingBar)findViewById(R.id.rating_average);
-		assert ratingAverage != null;
-		ratingAverage.setRating(mBook.ratingAverage * 100);
-
-		TextView tag = (TextView)findViewById(R.id.tag);
-		assert tag != null;
-		tag.setText(mBook.tag);
+		BookView book = (BookView)findViewById(R.id.book);
+		assert book != null;
+		book.bindView(mBook);
 
 		Button add = (Button)findViewById(R.id.add_btn);
 		assert add != null;
 		add.setOnClickListener(mAddClickListener);
+	}
 
-		mPages = new Fragment[NUMBER_OF_PAGES];
-		ViewPager pager = (ViewPager)findViewById(R.id.pager);
-		assert pager != null;
-		pager.setAdapter(mAdapter);
-
-		TabLayout tab = (TabLayout)findViewById(R.id.tab);
-
-		assert tab != null;
-		tab.setupWithViewPager(pager);
-		
-		mLoaded = new boolean[NUMBER_OF_PAGES];
-
-		for (int i = 0; i < NUMBER_OF_PAGES; i++) {
-			switch (i) {
-			case INDEX_REVIEW:
-				mPages[i] = ReviewFragment.newInstance();
-				tab.getTabAt(i).setText(R.string.title_reviews);
-				break;
-			case INDEX_USERS:
-				mPages[i] = UserRankingFragment.newInstance();
-				tab.getTabAt(i).setText(R.string.title_read_users);
-				break;
-			}
+	@Override
+	protected BaseFragment createFragment(int index) {
+		switch (index) {
+		case INDEX_REVIEW:
+			return ReviewFragment.newInstance();
+		case INDEX_USERS:
+			return UserFragment.newInstance();
+		default:
+			return null;
 		}
 	}
 
 	@Override
-	protected void onResume() {
-		super.onResume();
-		loadData();
+	protected int getTabCount() {
+		return 2;
 	}
+
+	@Override
+	protected String getTabTitle(int index) {
+		switch (index) {
+		case INDEX_REVIEW:
+			return getString(R.string.title_reviews);
+		case INDEX_USERS:
+			return getString(R.string.title_read_users);
+		default:
+			return null;
+		}
+	}
+
+	@Override
+	protected void requestData(int index, TabApiListener listener) {
+		ApiRequest request = new ApiRequest();
+		switch (index) {
+		case INDEX_REVIEW:
+			request.review(mBook.bookId, null, listener);
+		case INDEX_USERS:
+			request.recent(mBook.bookId, null, listener);
+		default:
+		}
+	}
+
+	@Override
+	protected String getKey(int index) {
+		switch (index) {
+		case INDEX_REVIEW:
+			return "reviews";
+		case INDEX_USERS:
+			return "users";
+		default:
+			return null;
+		}
+	}
+
+	@Override
+	protected ArrayList<?> getData(int index, JSONArray array) throws JSONException {
+		switch (index) {
+		case INDEX_REVIEW:
+			ArrayList<Review> reviews = new ArrayList<>();
+			for (int i = 0; i < array.length(); i++) {
+				JSONObject obj = array.optJSONObject(i);
+				if (obj != null) {
+					Review review = new Review(obj);
+					reviews.add(review);
+				}
+			}
+			return reviews;
+		case INDEX_USERS:
+			ArrayList<User> users = new ArrayList<>();
+			for (int i = 0; i < array.length(); i++) {
+				JSONObject obj = array.optJSONObject(i);
+				if (obj != null) {
+					Review review = new Review(obj);
+					users.add(review.user);
+				}
+			}
+			return users;
+		default:
+			return null;
+		}
+	}
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -144,94 +153,10 @@ public class BookActivity extends BaseActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	private void loadData() {
-		ApiRequest request = null;
-		if (!mLoaded[INDEX_REVIEW]) {
-			request = new ApiRequest();
-			request.review(mBook.bookId, null, new ApiRequest.ApiListener<JSONObject>() {
-				@Override
-				public void onSuccess(JSONObject response) {
-					try {
-						JSONArray array = response.optJSONArray("reviews");
-						if (array == null) {
-							return;
-						}
-						int length = array.length();
-						ArrayList<Review> reviews = new ArrayList<>();
-						for (int i = 0; i < length; i++) {
-							JSONObject obj = array.optJSONObject(i);
-							if (obj != null) {
-								Review review = new Review(obj);
-								reviews.add(review);
-							}
-						}
-						mLoaded[INDEX_REVIEW] = ((ReviewFragment)mPages[INDEX_REVIEW]).onData(reviews);
-					} catch (JSONException e) {
-						((ReviewFragment)mPages[INDEX_REVIEW]).setState(StatableListView.State.Failed);
-						Toast.makeText(BookActivity.this, getString(R.string.failed_data_set), Toast.LENGTH_SHORT).show();
-						Timber.w(e, null);
-					}
-				}
-				
-				@Override
-				public void onError(ApiRequest.ApiError error) {
-					Timber.w(error, null);
-					((ReviewFragment)mPages[INDEX_REVIEW]).setState(StatableListView.State.Failed);
-					Toast.makeText(BookActivity.this, getString(R.string.failed_load), Toast.LENGTH_SHORT).show();
-				}
-			});
-		}
-
-		if (!mLoaded[INDEX_USERS]) {
-			request = new ApiRequest();
-			request.recent(mBook.bookId, null, new ApiRequest.ApiListener<JSONObject>() {
-				@Override
-				public void onSuccess(JSONObject response) {
-					try {
-						JSONArray array = response.optJSONArray("histories");
-						if (array == null) {
-							return;
-						}
-						int length = array.length();
-						ArrayList<User> users = new ArrayList<>();
-						for (int i = 0; i < length; i++) {
-							JSONObject obj = array.optJSONObject(i);
-							if (obj != null) {
-								History history = new History(obj);
-								users.add(history.user);
-							}
-						}
-						mLoaded[INDEX_USERS] = ((UserRankingFragment)mPages[INDEX_USERS]).onData(users);
-					} catch (JSONException e) {
-						((UserRankingFragment)mPages[INDEX_USERS]).setState(StatableListView.State.Failed);
-						Toast.makeText(BookActivity.this, getString(R.string.failed_data_set), Toast.LENGTH_SHORT).show();
-						Timber.w(e, null);
-					}
-				}
-				@Override
-				public void onError(ApiRequest.ApiError error) {
-					((UserRankingFragment)mPages[INDEX_USERS]).setState(StatableListView.State.Failed);
-					Toast.makeText(BookActivity.this, getString(R.string.failed_load), Toast.LENGTH_SHORT).show();
-				}
-			});
-		}
-	}
-
 	private View.OnClickListener mAddClickListener = new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
 			Toast.makeText(BookActivity.this, "登録しちゃいましょう。", Toast.LENGTH_SHORT).show();
-		}
-	};
-
-	FragmentPagerAdapter mAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
-		@Override
-		public Fragment getItem(int position) {
-			return mPages[position];
-		}
-		@Override
-		public int getCount() {
-			return mPages.length;
 		}
 	};
 }
