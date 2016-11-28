@@ -1,6 +1,8 @@
 package tv.bokch.widget;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -9,6 +11,10 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
+import timber.log.Timber;
+import tv.bokch.android.BookActivity;
+import tv.bokch.data.Book;
+import tv.bokch.data.User;
 import tv.bokch.util.Display;
 
 public abstract class BaseListView<Data> extends android.support.v7.widget.RecyclerView {
@@ -132,10 +138,27 @@ public abstract class BaseListView<Data> extends android.support.v7.widget.Recyc
 	};
 
 	protected class Cell extends BaseListView.ViewHolder {
+		protected View root;
 		public Cell(View view) {
 			super(view);
+			this.root = view;
 		}
-		protected void bindView(Data data, int position) {
+		protected void bindView(final Data data, int position) {
+			root.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent();
+					if (data instanceof User) {
+//						intent.setClass(getContext(), UserActivity.class);
+//						intent.putExtra("data", (User)data);
+//						getContext().startActivity(intent);
+					} else if (data instanceof Book) {
+						intent.setClass(getContext(), BookActivity.class);
+						intent.putExtra("data", (Book)data);
+						getContext().startActivity(intent);
+					}
+				}
+			});
 		}
 	}
 

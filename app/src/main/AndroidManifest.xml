@@ -31,6 +31,8 @@
         <activity android:name=".android.BookRankingActivity" android:screenOrientation="portrait"/>
         <activity android:name=".android.UserListActivity" android:screenOrientation="portrait"/>
         <activity android:name=".android.BookListActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".android.BookActivity" android:screenOrientation="portrait"/>
+
         <activity android:name=".android.LoginActivity" android:launchMode="singleTop" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>

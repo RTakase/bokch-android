@@ -24,5 +24,6 @@
     <string name="loging_in">ログインしています</string>
     <string name="failed_login">ログインできませんでした...</string>
     <string name="successed_login">ログインに成功しました！</string>
+    <string name="add_read">私も読んだ！</string>
 
 </resources>
