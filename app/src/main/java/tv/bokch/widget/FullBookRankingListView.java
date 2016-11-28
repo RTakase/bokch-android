@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import timber.log.Timber;
@@ -64,7 +65,7 @@ public class FullBookRankingListView extends RankingListView<Book> {
 	protected class FullBookRankingCell extends RankingCell {
 		private NetworkImageView mJacket;
 		private TextView mTitle;
-		private TextView mRatingAverage;
+		private RatingBar mRatingAverage;
 		private TextView mScore;
 		private TextView mTag;
 		private Button mMoreButton;
@@ -72,9 +73,9 @@ public class FullBookRankingListView extends RankingListView<Book> {
 		public FullBookRankingCell(View view) {
 			super(view);
 			mJacket = (NetworkImageView)view.findViewById(R.id.jacket);
-			//mJacket.setDefaultImageResId(hoge);
+			mJacket.setDefaultImageResId(R.drawable.mysteryman);
 			mTitle = (TextView)view.findViewById(R.id.title);
-			mRatingAverage = (TextView)view.findViewById(R.id.rating_average);
+			mRatingAverage = (RatingBar)view.findViewById(R.id.rating_average);
 			mTag = (TextView)view.findViewById(R.id.tag);
 			mScore = (TextView)view.findViewById(R.id.score);
 			mMoreButton = (Button)view.findViewById(R.id.more_btn);
@@ -85,8 +86,8 @@ public class FullBookRankingListView extends RankingListView<Book> {
 			mTitle.setText(book.title);
 			ViewGroup.LayoutParams params = mJacket.getLayoutParams();
 			if (params != null) {
-				params.width = book.largeImageWidth;
-				params.height = book.largeImageHeight;
+				params.width = mDisplay.toPixels(book.largeImageWidth);
+				params.height = mDisplay.toPixels(book.largeImageHeight);
 				mJacket.setLayoutParams(params);
 			}
 			mJacket.setImageUrl(book.largeImageUrl);			
@@ -100,7 +101,7 @@ public class FullBookRankingListView extends RankingListView<Book> {
 			} else {
 				mScore.setText(String.format("スコア：%d", book.score));
 			}
-			mRatingAverage.setText(String.valueOf(book.ratingAverage));
+			mRatingAverage.setRating(book.ratingAverage * 100);
 			mMoreButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {

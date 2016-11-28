@@ -3,6 +3,7 @@ package tv.bokch.widget;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import tv.bokch.R;
@@ -70,6 +71,12 @@ public class SummarizedBookRankingListView extends RankingListView<Book> {
 		public void bindView(Book book, int position) {
 			super.bindView(book, position);
 			mTitle.setText(book.title);
+			ViewGroup.LayoutParams params = mJacket.getLayoutParams();
+			if (params != null) {
+				params.width = mDisplay.toPixels(book.largeImageWidth);
+				params.height = mDisplay.toPixels(book.largeImageHeight);
+				mJacket.setLayoutParams(params);
+			}
 			mJacket.setImageUrl(book.largeImageUrl);
 		}
 	}

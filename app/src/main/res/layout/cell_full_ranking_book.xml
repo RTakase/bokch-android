@@ -54,12 +54,13 @@
         android:layout_toLeftOf="@+id/score"
         />
 
-    <TextView
+    <RatingBar
         android:id="@+id/rating_average"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="14sp"
         android:maxLines="1"
+        android:isIndicator="true"
         android:gravity="center_vertical|left"
         android:layout_toRightOf="@id/icon_container"
         android:layout_below="@id/title"
