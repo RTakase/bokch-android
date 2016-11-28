@@ -8,6 +8,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,7 +27,9 @@ import java.util.ArrayList;
 import timber.log.Timber;
 import tv.bokch.R;
 import tv.bokch.data.Book;
+import tv.bokch.data.History;
 import tv.bokch.data.Review;
+import tv.bokch.data.User;
 import tv.bokch.util.ApiRequest;
 import tv.bokch.widget.NetworkImageView;
 import tv.bokch.widget.StatableListView;
@@ -39,7 +42,6 @@ public class BookActivity extends BaseActivity {
 
 	private Fragment[] mPages;
 	private boolean[] mLoaded;
-	private int[] mKinds;
 
 	private Book mBook;
 
@@ -65,7 +67,6 @@ public class BookActivity extends BaseActivity {
 		if (params != null) {
 			params.width = mDisplay.toPixels(mBook.largeImageWidth);
 			params.height = mDisplay.toPixels(mBook.largeImageHeight);
-			Timber.d("tks, w = %d, h = %d", params.width, params.height);
 			jacket.setLayoutParams(params);
 		}
 		jacket.setImageUrl(mBook.largeImageUrl);
@@ -103,8 +104,7 @@ public class BookActivity extends BaseActivity {
 
 		assert tab != null;
 		tab.setupWithViewPager(pager);
-
-		mKinds = new int[NUMBER_OF_PAGES];
+		
 		mLoaded = new boolean[NUMBER_OF_PAGES];
 
 		for (int i = 0; i < NUMBER_OF_PAGES; i++) {
@@ -114,7 +114,7 @@ public class BookActivity extends BaseActivity {
 				tab.getTabAt(i).setText(R.string.title_reviews);
 				break;
 			case INDEX_USERS:
-				mPages[i] = BookRankingFragment.newInstance();
+				mPages[i] = UserRankingFragment.newInstance();
 				tab.getTabAt(i).setText(R.string.title_read_users);
 				break;
 			}
@@ -187,12 +187,31 @@ public class BookActivity extends BaseActivity {
 			request.recent(mBook.bookId, null, new ApiRequest.ApiListener<JSONObject>() {
 				@Override
 				public void onSuccess(JSONObject response) {
-
+					try {
+						JSONArray array = response.optJSONArray("histories");
+						if (array == null) {
+							return;
+						}
+						int length = array.length();
+						ArrayList<User> users = new ArrayList<>();
+						for (int i = 0; i < length; i++) {
+							JSONObject obj = array.optJSONObject(i);
+							if (obj != null) {
+								History history = new History(obj);
+								users.add(history.user);
+							}
+						}
+						mLoaded[INDEX_USERS] = ((UserRankingFragment)mPages[INDEX_USERS]).onData(users);
+					} catch (JSONException e) {
+						((UserRankingFragment)mPages[INDEX_USERS]).setState(StatableListView.State.Failed);
+						Toast.makeText(BookActivity.this, getString(R.string.failed_data_set), Toast.LENGTH_SHORT).show();
+						Timber.w(e, null);
+					}
 				}
-
 				@Override
 				public void onError(ApiRequest.ApiError error) {
-
+					((UserRankingFragment)mPages[INDEX_USERS]).setState(StatableListView.State.Failed);
+					Toast.makeText(BookActivity.this, getString(R.string.failed_load), Toast.LENGTH_SHORT).show();
 				}
 			});
 		}

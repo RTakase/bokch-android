@@ -51,4 +51,11 @@ public class UserRankingFragment extends Fragment {
 		}
 		return res;
 	}
+
+	public void setState(StatableListView.State state) {
+		StatableListView content = (StatableListView)getView();
+		if (content != null) {
+			content.setState(state);
+		}
+	}
 }
