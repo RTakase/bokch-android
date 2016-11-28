@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 import tv.bokch.util.Display;
 
-public abstract class RecyclerView<Data> extends android.support.v7.widget.RecyclerView {
+public abstract class BaseListView<Data> extends android.support.v7.widget.RecyclerView {
 
 	public static final int VIEW_TYPE_CONTENT = 0;
 	public static final int VIEW_TYPE_HEADER = 1;
@@ -27,15 +27,15 @@ public abstract class RecyclerView<Data> extends android.support.v7.widget.Recyc
 	protected ArrayList<Data> mDataSet;
 	private LinearLayoutManager mManager;
 	
-	public RecyclerView(Context context) {
+	public BaseListView(Context context) {
 		super(context);
 		initialize(context);
 	}
-	public RecyclerView(Context context, AttributeSet attrs) {
+	public BaseListView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		initialize(context);
 	}
-	public RecyclerView(Context context, AttributeSet attrs, int defStyleAttr) {
+	public BaseListView(Context context, AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
 		initialize(context);
 	}
@@ -87,11 +87,11 @@ public abstract class RecyclerView<Data> extends android.support.v7.widget.Recyc
 	protected abstract int getLayoutResId();
 	protected abstract int getFooterResId();
 	protected abstract int getHeaderResId();
-	protected abstract Row createRow(View view);
-	protected abstract Row createHeaderRow(View view);
-	protected abstract Row createFooterRow(View view);
+	protected abstract Cell createCell(View view);
+	protected abstract Cell createHeader(View view);
+	protected abstract Cell createFooter(View view);
 
-	protected RecyclerView.Adapter<Row> mAdapter = new RecyclerView.Adapter<Row>() {
+	protected BaseListView.Adapter<Cell> mAdapter = new BaseListView.Adapter<Cell>() {
 
 		@Override
 		public int getItemViewType(int position) {
@@ -105,18 +105,18 @@ public abstract class RecyclerView<Data> extends android.support.v7.widget.Recyc
 		}
 
 		@Override
-		public Row onCreateViewHolder(ViewGroup parent, int viewType) {
+		public Cell onCreateViewHolder(ViewGroup parent, int viewType) {
 			switch (viewType) {
 			case VIEW_TYPE_FOOTER:
-				return createFooterRow(mInflater.inflate(getFooterResId(), parent, false));
+				return createFooter(mInflater.inflate(getFooterResId(), parent, false));
 			case VIEW_TYPE_HEADER:
-				return createHeaderRow(mInflater.inflate(getHeaderResId(), parent, false));
+				return createHeader(mInflater.inflate(getHeaderResId(), parent, false));
 			default:
-				return createRow(mInflater.inflate(getLayoutResId(), parent, false));
+				return createCell(mInflater.inflate(getLayoutResId(), parent, false));
 			}
 		}
 		@Override
-		public void onBindViewHolder(Row holder, int position) {
+		public void onBindViewHolder(Cell holder, int position) {
 			if (position == 0) {
 				//no implement
 			} else if (position == mDataSet.size() - 1) {
@@ -131,16 +131,16 @@ public abstract class RecyclerView<Data> extends android.support.v7.widget.Recyc
 		}
 	};
 
-	protected class Row extends RecyclerView.ViewHolder {
-		public Row(View view) {
+	protected class Cell extends BaseListView.ViewHolder {
+		public Cell(View view) {
 			super(view);
 		}
 		protected void bindView(Data data, int position) {
 		}
 	}
 
-	protected class DummyRow extends Row {
-		public DummyRow(View view) {
+	protected class DummyCell extends Cell {
+		public DummyCell(View view) {
 			super(view);
 		}
 	}

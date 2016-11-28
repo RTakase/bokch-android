@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 import tv.bokch.data.User;
 import tv.bokch.widget.FullUserRankingListView;
-import tv.bokch.widget.RecyclerView;
+import tv.bokch.widget.BaseListView;
 import tv.bokch.widget.StatableListView;
 
 public class UserRankingFragment extends Fragment {
@@ -37,7 +37,7 @@ public class UserRankingFragment extends Fragment {
 		ArrayList<User> data = arguments.getParcelableArrayList("data");
 
 		StatableListView<User> content = new StatableListView<>(getContext());
-		RecyclerView<User> listview = new FullUserRankingListView(getContext());
+		BaseListView<User> listview = new FullUserRankingListView(getContext());
 		content.addListView(listview);
 		content.onData(data);
 		return content;

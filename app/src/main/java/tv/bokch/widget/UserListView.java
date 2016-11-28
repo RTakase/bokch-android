@@ -8,7 +8,7 @@ import android.widget.TextView;
 import tv.bokch.R;
 import tv.bokch.data.User;
 
-public class UserListView extends RecyclerView<User> {
+public class UserListView extends BaseListView<User> {
 	
 	public UserListView(Context context) {
 		super(context);
@@ -29,40 +29,40 @@ public class UserListView extends RecyclerView<User> {
 
 	@Override
 	protected int getLayoutResId() {
-		return R.layout.row_user;
+		return R.layout.cell_user;
 	}
 
 	@Override
-	protected Row createRow(View view) {
-		return new UserRow(view);
+	protected Cell createCell(View view) {
+		return new UserCell(view);
 	}
 
 	@Override
 	protected int getFooterResId() {
-		return R.layout.row_footer;
+		return R.layout.cell_footer;
 	}
 
 	@Override
-	protected Row createFooterRow(View view) {
-		return new DummyRow(view);
+	protected Cell createFooter(View view) {
+		return new DummyCell(view);
 	}
 
 	@Override
 	protected int getHeaderResId() {
-		return R.layout.row_header;
+		return R.layout.cell_header;
 	}
 
 	@Override
-	protected Row createHeaderRow(View view) {
-		return new DummyRow(view);
+	protected Cell createHeader(View view) {
+		return new DummyCell(view);
 	}
 
-	protected class UserRow extends Row {
+	protected class UserCell extends Cell {
 		private TextView mUserName;
 		private NetworkImageView mUserIcon;
 		private TextView mTag;
 		
-		public UserRow(View view) {
+		public UserCell(View view) {
 			super(view);
 			mUserName = (TextView)view.findViewById(R.id.user_name);
 			mUserIcon = (NetworkImageView)view.findViewById(R.id.user_icon);

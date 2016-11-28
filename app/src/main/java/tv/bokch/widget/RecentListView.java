@@ -6,12 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 import tv.bokch.R;
 import tv.bokch.data.History;
 
-public abstract class RecentListView extends RecyclerView<History> {
+public abstract class RecentListView extends BaseListView<History> {
 
 	public RecentListView(Context context) {
 		super(context);
@@ -29,12 +27,12 @@ public abstract class RecentListView extends RecyclerView<History> {
 	private void initialize(Context context) {
 	}
 
-	protected class RecentRow extends Row {
+	protected class RecentCell extends Cell {
 		private TextView mTitle;
 		private CircleNetworkImageView mUserIcon;
 		private NetworkImageView mJacket;
 
-		public RecentRow(View view) {
+		public RecentCell(View view) {
 			super(view);
 			mTitle = (TextView)view.findViewById(R.id.title);
 			mJacket = (NetworkImageView)view.findViewById(R.id.jacket);

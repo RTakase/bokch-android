@@ -8,9 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import timber.log.Timber;
 import tv.bokch.R;
-import tv.bokch.android.RecentActivity;
 import tv.bokch.android.UserListActivity;
 import tv.bokch.data.History;
 
@@ -35,42 +33,42 @@ public class FullRecentListView extends RecentListView {
 
 	@Override
 	protected int getLayoutResId() {
-		return R.layout.row_full_recent;
+		return R.layout.cell_full_recent;
 	}
 
 	@Override
-	protected Row createRow(View view) {
-		return new FullRecentRow(view);
+	protected Cell createCell(View view) {
+		return new FullRecentCell(view);
 	}
 
 	@Override
 	protected int getFooterResId() {
-		return R.layout.row_footer;
+		return R.layout.cell_footer;
 	}
 
 	@Override
-	protected Row createFooterRow(View view) {
-		return new DummyRow(view);
+	protected Cell createFooter(View view) {
+		return new DummyCell(view);
 	}
 	
 	@Override
 	protected int getHeaderResId() {
-		return R.layout.row_header;
+		return R.layout.cell_header;
 	}
 	
 	@Override
-	protected Row createHeaderRow(View view) {
-		return new DummyRow(view);
+	protected Cell createHeader(View view) {
+		return new DummyCell(view);
 	}
 	
-	protected class FullRecentRow extends RecentRow {
+	protected class FullRecentCell extends RecentCell {
 		private TextView mComment;
 		private TextView mRating;
 		private Button mMoreButton;
 		private TextView mCreated;
 		private TextView mUserName;
 		
-		public FullRecentRow(View view) {
+		public FullRecentCell(View view) {
 			super(view);
 			mComment = (TextView)view.findViewById(R.id.comment);
 			mRating = (TextView)view.findViewById(R.id.rating);

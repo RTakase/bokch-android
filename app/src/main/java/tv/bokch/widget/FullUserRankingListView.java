@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import timber.log.Timber;
 import tv.bokch.R;
 import tv.bokch.android.BookListActivity;
 import tv.bokch.data.User;
@@ -34,42 +33,42 @@ public class FullUserRankingListView extends RankingListView<User> {
 
 	@Override
 	protected int getLayoutResId() {
-		return R.layout.row_full_ranking_user;
+		return R.layout.cell_full_ranking_user;
 	}
 
 	@Override
-	protected Row createRow(View view) {
-		return new FullUserRankingRow(view);
+	protected Cell createCell(View view) {
+		return new FullUserRankingCell(view);
 	}
 
 	@Override
 	protected int getFooterResId() {
-		return R.layout.row_footer;
+		return R.layout.cell_footer;
 	}
 
 	@Override
-	protected Row createFooterRow(View view) {
-		return new DummyRow(view);
+	protected Cell createFooter(View view) {
+		return new DummyCell(view);
 	}
 
 	@Override
 	protected int getHeaderResId() {
-		return R.layout.row_header;
+		return R.layout.cell_header;
 	}
 
 	@Override
-	protected Row createHeaderRow(View view) {
-		return new DummyRow(view);
+	protected Cell createHeader(View view) {
+		return new DummyCell(view);
 	}
 
-	protected class FullUserRankingRow extends RankingRow {
+	protected class FullUserRankingCell extends RankingCell {
 		private TextView mUserName;
 		private NetworkImageView mUserIcon;
 		private TextView mTag;
 		private TextView mScore;
 		private Button mMoreButton;
 
-		public FullUserRankingRow(View view) {
+		public FullUserRankingCell(View view) {
 			super(view);
 			mUserName = (TextView)view.findViewById(R.id.user_name);
 			mUserIcon = (NetworkImageView)view.findViewById(R.id.user_icon);

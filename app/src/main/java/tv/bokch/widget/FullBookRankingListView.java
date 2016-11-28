@@ -33,35 +33,35 @@ public class FullBookRankingListView extends RankingListView<Book> {
 	
 	@Override
 	protected int getLayoutResId() {
-		return R.layout.row_full_ranking_book;
+		return R.layout.cell_full_ranking_book;
 	}
 	
 	@Override
-	protected Row createRow(View view) {
-		return new FullBookRankingRow(view);
+	protected Cell createCell(View view) {
+		return new FullBookRankingCell(view);
 	}
 	
 	@Override
 	protected int getFooterResId() {
-		return R.layout.row_footer;
+		return R.layout.cell_footer;
 	}
 	
 	@Override
-	protected Row createFooterRow(View view) {
-		return new DummyRow(view);
+	protected Cell createFooter(View view) {
+		return new DummyCell(view);
 	}
 	
 	@Override
 	protected int getHeaderResId() {
-		return R.layout.row_header;
+		return R.layout.cell_header;
 	}
 	
 	@Override
-	protected Row createHeaderRow(View view) {
-		return new DummyRow(view);
+	protected Cell createHeader(View view) {
+		return new DummyCell(view);
 	}
 	
-	protected class FullBookRankingRow extends RankingRow {
+	protected class FullBookRankingCell extends RankingCell {
 		private NetworkImageView mJacket;
 		private TextView mTitle;
 		private TextView mRatingAverage;
@@ -69,7 +69,7 @@ public class FullBookRankingListView extends RankingListView<Book> {
 		private TextView mTag;
 		private Button mMoreButton;
 		
-		public FullBookRankingRow(View view) {
+		public FullBookRankingCell(View view) {
 			super(view);
 			mJacket = (NetworkImageView)view.findViewById(R.id.jacket);
 			//mJacket.setDefaultImageResId(hoge);

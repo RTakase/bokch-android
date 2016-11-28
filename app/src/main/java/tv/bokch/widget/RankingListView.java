@@ -4,11 +4,10 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import tv.bokch.R;
 
-public abstract class RankingListView<Data> extends RecyclerView<Data> {
+public abstract class RankingListView<Data> extends BaseListView<Data> {
 
 	public RankingListView(Context context) {
 		super(context);
@@ -30,12 +29,12 @@ public abstract class RankingListView<Data> extends RecyclerView<Data> {
 
 	protected abstract int getLayoutResId();
 
-	protected abstract Row createRow(View view);
+	protected abstract Cell createCell(View view);
 
-	protected class RankingRow extends Row {
+	protected class RankingCell extends Cell {
 		private ImageView mMedal;
 		
-		public RankingRow(View view) {
+		public RankingCell(View view) {
 			super(view);
 			mMedal = (ImageView)view.findViewById(R.id.medal);
 		}

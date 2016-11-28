@@ -16,7 +16,6 @@ import timber.log.Timber;
 import tv.bokch.R;
 import tv.bokch.data.Book;
 import tv.bokch.data.History;
-import tv.bokch.data.User;
 import tv.bokch.util.ApiRequest;
 import tv.bokch.widget.StatableListView;
 import tv.bokch.widget.BookListView;

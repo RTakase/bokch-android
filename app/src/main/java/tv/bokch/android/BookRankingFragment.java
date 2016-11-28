@@ -10,10 +10,8 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 import tv.bokch.data.Book;
-import tv.bokch.data.User;
 import tv.bokch.widget.FullBookRankingListView;
-import tv.bokch.widget.FullUserRankingListView;
-import tv.bokch.widget.RecyclerView;
+import tv.bokch.widget.BaseListView;
 import tv.bokch.widget.StatableListView;
 
 public class BookRankingFragment extends Fragment {
@@ -39,7 +37,7 @@ public class BookRankingFragment extends Fragment {
 		ArrayList<Book> data = arguments.getParcelableArrayList("data");
 		
 		StatableListView<Book> content = new StatableListView<>(getContext());
-		RecyclerView<Book> listview = new FullBookRankingListView(getContext());
+		BaseListView<Book> listview = new FullBookRankingListView(getContext());
 		content.addListView(listview);
 		content.onData(data);
 		return content;

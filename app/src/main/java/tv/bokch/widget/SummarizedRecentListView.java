@@ -27,31 +27,31 @@ public class SummarizedRecentListView extends RecentListView {
 
 	@Override
 	protected int getLayoutResId() {
-		return R.layout.row_summarized_recent;
+		return R.layout.cell_summarized_recent;
 	}
 
 	@Override
-	protected Row createRow(View view) {
-		return new RecentRow(view);
+	protected Cell createCell(View view) {
+		return new RecentCell(view);
 	}
 
 	@Override
 	protected int getFooterResId() {
-		return R.layout.row_dummy;
+		return R.layout.cell_dummy;
 	}
 
 	@Override
-	protected Row createFooterRow(View view) {
-		return new DummyRow(view);
+	protected Cell createFooter(View view) {
+		return new DummyCell(view);
 	}
 
 	@Override
 	protected int getHeaderResId() {
-		return R.layout.row_dummy;
+		return R.layout.cell_dummy;
 	}
 
 	@Override
-	protected Row createHeaderRow(View view) {
-		return new DummyRow(view);
+	protected Cell createHeader(View view) {
+		return new DummyCell(view);
 	}
 }

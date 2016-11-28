@@ -29,39 +29,39 @@ public class SummarizedUserRankingListView extends RankingListView<User> {
 
 	@Override
 	protected int getLayoutResId() {
-		return R.layout.row_summarized_ranking_user;
+		return R.layout.cell_summarized_ranking_user;
 	}
 
 	@Override
-	protected RankingRow createRow(View view) {
-		return new SummarizedUserRankingRow(view);
+	protected RankingCell createCell(View view) {
+		return new SummarizedUserRankingCell(view);
 	}
 
 	@Override
 	protected int getFooterResId() {
-		return R.layout.row_dummy;
+		return R.layout.cell_dummy;
 	}
 
 	@Override
-	protected Row createFooterRow(View view) {
-		return new DummyRow(view);
+	protected Cell createFooter(View view) {
+		return new DummyCell(view);
 	}
 
 	@Override
 	protected int getHeaderResId() {
-		return R.layout.row_dummy;
+		return R.layout.cell_dummy;
 	}
 
 	@Override
-	protected Row createHeaderRow(View view) {
-		return new DummyRow(view);
+	protected Cell createHeader(View view) {
+		return new DummyCell(view);
 	}
 
-	protected class SummarizedUserRankingRow extends RankingRow {
+	protected class SummarizedUserRankingCell extends RankingCell {
 		private TextView mName;
 		private NetworkImageView mUserIcon;
 		
-		public SummarizedUserRankingRow(View view) {
+		public SummarizedUserRankingCell(View view) {
 			super(view);
 			mName = (TextView)view.findViewById(R.id.name);
 			mUserIcon = (NetworkImageView)view.findViewById(R.id.user_icon);

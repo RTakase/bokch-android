@@ -29,39 +29,39 @@ public class SummarizedBookRankingListView extends RankingListView<Book> {
 
 	@Override
 	protected int getLayoutResId() {
-		return R.layout.row_summarized_ranking_book;
+		return R.layout.cell_summarized_ranking_book;
 	}
 
 	@Override
-	protected RankingRow createRow(View view) {
-		return new SummarizedBookRankingRow(view);
+	protected RankingCell createCell(View view) {
+		return new SummarizedBookRankingCell(view);
 	}
 
 	@Override
 	protected int getFooterResId() {
-		return R.layout.row_dummy;
+		return R.layout.cell_dummy;
 	}
 
 	@Override
-	protected Row createFooterRow(View view) {
-		return new DummyRow(view);
+	protected Cell createFooter(View view) {
+		return new DummyCell(view);
 	}
 
 	@Override
 	protected int getHeaderResId() {
-		return R.layout.row_dummy;
+		return R.layout.cell_dummy;
 	}
 
 	@Override
-	protected Row createHeaderRow(View view) {
-		return new DummyRow(view);
+	protected Cell createHeader(View view) {
+		return new DummyCell(view);
 	}
 
-	protected class SummarizedBookRankingRow extends RankingRow {
+	protected class SummarizedBookRankingCell extends RankingCell {
 		private TextView mTitle;
 		private NetworkImageView mJacket;
 		
-		public SummarizedBookRankingRow(View view) {
+		public SummarizedBookRankingCell(View view) {
 			super(view);
 			mTitle = (TextView)view.findViewById(R.id.title);
 			mJacket = (NetworkImageView)view.findViewById(R.id.jacket);

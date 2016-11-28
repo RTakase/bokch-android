@@ -24,7 +24,7 @@ import tv.bokch.data.Book;
 import tv.bokch.data.History;
 import tv.bokch.data.User;
 import tv.bokch.util.ApiRequest;
-import tv.bokch.widget.RecyclerView;
+import tv.bokch.widget.BaseListView;
 import tv.bokch.widget.StatableListView;
 import tv.bokch.widget.SummarizedBookRankingListView;
 import tv.bokch.widget.SummarizedUserRankingListView;
@@ -67,7 +67,7 @@ public class HomeActivity extends FabActivity {
 
 	private void initViews() {
 		View partial;
-		RecyclerView listview;
+		BaseListView listview;
 		
 		partial = findViewById(R.id.recent);
 		initHeader(partial, R.string.recent_title, mRecentMoreClickListener);

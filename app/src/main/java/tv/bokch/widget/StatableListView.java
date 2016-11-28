@@ -22,7 +22,7 @@ public class StatableListView<Data> extends FrameLayout {
 
 	private ProgressBar mProgress;
 	private View mEmptyView;
-	private RecyclerView<Data> mListView;
+	private BaseListView<Data> mListView;
 
 	public StatableListView(Context context) {
 		super(context);
@@ -49,7 +49,7 @@ public class StatableListView<Data> extends FrameLayout {
 		addView(mProgress, createLayoutParams());
 	}
 
-	public void addListView(RecyclerView<Data> listview) {
+	public void addListView(BaseListView<Data> listview) {
 		mListView = listview;
 		mListView.setVisibility(INVISIBLE);
 		addView(mListView, createLayoutParams());

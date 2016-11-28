@@ -9,7 +9,7 @@ import android.widget.TextView;
 import tv.bokch.R;
 import tv.bokch.data.Book;
 
-public class BookListView extends RecyclerView<Book> {
+public class BookListView extends BaseListView<Book> {
 	
 	public BookListView(Context context) {
 		super(context);
@@ -30,42 +30,42 @@ public class BookListView extends RecyclerView<Book> {
 	
 	@Override
 	protected int getLayoutResId() {
-		return R.layout.row_book;
+		return R.layout.cell_book;
 	}
 	
 	@Override
-	protected Row createRow(View view) {
-		return new BookRow(view);
+	protected Cell createCell(View view) {
+		return new BookCell(view);
 	}
 	
 	@Override
 	protected int getFooterResId() {
-		return R.layout.row_footer;
+		return R.layout.cell_footer;
 	}
 	
 	@Override
-	protected Row createFooterRow(View view) {
-		return new DummyRow(view);
+	protected Cell createFooter(View view) {
+		return new DummyCell(view);
 	}
 	
 	@Override
 	protected int getHeaderResId() {
-		return R.layout.row_header;
+		return R.layout.cell_header;
 	}
 	
 	@Override
-	protected Row createHeaderRow(View view) {
-		return new DummyRow(view);
+	protected Cell createHeader(View view) {
+		return new DummyCell(view);
 	}
 	
-	protected class BookRow extends Row {
+	protected class BookCell extends Cell {
 		private NetworkImageView mJacket;
 		private TextView mTitle;
 		private TextView mAuthor;
 		private TextView mRatingAverage;
 		private TextView mTag;
 
-		public BookRow(View view) {
+		public BookCell(View view) {
 			super(view);
 			mJacket = (NetworkImageView)view.findViewById(R.id.jacket);
 			mTitle = (TextView)view.findViewById(R.id.title);
