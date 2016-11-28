@@ -101,7 +101,7 @@ public class BookActivity extends TabActivity {
 		case INDEX_REVIEW:
 			return "reviews";
 		case INDEX_USERS:
-			return "users";
+			return "histories";
 		default:
 			return null;
 		}
