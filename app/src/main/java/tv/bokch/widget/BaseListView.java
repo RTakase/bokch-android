@@ -2,7 +2,6 @@ package tv.bokch.widget;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Parcelable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -12,6 +11,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 import timber.log.Timber;
+import tv.bokch.R;
 import tv.bokch.android.BookActivity;
 import tv.bokch.data.Book;
 import tv.bokch.data.User;
@@ -90,12 +90,23 @@ public abstract class BaseListView<Data> extends android.support.v7.widget.Recyc
 		return mDataSet.size() - 2; //ダミーデータの分だけ引く
 	}
 
+	protected int getFooterResId() {
+		return R.layout.cell_dummy;
+	}
+	protected int getHeaderResId() {
+		return R.layout.cell_dummy;
+	}
+
+	protected Cell createHeader(View view) {
+		return new DummyCell(view);
+	}
+
+	protected Cell createFooter(View view) {
+		return new DummyCell(view);
+	}
+
 	protected abstract int getLayoutResId();
-	protected abstract int getFooterResId();
-	protected abstract int getHeaderResId();
 	protected abstract Cell createCell(View view);
-	protected abstract Cell createHeader(View view);
-	protected abstract Cell createFooter(View view);
 
 	protected BaseListView.Adapter<Cell> mAdapter = new BaseListView.Adapter<Cell>() {
 
@@ -162,7 +173,7 @@ public abstract class BaseListView<Data> extends android.support.v7.widget.Recyc
 		}
 	}
 
-	protected class DummyCell extends Cell {
+	private class DummyCell extends Cell {
 		public DummyCell(View view) {
 			super(view);
 		}

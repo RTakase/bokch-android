@@ -58,12 +58,14 @@ public class CameraDialog extends BaseDialog {
 
 	@Override
 	protected int getWidth(int orientation) {
-		return SIZE_DEFAULT;
+		int resId = orientation == Configuration.ORIENTATION_PORTRAIT ? R.dimen.dialog_width_portrait : R.dimen.dialog_height_landscape;
+		return getResources().getDimensionPixelSize(resId);
 	}
 
 	@Override
 	protected int getHeight(int orientation) {
-		return getResources().getDimensionPixelSize(R.dimen.dialog_width_portrait);
+		int resId = orientation == Configuration.ORIENTATION_PORTRAIT ? R.dimen.dialog_width_portrait : R.dimen.dialog_height_landscape;
+		return getResources().getDimensionPixelSize(resId);
 	}
 
 	private BarcodeCallback mBarcodeCallback = new BarcodeCallback() {

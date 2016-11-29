@@ -37,26 +37,6 @@ public class SummarizedUserRankingListView extends RankingListView<User> {
 		return new SummarizedUserRankingCell(view);
 	}
 
-	@Override
-	protected int getFooterResId() {
-		return R.layout.cell_dummy;
-	}
-
-	@Override
-	protected Cell createFooter(View view) {
-		return new DummyCell(view);
-	}
-
-	@Override
-	protected int getHeaderResId() {
-		return R.layout.cell_dummy;
-	}
-
-	@Override
-	protected Cell createHeader(View view) {
-		return new DummyCell(view);
-	}
-
 	protected class SummarizedUserRankingCell extends RankingCell {
 		private TextView mName;
 		private NetworkImageView mUserIcon;

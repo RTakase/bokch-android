@@ -42,20 +42,10 @@ public class BookListView extends BaseListView<Book> {
 	protected int getFooterResId() {
 		return R.layout.cell_footer;
 	}
-	
-	@Override
-	protected Cell createFooter(View view) {
-		return new DummyCell(view);
-	}
-	
+
 	@Override
 	protected int getHeaderResId() {
 		return R.layout.cell_header;
-	}
-	
-	@Override
-	protected Cell createHeader(View view) {
-		return new DummyCell(view);
 	}
 	
 	protected class BookCell extends Cell {

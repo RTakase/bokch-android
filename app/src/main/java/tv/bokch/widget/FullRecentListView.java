@@ -47,20 +47,10 @@ public class FullRecentListView extends RecentListView {
 	}
 
 	@Override
-	protected Cell createFooter(View view) {
-		return new DummyCell(view);
-	}
-	
-	@Override
 	protected int getHeaderResId() {
 		return R.layout.cell_header;
 	}
-	
-	@Override
-	protected Cell createHeader(View view) {
-		return new DummyCell(view);
-	}
-	
+
 	protected class FullRecentCell extends RecentCell {
 		private TextView mComment;
 		private TextView mRating;

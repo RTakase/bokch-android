@@ -43,21 +43,6 @@ public class ReviewListView extends BaseListView<Review> {
 	protected int getHeaderResId() {
 		return R.layout.cell_header;
 	}
-
-	@Override
-	protected Cell createHeader(View view) {
-		return new DummyCell(view);
-	}
-	
-	@Override
-	protected int getFooterResId() {
-		return R.layout.cell_dummy;
-	}
-
-	@Override
-	protected Cell createFooter(View view) {
-		return new DummyCell(view);
-	}
 	
 	protected class ReviewCell extends Cell {
 		private CircleNetworkImageView mUserIcon;
