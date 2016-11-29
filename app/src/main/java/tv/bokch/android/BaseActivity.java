@@ -8,21 +8,13 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
-
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 import timber.log.Timber;
 import tv.bokch.R;
 import tv.bokch.data.User;
-import tv.bokch.util.ApiRequest;
 import tv.bokch.util.Display;
 import tv.bokch.util.ViewServer;
 
@@ -106,6 +98,15 @@ public class BaseActivity extends AppCompatActivity {
 		ActionBar actionBar = getSupportActionBar();
 		if (actionBar != null) {
 			actionBar.setTitle(title);
+		}
+	}
+
+	protected void setActionBarImage(int resId) {
+		ActionBar actionBar = getSupportActionBar();
+		if (actionBar != null) {
+			actionBar.setDisplayShowTitleEnabled(false);
+			actionBar.setLogo(resId);
+			actionBar.setDisplayUseLogoEnabled(true);
 		}
 	}
 

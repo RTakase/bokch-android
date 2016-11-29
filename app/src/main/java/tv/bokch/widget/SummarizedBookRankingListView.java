@@ -39,25 +39,16 @@ public class SummarizedBookRankingListView extends RankingListView<Book> {
 	}
 
 	protected class SummarizedBookRankingCell extends RankingCell {
-		private TextView mTitle;
-		private NetworkImageView mJacket;
-		
+		protected BookView.BookViewHolder mBook;
+
 		public SummarizedBookRankingCell(View view) {
 			super(view);
-			mTitle = (TextView)view.findViewById(R.id.title);
-			mJacket = (NetworkImageView)view.findViewById(R.id.jacket);
+			mBook = new BookView.BookViewHolder(view);
 		}
 		
 		public void bindView(Book book, int position) {
 			super.bindView(book, position);
-			mTitle.setText(book.title);
-			ViewGroup.LayoutParams params = mJacket.getLayoutParams();
-			if (params != null) {
-				params.width = mDisplay.toPixels(book.largeImageWidth);
-				params.height = mDisplay.toPixels(book.largeImageHeight);
-				mJacket.setLayoutParams(params);
-			}
-			mJacket.setImageUrl(book.largeImageUrl);
+			mBook.bindView(book);
 		}
 	}
 }

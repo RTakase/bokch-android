@@ -28,28 +28,18 @@ public abstract class RecentListView extends BaseListView<History> {
 	}
 
 	protected class RecentCell extends Cell {
-		private TextView mTitle;
+		protected BookView.BookViewHolder mBook;
 		private CircleNetworkImageView mUserIcon;
-		private NetworkImageView mJacket;
 
 		public RecentCell(View view) {
 			super(view);
-			mTitle = (TextView)view.findViewById(R.id.title);
-			mJacket = (NetworkImageView)view.findViewById(R.id.jacket);
+			mBook = new BookView.BookViewHolder(view);
 			mUserIcon = (CircleNetworkImageView)view.findViewById(R.id.user_icon);
 			mUserIcon.setDefaultImageResId(R.drawable.mysteryman);
 		}
 
 		public void bindView(History history, int position) {
 			super.bindView(history, position);
-			mTitle.setText(history.book.title);
-			ViewGroup.LayoutParams params = mJacket.getLayoutParams();
-			if (params != null) {
-				params.width = history.book.largeImageWidth;
-				params.height = history.book.largeImageHeight;
-				mJacket.setLayoutParams(params);
-			}
-			mJacket.setImageUrl(history.book.largeImageUrl);
 			mUserIcon.setImageUrl(history.user.iconUrl);
 		}
 	}

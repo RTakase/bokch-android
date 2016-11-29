@@ -58,6 +58,11 @@ public abstract class TabActivity extends BaseActivity {
 		loadTabData();
 	}
 
+	@Override
+	protected void onStop() {
+		super.onStop();
+	}
+
 	protected void loadTabData() {
 		for (int i = 0; i < mTabCount; i++) {
 			if (!mLoaded[i]) {

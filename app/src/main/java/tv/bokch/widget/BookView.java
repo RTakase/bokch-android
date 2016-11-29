@@ -1,6 +1,8 @@
 package tv.bokch.widget;
 
 import android.content.Context;
+import android.speech.tts.TextToSpeech;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +42,7 @@ public class BookView extends RelativeLayout {
 		}
 	}
 
-	protected class BookViewHolder {
+	public static class BookViewHolder {
 		public NetworkImageView jacket;
 		public TextView title;
 		public TextView author;
@@ -59,19 +61,35 @@ public class BookView extends RelativeLayout {
 		}
 
 		public void bindView(Book book) {
-			ViewGroup.LayoutParams params = jacket.getLayoutParams();
-			if (params != null) {
-				params.width = Display.dpToPx(getContext(), book.largeImageWidth);
-				params.height = Display.dpToPx(getContext(), book.largeImageHeight);
-				jacket.setLayoutParams(params);
+			if (jacket != null && !TextUtils.isEmpty(book.largeImageUrl)) {
+				ViewGroup.LayoutParams params = jacket.getLayoutParams();
+				if (params != null) {
+					params.width = book.largeImageWidth;
+					params.height = book.largeImageHeight;
+					jacket.setLayoutParams(params);
+				}
+				jacket.setImageUrl(book.largeImageUrl);
 			}
-			jacket.setImageUrl(book.largeImageUrl);
 
-			title.setText(book.title);
-			author.setText(book.author);
-			publisher.setText(book.publisher);
-			ratingAverage.setRating(book.ratingAverage * 100);
-			tag.setText(book.tag);
+			if (title != null && !TextUtils.isEmpty(book.title)) {
+				title.setText(book.title);
+			}
+
+			if (author != null && !TextUtils.isEmpty(book.author)) {
+				author.setText(book.author);
+			}
+
+			if (publisher != null && !TextUtils.isEmpty(book.publisher)) {
+				publisher.setText(book.publisher);
+			}
+
+			if (ratingAverage != null && book.ratingAverage > 0) {
+				ratingAverage.setRating(book.ratingAverage * 100);
+			}
+
+			if (tag != null && !TextUtils.isEmpty(book.tag)) {
+				tag.setText(book.tag);
+			}
 		}
 	}
 }

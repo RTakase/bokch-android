@@ -11,19 +11,16 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
+import timber.log.Timber;
 import tv.bokch.widget.BaseListView;
 import tv.bokch.widget.StatableListView;
 
 public abstract class BaseFragment<Data extends Parcelable> extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		Bundle arguments = getArguments();
-		ArrayList<Data> data = arguments.getParcelableArrayList("data");
-		
 		StatableListView<Data> content = new StatableListView<>(getContext());
 		BaseListView<Data> listview = createListView(getContext());
 		content.addListView(listview);
-		content.onData(data);
 		return content;
 	}
 

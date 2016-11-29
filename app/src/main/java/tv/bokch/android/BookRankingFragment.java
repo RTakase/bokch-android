@@ -3,6 +3,7 @@ package tv.bokch.android;
 import android.content.Context;
 import android.os.Bundle;
 
+import timber.log.Timber;
 import tv.bokch.data.Book;
 import tv.bokch.widget.FullBookRankingListView;
 import tv.bokch.widget.BaseListView;

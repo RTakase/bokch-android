@@ -54,51 +54,33 @@ public class FullBookRankingListView extends RankingListView<Book> {
 
 	
 	protected class FullBookRankingCell extends RankingCell {
-		private NetworkImageView mJacket;
-		private TextView mTitle;
-		private RatingBar mRatingAverage;
+		protected BookView.BookViewHolder mBook;
 		private TextView mScore;
-		private TextView mTag;
 		private Button mMoreButton;
 		
 		public FullBookRankingCell(View view) {
 			super(view);
-			mJacket = (NetworkImageView)view.findViewById(R.id.jacket);
-			mJacket.setDefaultImageResId(R.drawable.mysteryman);
-			mTitle = (TextView)view.findViewById(R.id.title);
-			mRatingAverage = (RatingBar)view.findViewById(R.id.rating_average);
-			mTag = (TextView)view.findViewById(R.id.tag);
+			mBook = new BookView.BookViewHolder(view);
 			mScore = (TextView)view.findViewById(R.id.score);
 			mMoreButton = (Button)view.findViewById(R.id.more_btn);
 		}
 		
 		public void bindView(Book book, int position) {
 			super.bindView(book, position);
-			mTitle.setText(book.title);
-			ViewGroup.LayoutParams params = mJacket.getLayoutParams();
-			if (params != null) {
-				params.width = mDisplay.toPixels(book.largeImageWidth);
-				params.height = mDisplay.toPixels(book.largeImageHeight);
-				mJacket.setLayoutParams(params);
-			}
-			mJacket.setImageUrl(book.largeImageUrl);			
-			if (TextUtils.isEmpty(book.tag)) {
-				mTag.setVisibility(View.GONE);
-			} else {
-				mTag.setText(book.tag);
-			}
-			if (book.score <= 0) {
-				mScore.setVisibility(View.GONE);
-			} else {
+			mBook.bindView(book);
+
+			if (mScore != null && book.score > 0) {
 				mScore.setText(String.format("スコア：%d", book.score));
 			}
-			mRatingAverage.setRating(book.ratingAverage * 100);
-			mMoreButton.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					Timber.d("tks, hoge");
-				}
-			});
+
+			if (mMoreButton != null) {
+				mMoreButton.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						Timber.d("tks, hoge");
+					}
+				});
+			}
 		}
 	}
 }
