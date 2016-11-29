@@ -34,7 +34,7 @@
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="#B0ffffff"
+        android:textColor="@color/title_plate_text"
         android:textSize="10sp"
         android:maxLines="2"
         android:gravity="center_vertical"

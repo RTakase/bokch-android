@@ -25,9 +25,17 @@
     <string name="loging_in">ログインしています</string>
     <string name="failed_login">ログインできませんでした...</string>
     <string name="successed_login">ログインに成功しました！</string>
-    <string name="add_read">読んだことある！</string>
+    <string name="label_submit_review">レビューを書く</string>
     <string name="action_amazon">アマゾンで開く</string>
     <string name="title_reviews">レビュー一覧</string>
     <string name="title_read_users">読んだ人一覧</string>
-
+    <string name="failed_load_isbn">ISBNコードを読み取れませんでした</string>
+    <string name="label_review">レビュー</string>
+    <string name="prompt_review">レビューを書こう！</string>
+    <string name="submit">送信</string>
+    <string name="confirmation">確認</string>
+    <string name="confirm_editing">レビューを編集中です。破棄して戻りますか？</string>
+    <string name="cancel">キャンセル</string>
+    <string name="message_post_review">レビューを投稿しました！</string>
+    <string name="error">エラー</string>
 </resources>

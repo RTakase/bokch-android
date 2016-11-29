@@ -16,19 +16,25 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import timber.log.Timber;
+import tv.bokch.App;
 import tv.bokch.R;
 import tv.bokch.data.Book;
+import tv.bokch.data.History;
 import tv.bokch.data.Review;
 import tv.bokch.data.User;
 import tv.bokch.util.ApiRequest;
 import tv.bokch.widget.BookView;
 
 public class BookActivity extends TabActivity {
-	
+
+	public static final int REQUEST_REVIEW_EDIT = 1;
 	public static final int INDEX_REVIEW = 0;
 	public static final int INDEX_USERS = 1;
 
 	private Book mBook;
+	private Review mReview;
+	private History mHistory;
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,6 +47,13 @@ public class BookActivity extends TabActivity {
 			finish();
 			return;
 		}
+
+		mReview = intent.getParcelableExtra("review");
+		mHistory = intent.getParcelableExtra("history");
+		
+		Timber.d("tks, review id is %d", (mReview == null ? -1 : mReview.id));
+		Timber.d("tks, history id is %d", (mHistory == null ? -1 : mHistory.id));		
+
 		initialize();
 	}
 
@@ -135,6 +148,19 @@ public class BookActivity extends TabActivity {
 		}
 	}
 
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		switch(requestCode) {
+		case REQUEST_REVIEW_EDIT:
+			if (resultCode == RESULT_OK) {
+				mReview = data.getParcelableExtra("review");
+				Toast.makeText(BookActivity.this, getString(R.string.message_post_review), Toast.LENGTH_SHORT).show();
+			} else {
+				Toast.makeText(BookActivity.this, getString(R.string.failed_load), Toast.LENGTH_SHORT).show();
+			}
+		}
+		super.onActivityResult(requestCode, resultCode, data);
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -156,7 +182,14 @@ public class BookActivity extends TabActivity {
 	private View.OnClickListener mAddClickListener = new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			Toast.makeText(BookActivity.this, "登録しちゃいましょう。", Toast.LENGTH_SHORT).show();
+			addHistory();
 		}
 	};
+
+	private void addHistory() {
+		App app = (App)getApplication();
+		ReviewEditDialog dialog = ReviewEditDialog.newInstance(mBook, app.getMyUser(), mReview, mHistory);
+		dialog.setTargetFragment(null, REQUEST_REVIEW_EDIT);
+		dialog.show(getFragmentManager(), "REVIEW_EDIT_DIALOG");
+	}
 }

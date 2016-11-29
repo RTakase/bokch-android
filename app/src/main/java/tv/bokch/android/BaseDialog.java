@@ -1,6 +1,7 @@
 package tv.bokch.android;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.PendingIntent;
@@ -87,6 +88,46 @@ public class BaseDialog extends DialogFragment {
 	public void onCancel(DialogInterface dialog) {
 		//キャンセルされると呼び出し元のactivityResultが呼ばれないため、
 		//キャンセル動作はdismissに変更する
-		dismiss();
+		//dismiss();
+	}
+
+	protected void confirmDismiss() {
+		DialogInterface.OnClickListener ok = new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dismiss();
+			}
+		};
+		showConfirmDialog(getString(R.string.confirm_editing), ok);
+	}
+
+	protected void showConfirmDialog(CharSequence message, DialogInterface.OnClickListener okClick) {
+		showConfirmDialog(message, okClick, null);
+	}
+
+	protected void showConfirmDialog(CharSequence message, DialogInterface.OnClickListener okClick, DialogInterface.OnClickListener cancelClick) {
+		showConfirmDialog(message, okClick, cancelClick, null);
+	}
+
+	protected void showConfirmDialog(CharSequence message, DialogInterface.OnClickListener okClick, DialogInterface.OnClickListener cancelClick, DialogInterface.OnCancelListener cancel) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+		builder.setTitle(getString(R.string.confirmation));
+		builder.setMessage(message);
+		builder.setPositiveButton("OK", okClick);
+		builder.setNegativeButton(R.string.cancel, cancelClick);
+		builder.setOnCancelListener(cancel);
+		builder.show();
+	}
+
+	protected void showAlertDialog(CharSequence title, CharSequence message) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+		if (title != null) {
+			builder.setTitle(title);
+		}
+		if (message != null) {
+			builder.setMessage(message);
+		}
+		builder.setPositiveButton("OK", null);
+		builder.show();
 	}
 }

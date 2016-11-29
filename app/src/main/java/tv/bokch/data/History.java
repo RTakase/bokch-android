@@ -7,13 +7,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class History extends Data implements Parcelable {
-	public int id;
+	public long id;
 	public long created;
 	public User user;
 	public Book book;
 	public Review review;
 
 	public History(JSONObject obj) throws JSONException {
+		id = obj.optLong("id");
 		user = new User(obj.optJSONObject("user"));
 		book = new Book(obj.optJSONObject("book"));
 		review = new Review(obj.optJSONObject("review"));
@@ -21,7 +22,7 @@ public class History extends Data implements Parcelable {
 	}
 	
 	public History(Parcel in) {
-		id = in.readInt();
+		id = in.readLong();
 		created = in.readLong();
 		user = in.readParcelable(User.class.getClassLoader());
 		book = in.readParcelable(Book.class.getClassLoader());
@@ -30,7 +31,7 @@ public class History extends Data implements Parcelable {
 	
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
-		dest.writeInt(id);
+		dest.writeLong(id);
 		dest.writeLong(created);
 		dest.writeParcelable(user, flags);
 		dest.writeParcelable(book, flags);

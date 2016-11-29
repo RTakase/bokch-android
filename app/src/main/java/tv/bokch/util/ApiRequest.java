@@ -1,25 +1,35 @@
 package tv.bokch.util;
 
+import android.net.Uri;
 import android.text.TextUtils;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.FormBody;
 import okhttp3.HttpUrl;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+import timber.log.Timber;
+import tv.bokch.data.Review;
 
 public class ApiRequest {
+
+	public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
 	public static String API_HOME = "http://52.198.155.49/";
 	
 	public static String API_RECENT = "histories";
 	public static String API_REVIEW = "reviews";
+	public static String API_BOOK = "books/%s";
 	public static String API_RANKING_USER_WEEKLY = "ranking/user/weekly";
 	public static String API_RANKING_BOOK_WEEKLY = "ranking/book/weekly";
 	public static String API_RANKING_USER_TOTAL = "ranking/user/total";
@@ -44,6 +54,15 @@ public class ApiRequest {
 
 	private void getJsonObject(HttpUrl url, ApiListener<JSONObject> listener) {
 		Request request = newRequestBuilder(url).get().build();
+		startJsonObjectApiDeliver(request, listener);
+	}
+
+	private void postJsonObject(HttpUrl url, RequestBody body, ApiListener<JSONObject> listener) {
+		if (body == null) {
+			FormBody.Builder formBodyBuilder = new FormBody.Builder();
+			body = formBodyBuilder.build();
+		}
+		Request request = newRequestBuilder(url).post(body).build();
 		startJsonObjectApiDeliver(request, listener);
 	}
 
@@ -101,7 +120,25 @@ public class ApiRequest {
 		}
 		getJsonObject(url.build(), listener);
 	}
-	
+
+	public void post_history(String bookId, String userId, int rating, String comment, ApiListener<JSONObject> listener) throws JSONException {
+		HttpUrl.Builder url = getUrlBuilder(API_RECENT);
+
+		JSONObject review = new JSONObject();
+		review.put("book_id", bookId);
+		review.put("user_id", userId);
+		review.put("rating", rating);
+		review.put("comment", comment);
+		
+		JSONObject json = new JSONObject();
+		json.put("user_id", userId);
+		json.put("book_id", bookId);
+		json.put("review", review);
+
+		RequestBody body = RequestBody.create(JSON, json.toString());
+		postJsonObject(url.build(), body, new PostApiListener(listener));
+	}
+
 	public void ranking_user_weekly(ApiListener<JSONObject> listener) {
 		HttpUrl.Builder url = getUrlBuilder(API_RANKING_USER_WEEKLY);
 		getJsonObject(url.build(), listener);
@@ -121,6 +158,12 @@ public class ApiRequest {
 		HttpUrl.Builder url = getUrlBuilder(API_RANKING_BOOK_TOTAL);
 		getJsonObject(url.build(), listener);
 	}
+
+	public void book(String bookId, String userId, ApiListener<JSONObject> listener) {
+		HttpUrl.Builder url = getUrlBuilder(String.format(API_BOOK, bookId));
+		url.addQueryParameter("user_id", userId);
+		getJsonObject(url.build(), listener);
+	}
 	
 	public interface ApiListener<T> {
 		// 通信がステータスコード200系で成功した場合に呼び出される
@@ -128,6 +171,26 @@ public class ApiRequest {
 
 		// 通信がステータスコード200系でない場合に呼び出される
 		void onError(ApiError error);
+	}
+
+	protected class PostApiListener implements ApiListener<JSONObject> {
+		private ApiListener<JSONObject> mListener;
+		public PostApiListener(ApiListener<JSONObject> listener) {
+			mListener = listener;
+		}
+		@Override
+		public void onSuccess(JSONObject response) {
+			if (mListener != null) {
+				mListener.onSuccess(response);
+			}
+		}
+
+		@Override
+		public void onError(ApiError error) {
+			if (mListener != null) {
+				mListener.onError(error);
+			}
+		}
 	}
 
 	public static class ApiError extends IOException {
@@ -155,6 +218,7 @@ public class ApiRequest {
 			}
 		}
 	}
+
 	public static class JSONObjectApiDeliver implements Callback {
 
 		ApiListener<JSONObject> mListener;

@@ -63,7 +63,6 @@ public class ReviewListView extends BaseListView<Review> {
 			super.bindView(review, position);
 			mUserIcon.setImageUrl(review.user.iconUrl);
 			mUserName.setText(review.user.name);
-			Timber.d("tks, name = %s", review.user.name);
 			mRating.setRating(review.rating);
 			mComment.setText(review.comment);
 		}

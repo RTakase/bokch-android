@@ -7,6 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Review extends Data implements Parcelable {
+	public Long id;
 	public Book book;
 	public User user;
 	public String comment;
@@ -14,6 +15,7 @@ public class Review extends Data implements Parcelable {
 	public long created;
 	
 	public Review(JSONObject obj) throws JSONException {
+		id = obj.optLong("id");
 		user = new User(obj.optJSONObject("user"));
 		book = new Book(obj.optJSONObject("book"));
 		comment = obj.optString("comment");
@@ -22,6 +24,7 @@ public class Review extends Data implements Parcelable {
 	}
 
 	public Review(Parcel in) {
+		id = in.readLong();
 		book = in.readParcelable(Book.class.getClassLoader());
 		user = in.readParcelable(User.class.getClassLoader());
 		comment = in.readString();
@@ -31,6 +34,7 @@ public class Review extends Data implements Parcelable {
 
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeLong(id);
 		dest.writeParcelable(book, flags);
 		dest.writeParcelable(user, flags);
 		dest.writeString(comment);

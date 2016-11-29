@@ -1,7 +1,6 @@
 package tv.bokch.widget;
 
 import android.content.Context;
-import android.speech.tts.TextToSpeech;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
@@ -12,7 +11,6 @@ import android.widget.TextView;
 
 import tv.bokch.R;
 import tv.bokch.data.Book;
-import tv.bokch.util.Display;
 
 public class BookView extends RelativeLayout {
 	private BookViewHolder mHolder;
@@ -49,11 +47,15 @@ public class BookView extends RelativeLayout {
 		public TextView publisher;
 		public RatingBar ratingAverage;
 		public TextView tag;
+		public int jacketWidth = -1;
+		public int jacketHeight = -1;
 
 		public BookViewHolder(View view) {
 			jacket = (NetworkImageView)view.findViewById(R.id.jacket);
-			jacket.setDefaultImageResId(R.drawable.mysteryman);
 			title = (TextView)view.findViewById(R.id.title);
+			if (title == null) {
+				title = (TextView)view.findViewById(R.id.book_title);
+			}
 			author = (TextView)view.findViewById(R.id.author);
 			publisher = (TextView)view.findViewById(R.id.publisher);
 			ratingAverage = (RatingBar)view.findViewById(R.id.rating_average);
@@ -62,10 +64,13 @@ public class BookView extends RelativeLayout {
 
 		public void bindView(Book book) {
 			if (jacket != null && !TextUtils.isEmpty(book.largeImageUrl)) {
+				jacket.setDefaultImageResId(R.drawable.mysteryman);
 				ViewGroup.LayoutParams params = jacket.getLayoutParams();
 				if (params != null) {
-					params.width = book.largeImageWidth;
-					params.height = book.largeImageHeight;
+					jacketWidth = book.largeImageWidth;
+					jacketHeight = book.largeImageHeight;
+					params.width = jacketWidth;
+					params.height = jacketHeight;
 					jacket.setLayoutParams(params);
 				}
 				jacket.setImageUrl(book.largeImageUrl);

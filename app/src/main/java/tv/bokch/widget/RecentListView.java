@@ -40,6 +40,7 @@ public abstract class RecentListView extends BaseListView<History> {
 
 		public void bindView(History history, int position) {
 			super.bindView(history, position);
+			mBook.bindView(history.book);
 			mUserIcon.setImageUrl(history.user.iconUrl);
 		}
 	}

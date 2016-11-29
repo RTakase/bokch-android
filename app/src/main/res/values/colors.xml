@@ -5,4 +5,5 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="activity_background">#eeeeee</color>
+    <color name="title_plate_text">#B0cccccc</color>
 </resources>
