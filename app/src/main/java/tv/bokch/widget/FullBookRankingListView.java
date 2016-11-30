@@ -12,6 +12,7 @@ import android.widget.TextView;
 import timber.log.Timber;
 import tv.bokch.R;
 import tv.bokch.data.Book;
+import tv.bokch.data.BookViewHolder;
 
 public class FullBookRankingListView extends RankingListView<Book> {
 	
@@ -54,13 +55,13 @@ public class FullBookRankingListView extends RankingListView<Book> {
 
 	
 	protected class FullBookRankingCell extends RankingCell {
-		protected BookView.BookViewHolder mBook;
+		protected BookViewHolder mBook;
 		private TextView mScore;
 		private Button mMoreButton;
 		
 		public FullBookRankingCell(View view) {
 			super(view);
-			mBook = new BookView.BookViewHolder(view);
+			mBook = new BookViewHolder(view);
 			mScore = (TextView)view.findViewById(R.id.score);
 			mMoreButton = (Button)view.findViewById(R.id.more_btn);
 		}

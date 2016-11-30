@@ -53,6 +53,13 @@ public abstract class TabActivity extends BaseActivity {
 	}
 
 	@Override
+	protected void onStart() {
+		Timber.d("tks, on start.");
+		mLoaded = new boolean[mTabCount];
+		super.onStart();
+	}
+
+	@Override
 	protected void onResume() {
 		Timber.d("tks, tab act on resume.");
 		super.onResume();

@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import tv.bokch.R;
 import tv.bokch.data.User;
+import tv.bokch.data.UserViewHolder;
 
 public class SummarizedUserRankingListView extends RankingListView<User> {
 
@@ -38,11 +39,11 @@ public class SummarizedUserRankingListView extends RankingListView<User> {
 	}
 
 	protected class SummarizedUserRankingCell extends RankingCell {
-		private UserView.UserViewHolder mUser;
+		private UserViewHolder mUser;
 
 		public SummarizedUserRankingCell(View view) {
 			super(view);
-			mUser = new UserView.UserViewHolder(view);
+			mUser = new UserViewHolder(view);
 		}
 		
 		public void bindView(User user, int position) {

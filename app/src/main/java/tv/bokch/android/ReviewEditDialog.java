@@ -19,6 +19,7 @@ import java.util.Iterator;
 import timber.log.Timber;
 import tv.bokch.R;
 import tv.bokch.data.Book;
+import tv.bokch.data.BookViewHolder;
 import tv.bokch.data.History;
 import tv.bokch.data.Review;
 import tv.bokch.data.User;
@@ -27,7 +28,7 @@ import tv.bokch.widget.BookView;
 
 public class ReviewEditDialog extends BaseDialog {
 
-	private BookView.BookViewHolder mBookHolder;
+	private BookViewHolder mBookHolder;
 	private EditText mEditor;
 	private RatingBar mRatingBar;
 	private Book mBook;
@@ -57,7 +58,7 @@ public class ReviewEditDialog extends BaseDialog {
 
 		View root = mParentActivity.getLayoutInflater().inflate(R.layout.dialog_review_edit, null);
 
-		mBookHolder = new BookView.BookViewHolder(root);
+		mBookHolder = new BookViewHolder(root);
 		mBookHolder.bindView(mBook);
 
 		mEditor = (EditText)root.findViewById(R.id.review_editor);

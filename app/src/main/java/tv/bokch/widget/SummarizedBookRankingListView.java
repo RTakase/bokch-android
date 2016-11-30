@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import tv.bokch.R;
 import tv.bokch.data.Book;
+import tv.bokch.data.BookViewHolder;
 
 public class SummarizedBookRankingListView extends RankingListView<Book> {
 
@@ -39,11 +40,11 @@ public class SummarizedBookRankingListView extends RankingListView<Book> {
 	}
 
 	protected class SummarizedBookRankingCell extends RankingCell {
-		protected BookView.BookViewHolder mBook;
+		protected BookViewHolder mBook;
 
 		public SummarizedBookRankingCell(View view) {
 			super(view);
-			mBook = new BookView.BookViewHolder(view);
+			mBook = new BookViewHolder(view);
 		}
 		
 		public void bindView(Book book, int position) {

@@ -10,6 +10,8 @@ import android.widget.TextView;
 import timber.log.Timber;
 import tv.bokch.R;
 import tv.bokch.data.Review;
+import tv.bokch.data.ReviewViewHolder;
+import tv.bokch.data.UserViewHolder;
 
 public class ReviewListView extends BaseListView<Review> {
 	
@@ -46,26 +48,19 @@ public class ReviewListView extends BaseListView<Review> {
 	}
 	
 	protected class ReviewCell extends Cell {
-		private CircleNetworkImageView mUserIcon;
-		private TextView mUserName;
-		private RatingBar mRating;
-		private TextView mComment;
-		
+		protected UserViewHolder mUser;
+		protected ReviewViewHolder mReview;
+
 		public ReviewCell(View view) {
 			super(view);
-			mUserIcon = (CircleNetworkImageView)view.findViewById(R.id.user_icon);
-			mUserIcon.setDefaultImageResId(R.drawable.mysteryman);
-			mUserName = (TextView)view.findViewById(R.id.user_name);
-			mRating = (RatingBar)view.findViewById(R.id.rating);
-			mComment = (TextView)view.findViewById(R.id.comment);
+			mUser = new UserViewHolder(view);
+			mReview = new ReviewViewHolder(view);
 		}
 		
 		public void bindView(Review review, int position) {
 			super.bindView(review, position);
-			mUserIcon.setImageUrl(review.user.iconUrl);
-			mUserName.setText(review.user.name);
-			mRating.setRating(review.rating);
-			mComment.setText(review.comment);
+			mUser.bindView(review.user);
+			mReview.bindView(review);
 		}
 	}
 }

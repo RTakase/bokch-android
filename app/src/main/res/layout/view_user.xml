@@ -12,24 +12,14 @@
     android:layout_marginRight="12dp"
     android:background="@drawable/bg_full_list_cell"
     >
-    <TextView
-        android:id="@+id/user_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:textColor="#ff555555"
-        android:gravity="left|center_vertical"
-        android:layout_alignParentTop="true"
-        android:maxLines="2"
-        android:ellipsize="end"
-        />
 
     <RelativeLayout
-        android:id="@+id/jacket_container"
+        android:id="@+id/user_icon_container"
         android:layout_width="72dp"
-        android:layout_height="match_parent"
-        android:layout_below="@id/title"
+        android:layout_height="72dp"
+        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
         >
         <tv.bokch.widget.CircleNetworkImageView
             android:id="@+id/user_icon"
@@ -38,9 +28,24 @@
             android:scaleType="centerInside"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
             />
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="8dp"
+        android:textSize="22sp"
+        android:textColor="#ff555555"
+        android:gravity="left|center_vertical"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@id/user_icon_container"
+        android:maxLines="2"
+        android:ellipsize="end"
+        />
 
     <TextView
         android:id="@+id/tag"
@@ -52,8 +57,6 @@
         android:textSize="14sp"
         android:ellipsize="end"
         android:maxLines="1"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
         android:visibility="invisible"
         />
 

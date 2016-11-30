@@ -18,6 +18,7 @@ import timber.log.Timber;
 import tv.bokch.App;
 import tv.bokch.R;
 import tv.bokch.android.BookActivity;
+import tv.bokch.android.UserActivity;
 import tv.bokch.data.Book;
 import tv.bokch.data.MyBook;
 import tv.bokch.data.User;
@@ -157,6 +158,12 @@ public abstract class BaseListView<Data> extends android.support.v7.widget.Recyc
 		}
 	};
 
+	protected void startUserActivity(User user) {
+		Intent intent = new Intent(getContext(), UserActivity.class);
+		intent.putExtra("data", user);
+		getContext().startActivity(intent);
+	}
+
 	protected void startBookActivity(Book book) {
 		final App app = (App)getContext().getApplicationContext();
 		ApiRequest request = new ApiRequest();
@@ -195,6 +202,7 @@ public abstract class BaseListView<Data> extends android.support.v7.widget.Recyc
 				@Override
 				public void onClick(View v) {
 					if (data instanceof User) {
+						startUserActivity((User)data);
 					} else if (data instanceof Book) {
 						showSpinner();
 						startBookActivity((Book)data);

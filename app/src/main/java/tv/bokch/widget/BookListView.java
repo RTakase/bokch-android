@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import tv.bokch.R;
 import tv.bokch.data.Book;
+import tv.bokch.data.BookViewHolder;
 
 public class BookListView extends BaseListView<Book> {
 	
@@ -49,11 +50,11 @@ public class BookListView extends BaseListView<Book> {
 	}
 	
 	protected class BookCell extends Cell {
-		private BookView.BookViewHolder mBook;
+		private BookViewHolder mBook;
 
 		public BookCell(View view) {
 			super(view);
-			mBook = new BookView.BookViewHolder(view);
+			mBook = new BookViewHolder(view);
 		}
 		
 		public void bindView(Book book, int position) {

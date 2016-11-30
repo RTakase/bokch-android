@@ -18,7 +18,7 @@
         <tv.bokch.widget.UserView
             android:id="@+id/user"
             android:layout_width="match_parent"
-            android:layout_height="118dp"
+            android:layout_height="114dp"
             app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
             />
 

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import tv.bokch.R;
 import tv.bokch.android.BookListActivity;
 import tv.bokch.data.User;
+import tv.bokch.data.UserViewHolder;
 
 public class FullUserRankingListView extends RankingListView<User> {
 
@@ -52,13 +53,13 @@ public class FullUserRankingListView extends RankingListView<User> {
 	}
 
 	protected class FullUserRankingCell extends RankingCell {
-		private UserView.UserViewHolder mUser;
+		private UserViewHolder mUser;
 		private TextView mScore;
 		private Button mMoreButton;
 
 		public FullUserRankingCell(View view) {
 			super(view);
-			mUser = new UserView.UserViewHolder(view);
+			mUser = new UserViewHolder(view);
 			mScore = (TextView)view.findViewById(R.id.score);
 			mMoreButton = (Button)view.findViewById(R.id.more_btn);
 		}
