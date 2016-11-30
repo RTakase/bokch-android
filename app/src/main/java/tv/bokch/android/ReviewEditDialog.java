@@ -1,6 +1,7 @@
 package tv.bokch.android;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -34,6 +35,8 @@ public class ReviewEditDialog extends BaseDialog {
 	private Review mReview;
 	private History mHistory;
 
+	private boolean mSavedReview;
+
 	public static ReviewEditDialog newInstance(Book book, User user, Review review, History history) {
 		ReviewEditDialog dialog = new ReviewEditDialog();
 		Bundle args = new Bundle();
@@ -44,20 +47,6 @@ public class ReviewEditDialog extends BaseDialog {
 		dialog.setArguments(args);
 		return dialog;
 	}
-
-//	@Override
-//	protected int getWidth(int orientation) {
-//		return (int)(super.getWidth(orientation) * 1.2f);
-//	}
-//
-//	@Override
-//	protected int getHeight(int orientation) {
-//		if (mBookHolder == null) {
-//			return super.getHeight(orientation);
-//		} else {
-//			return (int)(((float)mBookHolder.jacketHeight * getWidth(orientation)) / mBookHolder.jacketWidth);
-//		}
-//	}
 
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -76,11 +65,13 @@ public class ReviewEditDialog extends BaseDialog {
 
 		mRatingBar = (RatingBar)root.findViewById(R.id.rating);
 
+		if (mReview != null) {
+			mEditor.setText(mReview.comment);
+			mRatingBar.setRating(mReview.rating);
+		}
+
 		View submit = root.findViewById(R.id.submit_btn);
 		submit.setOnClickListener(mSubmitClickListener);
-
-//		View back = root.findViewById(R.id.back_btn);
-//		back.setOnClickListener(mBackClickListener);
 
 		Dialog dialog = super.onCreateDialog(savedInstanceState);
 		dialog.setCanceledOnTouchOutside(false);
@@ -88,11 +79,27 @@ public class ReviewEditDialog extends BaseDialog {
 		return dialog;
 	}
 
+	@Override
+	public void onDismiss(DialogInterface dialog) {
+		if (mSavedReview) {
+			Intent intent = new Intent();
+			intent.putExtra("review", mReview);
+			sendActivityResultCallback(intent);
+		}
+		super.onDismiss(dialog);
+	}
+
 	private View.OnClickListener mSubmitClickListener = new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
 			int rating = (int)mRatingBar.getRating();
 			String comment = mEditor.getText().toString();
+
+			if (rating == 0 && TextUtils.isEmpty(comment)) {
+				Toast.makeText(getActivity(), getString(R.string.empty_review), Toast.LENGTH_SHORT).show();
+				return;
+			}
+
 			if (mReview == null) {
 				ApiRequest request = new ApiRequest();
 				try {
@@ -102,24 +109,28 @@ public class ReviewEditDialog extends BaseDialog {
 					Toast.makeText(getActivity(), getString(R.string.failed_load), Toast.LENGTH_SHORT).show();
 				}
 			} else {
-
+				ApiRequest request = new ApiRequest();
+				try {
+					request.put_review(mReview.id, rating, comment, mReviewApiListener);
+				} catch (JSONException e) {
+					Timber.w(e, null);
+					Toast.makeText(getActivity(), getString(R.string.failed_load), Toast.LENGTH_SHORT).show();
+				}
 			}
-		}
-	};
-
-	private View.OnClickListener mBackClickListener = new View.OnClickListener() {
-		@Override
-		public void onClick(View v) {
-			confirmDismiss();
 		}
 	};
 
 	private ApiRequest.ApiListener<JSONObject> mHistoryApiListener = new ApiRequest.ApiListener<JSONObject>() {
 		@Override
 		public void onSuccess(JSONObject response) {
-			Intent intent = new Intent();
-			intent.putExtra("review", mReview);
-			sendActivityResultCallback(intent);
+			try {
+				JSONObject obj = response.optJSONObject("review");
+				mReview = new Review(obj);
+				Toast.makeText(getActivity(), getString(R.string.succeed_post_review), Toast.LENGTH_SHORT).show();
+			} catch (JSONException e) {
+				Timber.w(e, null);
+			}
+			mSavedReview = true;
 			dismiss();
 		}
 
@@ -142,6 +153,23 @@ public class ReviewEditDialog extends BaseDialog {
 			} catch (JSONException e) {
 				Timber.w(e, null);
 			}
+			Timber.w(error, null);
+		}
+	};
+
+	private ApiRequest.ApiListener<JSONObject> mReviewApiListener = new ApiRequest.ApiListener<JSONObject>() {
+		@Override
+		public void onSuccess(JSONObject response) {
+			Toast.makeText(getActivity(), getString(R.string.succeed_put_review), Toast.LENGTH_SHORT).show();
+			mReview.rating = (int)mRatingBar.getRating();
+			mReview.comment = mEditor.getText().toString();
+			mSavedReview = true;
+			dismiss();
+		}
+
+		@Override
+		public void onError(ApiRequest.ApiError error) {
+			Toast.makeText(getActivity(), getString(R.string.failed_load), Toast.LENGTH_SHORT).show();
 			Timber.w(error, null);
 		}
 	};

@@ -1,6 +1,7 @@
 package tv.bokch.widget;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.RatingBar;

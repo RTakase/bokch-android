@@ -25,6 +25,7 @@ import tv.bokch.data.Book;
 import tv.bokch.data.History;
 import tv.bokch.data.User;
 import tv.bokch.util.ApiRequest;
+import tv.bokch.util.ViewUtils;
 import tv.bokch.widget.BaseListView;
 import tv.bokch.widget.StatableListView;
 import tv.bokch.widget.SummarizedBookRankingListView;
@@ -59,7 +60,7 @@ public class HomeActivity extends FabActivity {
 		if (TextUtils.isEmpty(userId)) {
 			startLoginActivity(HomeActivity.this);
 		} else {
-			showProgress(getString(R.string.loging_in));
+			showSpinner();
 			ApiRequest request = new ApiRequest();
 			request.login(userId, null, mLoginApiListener);
 		}
@@ -262,7 +263,7 @@ public class HomeActivity extends FabActivity {
 	private ApiRequest.ApiListener<JSONObject> mLoginApiListener = new ApiRequest.ApiListener<JSONObject>() {
 		@Override
 		public void onSuccess(JSONObject response) {
-			hideProgress();
+			dismissSpinner();
 			try {
 				if (response.isNull("user")) {
 					startLoginActivity(HomeActivity.this);
@@ -276,7 +277,7 @@ public class HomeActivity extends FabActivity {
 		}
 		@Override
 		public void onError(ApiRequest.ApiError error) {
-			hideProgress();
+			dismissSpinner();
 			Toast.makeText(HomeActivity.this, getString(R.string.failed_load), Toast.LENGTH_SHORT).show();
 			Timber.d("tks, api error, %s", error.getLocalizedMessage());
 			Timber.w(error, null);

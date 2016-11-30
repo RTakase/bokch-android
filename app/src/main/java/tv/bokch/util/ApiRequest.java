@@ -34,6 +34,7 @@ public class ApiRequest {
 	public static String API_RANKING_BOOK_WEEKLY = "ranking/book/weekly";
 	public static String API_RANKING_USER_TOTAL = "ranking/user/total";
 	public static String API_RANKING_BOOK_TOTAL = "ranking/book/total";
+	public static String API_PUT_REVIEW = "reviews/%d";
 
 	public static String API_LOGIN = "login";
 
@@ -63,6 +64,15 @@ public class ApiRequest {
 			body = formBodyBuilder.build();
 		}
 		Request request = newRequestBuilder(url).post(body).build();
+		startJsonObjectApiDeliver(request, listener);
+	}
+
+	private void putJsonObject(HttpUrl url, RequestBody body, ApiListener<JSONObject> listener) {
+		if (body == null) {
+			FormBody.Builder formBodyBuilder = new FormBody.Builder();
+			body = formBodyBuilder.build();
+		}
+		Request request = newRequestBuilder(url).put(body).build();
 		startJsonObjectApiDeliver(request, listener);
 	}
 
@@ -137,6 +147,20 @@ public class ApiRequest {
 
 		RequestBody body = RequestBody.create(JSON, json.toString());
 		postJsonObject(url.build(), body, new PostApiListener(listener));
+	}
+	
+	public void put_review(long reviewId, int rating, String comment, ApiListener<JSONObject> listener) throws JSONException {
+		HttpUrl.Builder url = getUrlBuilder(String.format(API_PUT_REVIEW, reviewId));
+
+		JSONObject review = new JSONObject();
+		review.put("rating", rating);
+		review.put("comment", comment);
+
+		JSONObject json = new JSONObject();
+		json.put("review", review);
+
+		RequestBody body = RequestBody.create(JSON, json.toString());
+		putJsonObject(url.build(), body, new PostApiListener(listener));
 	}
 
 	public void ranking_user_weekly(ApiListener<JSONObject> listener) {

@@ -8,15 +8,14 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import timber.log.Timber;
 import tv.bokch.R;
 import tv.bokch.data.User;
 import tv.bokch.util.Display;
 import tv.bokch.util.ViewServer;
+import tv.bokch.util.ViewUtils;
 
 public class BaseActivity extends AppCompatActivity {
 	
@@ -27,6 +26,8 @@ public class BaseActivity extends AppCompatActivity {
 	protected Display mDisplay;
 
 	protected ProgressDialog mProgressDialog;
+
+	protected ProgressDialog mSpinner;
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -110,27 +111,16 @@ public class BaseActivity extends AppCompatActivity {
 		}
 	}
 
-	protected void showProgress(String message) {
-		Timber.d("tks, show progress.");
-		if (mProgressDialog == null) {
-			mProgressDialog = ProgressDialog.show(
-				this,
-				"",
-				message
-			);
-		}
-	}
-
-	protected void hideProgress() {
-		Timber.d("tks, hide progress.");
-		if (mProgressDialog != null) {
-			mProgressDialog.dismiss();
-		}
-	}
-
 	protected void startLoginActivity(Context context) {
 		Intent intent = new Intent(context, LoginActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivityForResult(intent, REQUEST_LOGIN);
+	}
+
+	protected void showSpinner() {
+		mSpinner = ViewUtils.showSpinner(this, getString(R.string.loading));
+	}
+	protected void dismissSpinner() {
+		ViewUtils.dismissSpinner(mSpinner);
 	}
 }

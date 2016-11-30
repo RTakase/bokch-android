@@ -17,7 +17,8 @@ public class History extends Data implements Parcelable {
 		id = obj.optLong("id");
 		user = new User(obj.optJSONObject("user"));
 		book = new Book(obj.optJSONObject("book"));
-		review = new Review(obj.optJSONObject("review"));
+		JSONObject _review = obj.optJSONObject("review");
+		review = _review == null ? null : new Review(_review);
 		created = obj.optLong("created");
 	}
 	

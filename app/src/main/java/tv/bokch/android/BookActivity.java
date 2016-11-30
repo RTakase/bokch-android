@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,6 +36,9 @@ public class BookActivity extends TabActivity {
 	private Book mBook;
 	private Review mReview;
 	private History mHistory;
+	
+	private Button mNewReviewButton;
+	private Button mEditReviewButton;
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,12 +51,9 @@ public class BookActivity extends TabActivity {
 			finish();
 			return;
 		}
-
+		
 		mReview = intent.getParcelableExtra("review");
 		mHistory = intent.getParcelableExtra("history");
-		
-		Timber.d("tks, review id is %d", (mReview == null ? -1 : mReview.id));
-		Timber.d("tks, history id is %d", (mHistory == null ? -1 : mHistory.id));		
 
 		initialize();
 	}
@@ -61,10 +62,16 @@ public class BookActivity extends TabActivity {
 		BookView book = (BookView)findViewById(R.id.book);
 		assert book != null;
 		book.bindView(mBook);
+		
+		mNewReviewButton = (Button)findViewById(R.id.new_review_btn);
+		assert mNewReviewButton != null;
+		mNewReviewButton.setOnClickListener(mReviewClickListener);
+		
+		mEditReviewButton = (Button)findViewById(R.id.edit_review_btn);
+		assert mEditReviewButton != null;
+		mEditReviewButton.setOnClickListener(mReviewClickListener);
 
-		Button add = (Button)findViewById(R.id.add_btn);
-		assert add != null;
-		add.setOnClickListener(mAddClickListener);
+		setReviewButtonVisibility();
 	}
 
 	@Override
@@ -149,12 +156,29 @@ public class BookActivity extends TabActivity {
 	}
 
 	@Override
+	protected void onResume() {
+		super.onResume();
+	}
+
+	private void setReviewButtonVisibility() {
+		if (mReview == null) {
+			mNewReviewButton.setVisibility(View.VISIBLE);
+			mEditReviewButton.setVisibility(View.GONE);
+		} else {
+			mNewReviewButton.setVisibility(View.GONE);
+			mEditReviewButton.setVisibility(View.VISIBLE);
+		}
+	}
+	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch(requestCode) {
 		case REQUEST_REVIEW_EDIT:
 			if (resultCode == RESULT_OK) {
-				mReview = data.getParcelableExtra("review");
-				Toast.makeText(BookActivity.this, getString(R.string.message_post_review), Toast.LENGTH_SHORT).show();
+				Review review = data.getParcelableExtra("review");
+				mReview = review;
+				setReviewButtonVisibility();
+				mLoaded[INDEX_REVIEW] = false;
+				loadTabData();
 			} else {
 				Toast.makeText(BookActivity.this, getString(R.string.failed_load), Toast.LENGTH_SHORT).show();
 			}
@@ -179,14 +203,14 @@ public class BookActivity extends TabActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	private View.OnClickListener mAddClickListener = new View.OnClickListener() {
+	private View.OnClickListener mReviewClickListener = new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			addHistory();
+			editReview();
 		}
 	};
 
-	private void addHistory() {
+	private void editReview() {
 		App app = (App)getApplication();
 		ReviewEditDialog dialog = ReviewEditDialog.newInstance(mBook, app.getMyUser(), mReview, mHistory);
 		dialog.setTargetFragment(null, REQUEST_REVIEW_EDIT);

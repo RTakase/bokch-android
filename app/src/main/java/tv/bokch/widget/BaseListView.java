@@ -1,5 +1,6 @@
 package tv.bokch.widget;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,14 +9,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 import timber.log.Timber;
+import tv.bokch.App;
 import tv.bokch.R;
 import tv.bokch.android.BookActivity;
 import tv.bokch.data.Book;
+import tv.bokch.data.MyBook;
 import tv.bokch.data.User;
+import tv.bokch.util.ApiRequest;
 import tv.bokch.util.Display;
+import tv.bokch.util.ViewUtils;
 
 public abstract class BaseListView<Data> extends android.support.v7.widget.RecyclerView {
 
@@ -32,6 +40,7 @@ public abstract class BaseListView<Data> extends android.support.v7.widget.Recyc
 	protected Display mDisplay;
 	protected ArrayList<Data> mDataSet;
 	private LinearLayoutManager mManager;
+	protected ProgressDialog mSpinner;
 	
 	public BaseListView(Context context) {
 		super(context);
@@ -148,28 +157,58 @@ public abstract class BaseListView<Data> extends android.support.v7.widget.Recyc
 		}
 	};
 
+	protected void startBookActivity(Book book) {
+		final App app = (App)getContext().getApplicationContext();
+		ApiRequest request = new ApiRequest();
+		request.book(book.bookId, app.getMyUser().userId, new ApiRequest.ApiListener<JSONObject>() {
+			@Override
+			public void onSuccess(JSONObject response) {
+				dismissSpinner();
+				try {
+					MyBook book = new MyBook(response);
+					book.user = app.getMyUser();
+					Intent intent = new Intent(getContext(), BookActivity.class);
+					intent.putExtra("data", book);
+					intent.putExtra("review", book.review);
+					intent.putExtra("history", book.history);
+					getContext().startActivity(intent);
+				} catch (JSONException e) {
+					Timber.w(e, null);
+				}
+			}
+			@Override
+			public void onError(ApiRequest.ApiError error) {
+			}
+		});
+	}
+
 	protected class Cell extends BaseListView.ViewHolder {
 		protected View root;
+
 		public Cell(View view) {
 			super(view);
 			this.root = view;
 		}
+
 		protected void bindView(final Data data, int position) {
 			root.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					Intent intent = new Intent();
 					if (data instanceof User) {
-//						intent.setClass(getContext(), UserActivity.class);
-//						intent.putExtra("data", (User)data);
-//						getContext().startActivity(intent);
 					} else if (data instanceof Book) {
-						intent.setClass(getContext(), BookActivity.class);
-						intent.putExtra("data", (Book)data);
-						getContext().startActivity(intent);
+						showSpinner();
+						startBookActivity((Book)data);
 					}
 				}
 			});
+		}
+
+		protected void visible() {
+			root.setVisibility(View.VISIBLE);
+		}
+
+		protected void gone() {
+			root.setVisibility(View.GONE);
 		}
 	}
 
@@ -177,5 +216,12 @@ public abstract class BaseListView<Data> extends android.support.v7.widget.Recyc
 		public DummyCell(View view) {
 			super(view);
 		}
+	}
+
+	protected void showSpinner() {
+		mSpinner = ViewUtils.showSpinner(getContext(), getContext().getString(R.string.loading));
+	}
+	protected void dismissSpinner() {
+		ViewUtils.dismissSpinner(mSpinner);
 	}
 }

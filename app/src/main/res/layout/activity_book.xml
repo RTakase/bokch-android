@@ -22,7 +22,7 @@
             />
 
         <info.hoang8f.widget.FButton
-            android:id="@+id/add_btn"
+            android:id="@+id/new_review_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
@@ -32,6 +32,20 @@
             android:textColor="#ddfafafa"
             app:buttonColor="#ff225B1E"
             android:text="@string/label_submit_review"
+            />
+
+        <info.hoang8f.widget.FButton
+            android:id="@+id/edit_review_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginLeft="36dp"
+            android:layout_marginRight="36dp"
+            android:textSize="16sp"
+            android:textColor="#ddfafafa"
+            app:buttonColor="#a18320"
+            android:text="@string/label_edit_review"
+            android:visibility="gone"
             />
 
         <android.support.design.widget.TabLayout

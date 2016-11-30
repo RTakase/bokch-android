@@ -12,6 +12,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.KeyEvent;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -20,7 +21,6 @@ import tv.bokch.R;
 
 public class BaseDialog extends DialogFragment {
 	protected Activity mParentActivity;
-	public static final int SIZE_DEFAULT = -999;
 	
 	@Override
 	public void onAttach(Activity activity) {
@@ -51,6 +51,10 @@ public class BaseDialog extends DialogFragment {
 		return getResources().getDimensionPixelSize(resId);
 	}
 
+	protected boolean onBackKeyPressed() {
+		return false;
+	}
+
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		Activity activity = getActivity();
@@ -63,6 +67,15 @@ public class BaseDialog extends DialogFragment {
 		dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
 		dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT)); //nullじゃだめだった
 		dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN);
+		dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+			@Override
+			public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+				if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+					return onBackKeyPressed();
+				}
+				return false;
+			}
+		});
 		return dialog;
 	}
 
@@ -88,17 +101,7 @@ public class BaseDialog extends DialogFragment {
 	public void onCancel(DialogInterface dialog) {
 		//キャンセルされると呼び出し元のactivityResultが呼ばれないため、
 		//キャンセル動作はdismissに変更する
-		//dismiss();
-	}
-
-	protected void confirmDismiss() {
-		DialogInterface.OnClickListener ok = new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dismiss();
-			}
-		};
-		showConfirmDialog(getString(R.string.confirm_editing), ok);
+		dismiss();
 	}
 
 	protected void showConfirmDialog(CharSequence message, DialogInterface.OnClickListener okClick) {
