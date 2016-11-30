@@ -88,6 +88,7 @@ public class ApiRequest {
 	}
 
 	private void startDeliver(OkHttpClient client, Request request, Callback callback) {
+		Timber.d("tks, %s", request.url().toString());
 		Call call = client.newCall(request);
 		call.enqueue(callback);
 	}
