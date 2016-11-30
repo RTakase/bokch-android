@@ -68,6 +68,7 @@ public abstract class TabActivity extends BaseActivity {
 			if (!mLoaded[i]) {
 				TabApiListener listener = new TabApiListener(i);
 				requestData(i, listener);
+				mPages[i].setState(StatableListView.State.Loading);
 			}
 		}
 	}

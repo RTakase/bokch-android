@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
@@ -45,8 +46,14 @@ public class StatableListView<Data> extends FrameLayout {
 		addView(mEmptyView, createLayoutParams());
 
 		mProgress = new ProgressBar(context);
-		mProgress.setVisibility(VISIBLE);
-		addView(mProgress, createLayoutParams());
+		mProgress.setVisibility(INVISIBLE);
+		FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+			ViewGroup.LayoutParams.WRAP_CONTENT,
+			ViewGroup.LayoutParams.WRAP_CONTENT
+		);
+		params.gravity = Gravity.TOP | Gravity.CENTER_HORIZONTAL;
+		mProgress.setLayoutParams(params);
+		addView(mProgress, params);
 	}
 
 	public void addListView(BaseListView<Data> listview) {
@@ -98,15 +105,13 @@ public class StatableListView<Data> extends FrameLayout {
 	}
 	
 	public boolean  onData(ArrayList<Data> data) {
-		if (data == null) {
-			setState(StatableListView.State.Loading);
-			return false;
-		} else if (data.size() == 0) {
+		if (data == null || data.size() == 0) {
+			setState(StatableListView.State.Failed);
 			setState(StatableListView.State.Failed);
 			return false;
 		} else {
-			setData(data);
 			setState(StatableListView.State.OK);
+			setData(data);
 			return true;
 		}
 	}
