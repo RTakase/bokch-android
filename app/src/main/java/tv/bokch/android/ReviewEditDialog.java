@@ -74,7 +74,6 @@ public class ReviewEditDialog extends BaseDialog {
 		submit.setOnClickListener(mSubmitClickListener);
 
 		Dialog dialog = super.onCreateDialog(savedInstanceState);
-		dialog.setCanceledOnTouchOutside(false);
 		dialog.setContentView(root);
 		return dialog;
 	}
