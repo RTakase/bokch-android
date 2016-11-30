@@ -19,6 +19,7 @@ import tv.bokch.App;
 import tv.bokch.R;
 import tv.bokch.android.BookActivity;
 import tv.bokch.android.UserActivity;
+import tv.bokch.android.UserListActivity;
 import tv.bokch.data.Book;
 import tv.bokch.data.MyBook;
 import tv.bokch.data.User;
@@ -117,6 +118,9 @@ public abstract class BaseListView<Data> extends android.support.v7.widget.Recyc
 
 	protected abstract int getLayoutResId();
 	protected abstract Cell createCell(View view);
+	protected void onCellClick(Data data) {
+
+	}
 
 	protected BaseListView.Adapter<Cell> mAdapter = new BaseListView.Adapter<Cell>() {
 
@@ -164,9 +168,16 @@ public abstract class BaseListView<Data> extends android.support.v7.widget.Recyc
 		getContext().startActivity(intent);
 	}
 
+	protected void startUserListActivity(Book book) {
+		Intent intent = new Intent(getContext(), UserListActivity.class);
+		intent.putExtra("data", book);
+		getContext().startActivity(intent);
+	}
+
 	protected void startBookActivity(Book book) {
 		final App app = (App)getContext().getApplicationContext();
 		ApiRequest request = new ApiRequest();
+		showSpinner();
 		request.book(book.bookId, app.getMyUser().userId, new ApiRequest.ApiListener<JSONObject>() {
 			@Override
 			public void onSuccess(JSONObject response) {
@@ -185,6 +196,7 @@ public abstract class BaseListView<Data> extends android.support.v7.widget.Recyc
 			}
 			@Override
 			public void onError(ApiRequest.ApiError error) {
+				dismissSpinner();
 			}
 		});
 	}
@@ -201,12 +213,7 @@ public abstract class BaseListView<Data> extends android.support.v7.widget.Recyc
 			root.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					if (data instanceof User) {
-						startUserActivity((User)data);
-					} else if (data instanceof Book) {
-						showSpinner();
-						startBookActivity((Book)data);
-					}
+					onCellClick(data);
 				}
 			});
 		}

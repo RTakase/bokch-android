@@ -47,11 +47,13 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
         android:textSize="14sp"
+        android:maxLines="1"
+        android:ellipsize="end"
         android:gravity="center_vertical|left"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@id/icon_container"
-        android:layout_toLeftOf="@+id/score"
         />
 
     <RatingBar
@@ -61,42 +63,22 @@
         android:textSize="14sp"
         android:maxLines="1"
         android:isIndicator="true"
-        android:gravity="center_vertical|left"
-        android:layout_toRightOf="@id/icon_container"
-        android:layout_below="@id/title"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
         style="@style/Base.Widget.AppCompat.RatingBar.Small"
         />
-
-    <TextView
-        android:id="@+id/tag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:maxLines="1"
-        android:gravity="center_vertical|left"
-        android:layout_toRightOf="@id/icon_container"
-        android:layout_below="@id/rating_average"
-        />
-
-    <Button
-        android:id="@+id/more_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/user_list_with_book"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        />
-
 
     <TextView
         android:id="@+id/score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="14sp"
+        android:paddingRight="4dp"
+        android:textSize="12sp"
         android:maxLines="1"
         android:gravity="center_vertical|left"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@id/rating_average"
+        android:visibility="gone"
         />
 
 

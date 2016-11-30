@@ -3,27 +3,25 @@ package tv.bokch.android;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import timber.log.Timber;
 import tv.bokch.R;
+import tv.bokch.data.Book;
 import tv.bokch.data.History;
 import tv.bokch.data.User;
 import tv.bokch.util.ApiRequest;
-import tv.bokch.widget.StatableListView;
+import tv.bokch.widget.BaseListView;
 import tv.bokch.widget.UserListView;
 
-public class UserListActivity extends BaseActivity {
-	private StatableListView<User> mContent;
-	private boolean mLoaded;
-	private String mBookId;
+public class UserListActivity extends ListActivity<User> {
+	private Book mBook;
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,57 +30,42 @@ public class UserListActivity extends BaseActivity {
 		
 		super.onCreate(savedInstanceState);
 		
-		setActionBarTitle(R.string.acitivity_title_user_list);
+		setActionBarTitle(R.string.title_users_with_this_book);
 		
 		Intent intent = getIntent();
-		mBookId = intent.getStringExtra("book_id");
-		if (TextUtils.isEmpty(mBookId)) {
+		mBook = intent.getParcelableExtra("data");
+		if (mBook == null) {
 			finish();
 			return;
 		}
-		mContent = (StatableListView<User>)findViewById(R.id.content);
-		UserListView listview = new UserListView(this);
-		mContent.addListView(listview);
+		Timber.d("tks, %s", mBook.bookId);
 	}
-	
+
 	@Override
-	protected void onResume() {
-		super.onResume();
-		if (!mLoaded) {
-			ApiRequest request = new ApiRequest();
-			request.recent(mBookId, null, mRecentApiListener);
-		}
+	protected BaseListView<User> createListView() {
+		return new UserListView(this);
 	}
-	
-	private ApiRequest.ApiListener<JSONObject> mRecentApiListener = new ApiRequest.ApiListener<JSONObject>() {
-		@Override
-		public void onSuccess(JSONObject response) {
-			try {
-				JSONArray array = response.optJSONArray("histories");
-				if (array == null) {
-					return;
-				}
-				int length = array.length();
-				ArrayList<User> users = new ArrayList<>();
-				for (int i = 0; i < length; i++) {
-					JSONObject obj = array.optJSONObject(i);
-					if (obj != null) {
-						History history = new History(obj);
-						//たまに取得できないやつがいるのでスルー
-						if (!TextUtils.isEmpty(history.book.title)) {
-							users.add(history.user);
-						}
-					}
-				}
-				mLoaded = mContent.onData(users);
-			} catch (JSONException e) {
-				Toast.makeText(UserListActivity.this, getString(R.string.failed_data_set), Toast.LENGTH_SHORT).show();
-				Timber.w(e, null);
-			}
+
+	@Override
+	protected void request(ApiRequest.ApiListener<JSONObject> listener) {
+		ApiRequest r = new ApiRequest();
+		r.recent(mBook.bookId, null, listener);
+	}
+
+	@Override
+	protected String getKey() {
+		return "histories";
+	}
+
+	@Override
+	protected ArrayList<User> getData(JSONArray array) throws JSONException {
+		ArrayList<User> histories = new ArrayList<>();
+		for (int i = 0; i < array.length(); i++) {
+			History history = new History(array.getJSONObject(i));
+			//本IDをもとに取得した履歴には本情報が入っていないので取得中チェックをしなくて良い
+			histories.add(history.user);
 		}
-		@Override
-		public void onError(ApiRequest.ApiError error) {
-			Toast.makeText(UserListActivity.this, getString(R.string.failed_load), Toast.LENGTH_SHORT).show();
-		}
-	};
+		Collections.reverse(histories);
+		return histories;
+	}
 }

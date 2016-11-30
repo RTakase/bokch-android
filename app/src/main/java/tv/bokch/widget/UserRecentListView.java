@@ -52,30 +52,13 @@ public class UserRecentListView extends RecentListView {
 	}
 	
 	protected class UserRecentCell extends RecentCell {
-		private Button mMoreButton;
-		private TextView mCreated;
-		private TextView mUserName;
-		
+
 		public UserRecentCell(View view) {
 			super(view);
-			mCreated = (TextView)view.findViewById(R.id.created);
-			mUserName = (TextView)view.findViewById(R.id.user_name);
-			mMoreButton = (Button)view.findViewById(R.id.more_btn);
 		}
 		
 		public void bindView(final History history, int position) {
 			super.bindView(history, position);
-			mCreated.setText(String.format("登録日時：%s", DateFormat.format("yy/MM kk", history.created)));
-			mUserName.setText(String.format("ユーザ名：%s", history.user.name));
-			mMoreButton.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					Intent intent = new Intent(getContext(), UserListActivity.class);
-					intent.putExtra("data", getData());
-					intent.putExtra("book_id", history.book.bookId);
-					getContext().startActivity(intent);
-				}
-			});
 		}
 	}
 }

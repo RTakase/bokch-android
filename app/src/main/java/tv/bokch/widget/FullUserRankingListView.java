@@ -55,32 +55,20 @@ public class FullUserRankingListView extends RankingListView<User> {
 	protected class FullUserRankingCell extends RankingCell {
 		private UserViewHolder mUser;
 		private TextView mScore;
-		private Button mMoreButton;
 
 		public FullUserRankingCell(View view) {
 			super(view);
 			mUser = new UserViewHolder(view);
 			mScore = (TextView)view.findViewById(R.id.score);
-			mMoreButton = (Button)view.findViewById(R.id.more_btn);
 		}
 
 		public void bindView(final User user, int position) {
 			super.bindView(user, position);
 			mUser.bindView(user);
 
-			if (user.score <= 0) {
-				mScore.setVisibility(View.GONE);
-			} else {
-				mScore.setText(String.format("スコア：%d", user.score));
+			if (mScore != null && user.score > 0) {
+				mScore.setText(String.valueOf(user.score));
 			}
-			mMoreButton.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					Intent intent = new Intent(getContext(), BookListActivity.class);
-					intent.putExtra("user_id", user.userId);
-					getContext().startActivity(intent);
-				}
-			});
 		}
 	}
 }

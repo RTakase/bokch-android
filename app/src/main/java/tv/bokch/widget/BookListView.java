@@ -2,6 +2,7 @@ package tv.bokch.widget;
 
 import android.content.Context;
 
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
@@ -48,7 +49,12 @@ public class BookListView extends BaseListView<Book> {
 	protected int getHeaderResId() {
 		return R.layout.cell_header;
 	}
-	
+
+	@Override
+	protected void onCellClick(Book book) {
+		startBookActivity(book);
+	}
+
 	protected class BookCell extends Cell {
 		private BookViewHolder mBook;
 
@@ -58,7 +64,9 @@ public class BookListView extends BaseListView<Book> {
 		}
 		
 		public void bindView(Book book, int position) {
-			mBook.bindView(book);
+			if (!TextUtils.isEmpty(book.title)) {
+				mBook.bindView(book);
+			}
 			super.bindView(book, position);
 		}
 	}

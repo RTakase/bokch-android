@@ -1,15 +1,10 @@
 package tv.bokch.widget;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
-import timber.log.Timber;
 import tv.bokch.R;
 import tv.bokch.data.Book;
 import tv.bokch.data.BookViewHolder;
@@ -53,17 +48,14 @@ public class FullBookRankingListView extends RankingListView<Book> {
 		return R.layout.cell_header;
 	}
 
-	
 	protected class FullBookRankingCell extends RankingCell {
 		protected BookViewHolder mBook;
 		private TextView mScore;
-		private Button mMoreButton;
 		
 		public FullBookRankingCell(View view) {
 			super(view);
 			mBook = new BookViewHolder(view);
 			mScore = (TextView)view.findViewById(R.id.score);
-			mMoreButton = (Button)view.findViewById(R.id.more_btn);
 		}
 		
 		public void bindView(Book book, int position) {
@@ -71,16 +63,7 @@ public class FullBookRankingListView extends RankingListView<Book> {
 			mBook.bindView(book);
 
 			if (mScore != null && book.score > 0) {
-				mScore.setText(String.format("スコア：%d", book.score));
-			}
-
-			if (mMoreButton != null) {
-				mMoreButton.setOnClickListener(new OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						Timber.d("tks, hoge");
-					}
-				});
+				mScore.setText(String.valueOf(book.score));
 			}
 		}
 	}

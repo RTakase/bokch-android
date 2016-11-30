@@ -38,6 +38,7 @@
             android:id="@+id/user_icon"
             android:layout_width="36dp"
             android:layout_height="36dp"
+            android:scaleType="centerInside"
             android:layout_marginRight="4dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"

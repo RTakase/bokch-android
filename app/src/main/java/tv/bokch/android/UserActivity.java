@@ -1,22 +1,20 @@
 package tv.bokch.android;
 
 import android.content.Intent;
-import android.net.Uri;
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
+import android.text.TextUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
-import tv.bokch.App;
 import tv.bokch.R;
+import tv.bokch.data.History;
 import tv.bokch.data.User;
 import tv.bokch.data.Review;
 import tv.bokch.util.ApiRequest;
@@ -54,9 +52,9 @@ public class UserActivity extends TabActivity {
 	protected BaseFragment createFragment(int index) {
 		switch (index) {
 		case INDEX_REVIEW:
-			return ReviewFragment.newInstance();
+			return BookReviewFragment.newInstance();
 		case INDEX_STACK:
-			return ReviewFragment.newInstance();
+			return BookReviewFragment.newInstance();
 		default:
 			return null;
 		}
@@ -71,7 +69,7 @@ public class UserActivity extends TabActivity {
 	protected String getTabTitle(int index) {
 		switch (index) {
 		case INDEX_REVIEW:
-			return getString(R.string.title_histories);
+			return getString(R.string.title_reviews);
 		case INDEX_STACK:
 			return getString(R.string.title_stack);
 		default:
@@ -84,10 +82,10 @@ public class UserActivity extends TabActivity {
 		ApiRequest request = new ApiRequest();
 		switch (index) {
 		case INDEX_REVIEW:
-			request.review(null, mUser.userId, listener);
+			request.recent(null, mUser.userId, listener);
 			break;
 		case INDEX_STACK:
-			request.review(null, mUser.userId, listener);
+			request.recent(null, mUser.userId, listener);
 			break;
 		default:
 		}
@@ -97,7 +95,7 @@ public class UserActivity extends TabActivity {
 	protected String getKey(int index) {
 		switch (index) {
 		case INDEX_REVIEW:
-			return "reviews";
+			return "histories";
 		case INDEX_STACK:
 			return "reviews";
 		default:
@@ -109,25 +107,28 @@ public class UserActivity extends TabActivity {
 	protected ArrayList<?> getData(int index, JSONArray array) throws JSONException {
 		switch (index) {
 		case INDEX_REVIEW:
-			ArrayList<Review> reviews = new ArrayList<>();
+			ArrayList<History> histories = new ArrayList<>();
 			for (int i = 0; i < array.length(); i++) {
 				JSONObject obj = array.optJSONObject(i);
 				if (obj != null) {
-					Review review = new Review(obj);
-					reviews.add(review);
+					History history = new History(obj);
+					if (history.review != null && !TextUtils.isEmpty(history.book.title)) {
+						histories.add(history);
+					}
 				}
 			}
-			return reviews;
+			Collections.reverse(histories);
+			return histories;
 		case INDEX_STACK:
-			ArrayList<Review> reviews2 = new ArrayList<>();
+			ArrayList<History> reviewss = new ArrayList<>();
 			for (int i = 0; i < array.length(); i++) {
 				JSONObject obj = array.optJSONObject(i);
 				if (obj != null) {
-					Review review = new Review(obj);
-					reviews2.add(review);
+					History history = new History(obj);
+					reviewss.add(history);
 				}
 			}
-			return reviews2;
+			return reviewss;
 		default:
 			return null;
 		}

@@ -77,6 +77,7 @@ public class FabActivity extends BaseActivity {
 			}
 			@Override
 			public void onError(ApiRequest.ApiError error) {
+				ViewUtils.dismissSpinner(mSpinner);
 			}
 		});
 	}

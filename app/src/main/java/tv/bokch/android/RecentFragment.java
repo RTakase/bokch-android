@@ -23,10 +23,4 @@ public class RecentFragment extends BaseFragment<History> {
 		fragment.setArguments(args);
 		return fragment;
 	}
-	
-	@Override
-	protected ArrayList<History> filterData(ArrayList<History> data) {
-		Collections.reverse(data);
-		return data;
-	}
 }

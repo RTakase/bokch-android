@@ -59,6 +59,7 @@ public class BookListActivity extends BaseActivity {
 		public void onSuccess(JSONObject response) {
 			try {
 				JSONArray array = response.optJSONArray("histories");
+				Timber.d("tks, arrays = %d", array.length());
 				if (array == null) {
 					return;
 				}
@@ -76,12 +77,13 @@ public class BookListActivity extends BaseActivity {
 				}
 				mLoaded = mContent.onData(books);
 			} catch (JSONException e) {
-				Toast.makeText(BookListActivity.this, getString(R.string.failed_data_set), Toast.LENGTH_SHORT).show();
 				Timber.w(e, null);
+				Toast.makeText(BookListActivity.this, getString(R.string.failed_data_set), Toast.LENGTH_SHORT).show();
 			}
 		}
 		@Override
 		public void onError(ApiRequest.ApiError error) {
+			Timber.w(error, null);
 			Toast.makeText(BookListActivity.this, getString(R.string.failed_load), Toast.LENGTH_SHORT).show();
 		}
 	};

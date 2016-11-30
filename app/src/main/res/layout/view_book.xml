@@ -2,7 +2,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="144dp"
     android:paddingTop="12dp"
     android:paddingLeft="12dp"
     android:paddingRight="12dp"
@@ -12,24 +12,14 @@
     android:layout_marginRight="12dp"
     android:background="@drawable/bg_full_list_cell"
     >
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="22sp"
-        android:textColor="#ff555555"
-        android:gravity="left|center_vertical"
-        android:layout_alignParentTop="true"
-        android:maxLines="2"
-        android:ellipsize="end"
-        />
 
     <RelativeLayout
         android:id="@+id/jacket_container"
         android:layout_width="96dp"
         android:layout_height="match_parent"
-        android:layout_below="@id/title"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
         >
         <tv.bokch.widget.NetworkImageView
             android:id="@+id/jacket"
@@ -42,17 +32,47 @@
             />
     </RelativeLayout>
 
+    <TextView
+        android:id="@+id/book_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:textSize="16sp"
+        android:textColor="#ff555555"
+        android:gravity="left|center_vertical"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/jacket_container"
+        />
+
+
     <RatingBar
         android:id="@+id/rating_average"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="4dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="14dp"
         android:max="5"
         android:stepSize="0.01"
         android:isIndicator="true"
-        android:layout_below="@id/title"
+        android:layout_below="@id/book_title"
         android:layout_toRightOf="@id/jacket_container"
         style="?android:attr/ratingBarStyleIndicator"
+        />
+
+    <TextView
+        android:id="@+id/publisher"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:gravity="left|center_vertical"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignLeft="@id/book_title"
         />
 
     <TextView
@@ -61,25 +81,11 @@
         android:layout_height="wrap_content"
         android:gravity="left|center_vertical"
         android:layout_marginTop="4dp"
-        android:layout_marginLeft="8dp"
-        android:textSize="14sp"
+        android:textSize="12sp"
         android:ellipsize="end"
         android:maxLines="1"
-        android:layout_below="@id/rating_average"
-        android:layout_alignLeft="@id/rating_average"
-        />
-
-    <TextView
-        android:id="@+id/publisher"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:textSize="14sp"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:gravity="left|center_vertical"
-        android:layout_below="@id/author"
-        android:layout_alignLeft="@id/author"
+        android:layout_above="@id/publisher"
+        android:layout_alignLeft="@id/book_title"
         />
 
     <TextView

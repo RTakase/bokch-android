@@ -1,6 +1,8 @@
 package tv.bokch.data;
 
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import tv.bokch.R;
@@ -26,6 +28,7 @@ public class UserViewHolder {
 		}
 		if (userIcon != null) {
 			userIcon.setDefaultImageResId(R.drawable.mysteryman);
+			userIcon.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 			userIcon.setImageUrl(user.iconUrl);
 		}
 		if (tag != null) {

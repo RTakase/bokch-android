@@ -9,11 +9,13 @@ import android.widget.TextView;
 
 import timber.log.Timber;
 import tv.bokch.R;
+import tv.bokch.data.BookViewHolder;
+import tv.bokch.data.History;
 import tv.bokch.data.Review;
 import tv.bokch.data.ReviewViewHolder;
 import tv.bokch.data.UserViewHolder;
 
-public class ReviewListView extends BaseListView<Review> {
+public abstract class ReviewListView extends BaseListView<History> {
 	
 	public ReviewListView(Context context) {
 		super(context);
@@ -30,37 +32,28 @@ public class ReviewListView extends BaseListView<Review> {
 	
 	private void initialize(Context context) {
 	}
-	
-	
-	@Override
-	protected int getLayoutResId() {
-		return R.layout.cell_review;
-	}
-	
-	@Override
-	protected Cell createCell(View view) {
-		return new ReviewCell(view);
-	}
 
 	@Override
 	protected int getHeaderResId() {
 		return R.layout.cell_header;
 	}
-	
+
+	@Override
+	protected int getFooterResId() {
+		return R.layout.cell_footer;
+	}
+
 	protected class ReviewCell extends Cell {
-		protected UserViewHolder mUser;
 		protected ReviewViewHolder mReview;
 
 		public ReviewCell(View view) {
 			super(view);
-			mUser = new UserViewHolder(view);
 			mReview = new ReviewViewHolder(view);
 		}
 		
-		public void bindView(Review review, int position) {
-			super.bindView(review, position);
-			mUser.bindView(review.user);
-			mReview.bindView(review);
+		public void bindView(History history, int position) {
+			super.bindView(history, position);
+			mReview.bindView(history.review);
 		}
 	}
 }

@@ -3,7 +3,6 @@ package tv.bokch.android;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -39,7 +38,6 @@ public class HomeActivity extends FabActivity {
 	private StatableListView<History> mRecentView;
 	private StatableListView<User> mUserRankingView;
 	private StatableListView<Book> mBookRankingView;
-	protected FloatingActionButton mFab;
 
 	private boolean mLoadedRecent;
 	private boolean mLoadedUserRanking;

@@ -16,6 +16,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import timber.log.Timber;
 import tv.bokch.App;
@@ -78,7 +79,7 @@ public class BookActivity extends TabActivity {
 	protected BaseFragment createFragment(int index) {
 		switch (index) {
 		case INDEX_REVIEW:
-			return ReviewFragment.newInstance();
+			return UserReviewFragment.newInstance();
 		case INDEX_USERS:
 			return UserFragment.newInstance();
 		default:
@@ -108,7 +109,7 @@ public class BookActivity extends TabActivity {
 		ApiRequest request = new ApiRequest();
 		switch (index) {
 		case INDEX_REVIEW:
-			request.review(mBook.bookId, null, listener);
+			request.recent(mBook.bookId, null, listener);
 			break;
 		case INDEX_USERS:
 			request.recent(mBook.bookId, null, listener);
@@ -121,7 +122,6 @@ public class BookActivity extends TabActivity {
 	protected String getKey(int index) {
 		switch (index) {
 		case INDEX_REVIEW:
-			return "reviews";
 		case INDEX_USERS:
 			return "histories";
 		default:
@@ -133,24 +133,28 @@ public class BookActivity extends TabActivity {
 	protected ArrayList<?> getData(int index, JSONArray array) throws JSONException {
 		switch (index) {
 		case INDEX_REVIEW:
-			ArrayList<Review> reviews = new ArrayList<>();
+			ArrayList<History> histories = new ArrayList<>();
 			for (int i = 0; i < array.length(); i++) {
 				JSONObject obj = array.optJSONObject(i);
 				if (obj != null) {
-					Review review = new Review(obj);
-					reviews.add(review);
+					History history = new History(obj);
+					if (history.review != null) {
+						histories.add(history);
+					}
 				}
 			}
-			return reviews;
+			Collections.reverse(histories);
+			return histories;
 		case INDEX_USERS:
 			ArrayList<User> users = new ArrayList<>();
 			for (int i = 0; i < array.length(); i++) {
 				JSONObject obj = array.optJSONObject(i);
 				if (obj != null) {
-					Review review = new Review(obj);
-					users.add(review.user);
+					History history = new History(obj);
+					users.add(history.user);
 				}
 			}
+			Collections.reverse(users);
 			return users;
 		default:
 			return null;

@@ -20,7 +20,6 @@ public class ReviewViewHolder {
 		if (review == null) {
 			return;
 		}
-		Timber.d("tks, review id = %d, user = %s, book = %s, comment = %s", review.id, review.user.userId, review.book.title, review.comment);
 		if (mRating != null) {
 			mRating.setRating(review.rating);
 		}

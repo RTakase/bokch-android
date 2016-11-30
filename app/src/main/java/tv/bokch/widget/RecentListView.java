@@ -6,10 +6,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
-import java.util.Locale;
-
-import timber.log.Timber;
 import tv.bokch.R;
 import tv.bokch.data.BookViewHolder;
 import tv.bokch.data.History;
@@ -34,12 +30,16 @@ public abstract class RecentListView extends BaseListView<History> {
 	private void initialize(Context context) {
 	}
 
+	@Override
+	protected void onCellClick(History history) {
+		//startUserActivity(history.user);
+	}
+
 	protected class RecentCell extends Cell {
 		protected BookViewHolder mBook;
 		protected UserViewHolder mUser;
 		protected ReviewViewHolder mReview;
 		protected TextView mCreated;
-		
 
 		public RecentCell(View view) {
 			super(view);

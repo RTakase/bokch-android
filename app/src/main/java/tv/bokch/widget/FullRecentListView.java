@@ -1,18 +1,10 @@
 package tv.bokch.widget;
 
 import android.content.Context;
-import android.content.Intent;
-import android.text.format.DateFormat;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
 import tv.bokch.R;
-import tv.bokch.android.UserListActivity;
-import tv.bokch.data.History;
-import tv.bokch.data.ReviewViewHolder;
-import tv.bokch.data.UserViewHolder;
 
 public class FullRecentListView extends RecentListView {
 

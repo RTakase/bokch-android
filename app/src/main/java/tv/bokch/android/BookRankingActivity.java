@@ -2,10 +2,12 @@ package tv.bokch.android;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -77,7 +79,7 @@ public class BookRankingActivity extends TabActivity {
 				JSONObject obj = array.optJSONObject(i);
 				if (obj != null) {
 					Book book = new Book(obj);
-					if (book != null) {
+					if (!TextUtils.isEmpty(book.title)) {
 						res.add(book);
 					}
 				}
