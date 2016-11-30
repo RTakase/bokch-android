@@ -14,14 +14,9 @@ import org.json.JSONObject;
 import timber.log.Timber;
 import tv.bokch.App;
 import tv.bokch.R;
-import tv.bokch.data.Book;
-import tv.bokch.data.History;
 import tv.bokch.data.MyBook;
-import tv.bokch.data.Review;
 import tv.bokch.util.ApiRequest;
-import tv.bokch.util.JSONUtils;
 import tv.bokch.util.ViewUtils;
-import tv.bokch.widget.StatableListView;
 
 public class FabActivity extends BaseActivity {
 
