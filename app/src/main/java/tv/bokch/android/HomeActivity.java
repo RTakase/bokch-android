@@ -17,6 +17,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import timber.log.Timber;
 import tv.bokch.App;
@@ -25,7 +26,6 @@ import tv.bokch.data.Book;
 import tv.bokch.data.History;
 import tv.bokch.data.User;
 import tv.bokch.util.ApiRequest;
-import tv.bokch.util.ViewUtils;
 import tv.bokch.widget.BaseListView;
 import tv.bokch.widget.StatableListView;
 import tv.bokch.widget.SummarizedBookRankingListView;
@@ -186,6 +186,8 @@ public class HomeActivity extends FabActivity {
 						}
 					}
 				}
+
+				Collections.reverse(histories);
 				mLoadedRecent = mRecentView.onData(histories);
 			} catch (JSONException e) {
 				Toast.makeText(HomeActivity.this, getString(R.string.failed_data_set), Toast.LENGTH_SHORT).show();

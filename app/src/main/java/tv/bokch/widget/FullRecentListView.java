@@ -69,8 +69,10 @@ public class FullRecentListView extends RecentListView {
 		
 		public void bindView(final History history, int position) {
 			super.bindView(history, position);
-			mComment.setText(String.format("コメント：%s", history.review.comment));
-			mRating.setText(String.format("評価：%s", history.review.rating));
+			if (history.review != null) {
+				mComment.setText(String.format("コメント：%s", history.review.comment));
+				mRating.setText(String.format("評価：%s", history.review.rating));
+			}
 			mCreated.setText(String.format("登録日時：%s", DateFormat.format("yy/MM kk", history.created)));
 			mUserName.setText(String.format("ユーザ名：%s", history.user.name));
 			mMoreButton.setOnClickListener(new OnClickListener() {

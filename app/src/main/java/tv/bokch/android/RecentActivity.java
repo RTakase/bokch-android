@@ -11,6 +11,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import timber.log.Timber;
 import tv.bokch.R;
@@ -69,6 +70,7 @@ public class RecentActivity extends BaseActivity {
 						}
 					}
 				}
+				Collections.reverse(histories);
 				mLoaded = mContent.onData(histories);
 			} catch (JSONException e) {
 				Toast.makeText(RecentActivity.this, getString(R.string.failed_data_set), Toast.LENGTH_SHORT).show();

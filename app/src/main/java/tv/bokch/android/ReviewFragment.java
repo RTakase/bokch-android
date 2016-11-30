@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import tv.bokch.data.Review;
 import tv.bokch.widget.BaseListView;
@@ -24,7 +25,9 @@ public class ReviewFragment extends BaseFragment<Review> {
 
 	@Override
 	protected ArrayList<Review> filterData(ArrayList<Review> data) {
-		return super.filterData(data);
+		Collections.reverse(data);
+		return data;
+		//return super.filterData(data);
 //		ArrayList<Review> newOne = new ArrayList<>();
 //		for (int i = 0; i < data.size(); i++) {
 //			if (!TextUtils.isEmpty(data.get(i).comment)) {
