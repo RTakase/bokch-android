@@ -16,7 +16,6 @@ import java.util.Collections;
 import tv.bokch.R;
 import tv.bokch.data.History;
 import tv.bokch.data.User;
-import tv.bokch.data.Review;
 import tv.bokch.util.ApiRequest;
 import tv.bokch.widget.UserView;
 
@@ -71,7 +70,7 @@ public class UserActivity extends TabActivity {
 		case INDEX_REVIEW:
 			return getString(R.string.title_reviews);
 		case INDEX_STACK:
-			return getString(R.string.title_stack);
+			return getString(R.string.title_book_history);
 		default:
 			return null;
 		}

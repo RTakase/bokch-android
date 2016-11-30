@@ -98,7 +98,7 @@ public class BookActivity extends TabActivity {
 		case INDEX_REVIEW:
 			return getString(R.string.title_reviews);
 		case INDEX_USERS:
-			return getString(R.string.title_read_users);
+			return getString(R.string.title_user_history);
 		default:
 			return null;
 		}

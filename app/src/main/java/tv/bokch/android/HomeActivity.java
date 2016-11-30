@@ -98,6 +98,9 @@ public class HomeActivity extends FabActivity {
 			titleView.setText(getString(resId));
 		}
 		if (listener != null) {
+			View header = partial.findViewById(R.id.header);
+			header.setOnClickListener(listener);
+
 			View button = partial.findViewById(R.id.header_more_btn);
 			button.setOnClickListener(listener);
 		}
