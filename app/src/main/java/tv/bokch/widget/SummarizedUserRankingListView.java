@@ -38,20 +38,16 @@ public class SummarizedUserRankingListView extends RankingListView<User> {
 	}
 
 	protected class SummarizedUserRankingCell extends RankingCell {
-		private TextView mName;
-		private NetworkImageView mUserIcon;
-		
+		private UserView.UserViewHolder mUser;
+
 		public SummarizedUserRankingCell(View view) {
 			super(view);
-			mName = (TextView)view.findViewById(R.id.name);
-			mUserIcon = (NetworkImageView)view.findViewById(R.id.user_icon);
-			mUserIcon.setDefaultImageResId(R.drawable.mysteryman);
+			mUser = new UserView.UserViewHolder(view);
 		}
 		
 		public void bindView(User user, int position) {
 			super.bindView(user, position);
-			mName.setText(user.name);
-			mUserIcon.setImageUrl(user.iconUrl);
+			mUser.bindView(user);
 		}
 	}
 }

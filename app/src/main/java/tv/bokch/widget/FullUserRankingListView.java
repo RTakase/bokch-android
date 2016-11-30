@@ -52,31 +52,21 @@ public class FullUserRankingListView extends RankingListView<User> {
 	}
 
 	protected class FullUserRankingCell extends RankingCell {
-		private TextView mUserName;
-		private NetworkImageView mUserIcon;
-		private TextView mTag;
+		private UserView.UserViewHolder mUser;
 		private TextView mScore;
 		private Button mMoreButton;
 
 		public FullUserRankingCell(View view) {
 			super(view);
-			mUserName = (TextView)view.findViewById(R.id.user_name);
-			mUserIcon = (NetworkImageView)view.findViewById(R.id.user_icon);
-			mUserIcon.setDefaultImageResId(R.drawable.mysteryman);
-			mTag = (TextView)view.findViewById(R.id.tag);
+			mUser = new UserView.UserViewHolder(view);
 			mScore = (TextView)view.findViewById(R.id.score);
 			mMoreButton = (Button)view.findViewById(R.id.more_btn);
 		}
 
 		public void bindView(final User user, int position) {
 			super.bindView(user, position);
-			mUserName.setText(String.format("ユーザ名：%s", user.name));
-			mUserIcon.setImageUrl(user.iconUrl);
-			if (TextUtils.isEmpty(user.tag)) {
-				mTag.setVisibility(View.GONE);
-			} else {
-				mTag.setText(user.tag);
-			}
+			mUser.bindView(user);
+
 			if (user.score <= 0) {
 				mScore.setVisibility(View.GONE);
 			} else {

@@ -48,23 +48,15 @@ public class UserListView extends BaseListView<User> {
 	}
 
 	protected class UserCell extends Cell {
-		private TextView mUserName;
-		private NetworkImageView mUserIcon;
-		private TextView mTag;
-		
+		private UserView.UserViewHolder mUser;
 		public UserCell(View view) {
 			super(view);
-			mUserName = (TextView)view.findViewById(R.id.user_name);
-			mUserIcon = (NetworkImageView)view.findViewById(R.id.user_icon);
-			mUserIcon.setDefaultImageResId(R.drawable.mysteryman);
-			mTag = (TextView)view.findViewById(R.id.tag);
+			mUser = new UserView.UserViewHolder(view);
 		}
-		
+
 		public void bindView(User user, int position) {
 			super.bindView(user, position);
-			mUserName.setText(user.name);
-			mUserIcon.setImageUrl(user.iconUrl);
-			mTag.setText(user.tag);
+			mUser.bindView(user);
 		}
 	}
 }

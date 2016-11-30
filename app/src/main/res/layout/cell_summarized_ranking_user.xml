@@ -10,7 +10,7 @@
     android:layout_marginBottom="4dp"
     >
 
-    <tv.bokch.widget.NetworkImageView
+    <tv.bokch.widget.CircleNetworkImageView
         android:id="@+id/user_icon"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

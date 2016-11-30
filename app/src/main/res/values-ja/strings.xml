@@ -42,4 +42,6 @@
     <string name="error">エラー</string>
     <string name="loading">通信中</string>
     <string name="empty_review">少なくとも評価とコメントのどちらかは記入してください</string>
+    <string name="title_histories">読んだ本一覧</string>
+    <string name="title_stack">積み上げてる本一覧</string>
 </resources>

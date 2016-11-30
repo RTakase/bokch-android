@@ -13,7 +13,7 @@
     android:background="@drawable/bg_full_list_cell"
     >
 
-    <tv.bokch.widget.NetworkImageView
+    <tv.bokch.widget.CircleNetworkImageView
         android:id="@+id/user_icon"
         android:layout_width="64dp"
         android:layout_height="64dp"
