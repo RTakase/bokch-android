@@ -91,6 +91,7 @@ public class ReviewEditDialog extends BaseDialog {
 	private View.OnClickListener mSubmitClickListener = new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
+
 			int rating = (int)mRatingBar.getRating();
 			String comment = mEditor.getText().toString();
 
@@ -100,6 +101,7 @@ public class ReviewEditDialog extends BaseDialog {
 			}
 
 			if (mReview == null) {
+				showSpinner();
 				ApiRequest request = new ApiRequest();
 				try {
 					request.post_history(mBook.bookId, mUser.userId, rating, comment, mHistoryApiListener);
@@ -123,6 +125,7 @@ public class ReviewEditDialog extends BaseDialog {
 		@Override
 		public void onSuccess(JSONObject response) {
 			try {
+				dismissSpinner();
 				JSONObject obj = response.optJSONObject("review");
 				mReview = new Review(obj);
 				Toast.makeText(getActivity(), getString(R.string.succeed_post_review), Toast.LENGTH_SHORT).show();
@@ -159,10 +162,11 @@ public class ReviewEditDialog extends BaseDialog {
 	private ApiRequest.ApiListener<JSONObject> mReviewApiListener = new ApiRequest.ApiListener<JSONObject>() {
 		@Override
 		public void onSuccess(JSONObject response) {
-			Toast.makeText(getActivity(), getString(R.string.succeed_put_review), Toast.LENGTH_SHORT).show();
+			dismissSpinner();
 			mReview.rating = (int)mRatingBar.getRating();
 			mReview.comment = mEditor.getText().toString();
 			mSavedReview = true;
+			Toast.makeText(getActivity(), getString(R.string.succeed_put_review), Toast.LENGTH_SHORT).show();
 			dismiss();
 		}
 

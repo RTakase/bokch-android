@@ -109,8 +109,10 @@ public class BookActivity extends TabActivity {
 		switch (index) {
 		case INDEX_REVIEW:
 			request.review(mBook.bookId, null, listener);
+			break;
 		case INDEX_USERS:
 			request.recent(mBook.bookId, null, listener);
+			break;
 		default:
 		}
 	}
@@ -155,11 +157,6 @@ public class BookActivity extends TabActivity {
 		}
 	}
 
-	@Override
-	protected void onResume() {
-		super.onResume();
-	}
-
 	private void setReviewButtonVisibility() {
 		if (mReview == null) {
 			mNewReviewButton.setVisibility(View.VISIBLE);
@@ -177,8 +174,8 @@ public class BookActivity extends TabActivity {
 				Review review = data.getParcelableExtra("review");
 				mReview = review;
 				setReviewButtonVisibility();
+				//この後 TabActivityのonResumeが呼ばれるのでフラグをセットするだけ
 				mLoaded[INDEX_REVIEW] = false;
-				loadTabData();
 			} else {
 				Toast.makeText(BookActivity.this, getString(R.string.failed_load), Toast.LENGTH_SHORT).show();
 			}

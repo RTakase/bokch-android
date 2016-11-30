@@ -54,8 +54,10 @@ public class UserRankingActivity extends TabActivity {
 		switch (index) {
 		case INDEX_WEEKLY:
 			request.ranking_user_weekly(listener);
+			break;
 		case INDEX_TOTAL:
 			request.ranking_user_total(listener);
+			break;
 		default:
 		}
 	}

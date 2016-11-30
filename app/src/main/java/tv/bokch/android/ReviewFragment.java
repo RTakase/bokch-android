@@ -24,12 +24,13 @@ public class ReviewFragment extends BaseFragment<Review> {
 
 	@Override
 	protected ArrayList<Review> filterData(ArrayList<Review> data) {
-		ArrayList<Review> newOne = new ArrayList<>();
-		for (int i = 0; i < data.size(); i++) {
-			if (!TextUtils.isEmpty(data.get(i).comment)) {
-				newOne.add(data.get(i));
-			}
-		}
-		return newOne;
+		return super.filterData(data);
+//		ArrayList<Review> newOne = new ArrayList<>();
+//		for (int i = 0; i < data.size(); i++) {
+//			if (!TextUtils.isEmpty(data.get(i).comment)) {
+//				newOne.add(data.get(i));
+//			}
+//		}
+//		return newOne;
 	}
 }

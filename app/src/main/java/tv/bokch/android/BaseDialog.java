@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -18,9 +19,11 @@ import android.view.WindowManager;
 
 import timber.log.Timber;
 import tv.bokch.R;
+import tv.bokch.util.ViewUtils;
 
 public class BaseDialog extends DialogFragment {
 	protected Activity mParentActivity;
+	protected ProgressDialog mSpinner;
 	
 	@Override
 	public void onAttach(Activity activity) {
@@ -132,5 +135,12 @@ public class BaseDialog extends DialogFragment {
 		}
 		builder.setPositiveButton("OK", null);
 		builder.show();
+	}
+
+	protected void showSpinner() {
+		mSpinner = ViewUtils.showSpinner(getActivity(), getString(R.string.loading));
+	}
+	protected void dismissSpinner() {
+		ViewUtils.dismissSpinner(mSpinner);
 	}
 }

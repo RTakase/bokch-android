@@ -54,6 +54,7 @@ public abstract class TabActivity extends BaseActivity {
 
 	@Override
 	protected void onResume() {
+		Timber.d("tks, tab act on resume.");
 		super.onResume();
 		loadTabData();
 	}
