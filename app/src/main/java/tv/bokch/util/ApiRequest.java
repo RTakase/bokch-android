@@ -30,6 +30,7 @@ public class ApiRequest {
 	public static String API_RECENT = "histories";
 	public static String API_REVIEW = "reviews";
 	public static String API_BOOK = "books/%s";
+	public static String API_USER = "users";
 	public static String API_RANKING_USER_WEEKLY = "ranking/user/weekly";
 	public static String API_RANKING_BOOK_WEEKLY = "ranking/book/weekly";
 	public static String API_RANKING_USER_TOTAL = "ranking/user/total";
@@ -191,6 +192,11 @@ public class ApiRequest {
 	public void book(String bookId, String userId, ApiListener<JSONObject> listener) {
 		HttpUrl.Builder url = getUrlBuilder(String.format(API_BOOK, bookId));
 		url.addQueryParameter("user_id", userId);
+		getJsonObject(url.build(), listener);
+	}
+	
+	public void user(ApiListener<JSONObject> listener) {
+		HttpUrl.Builder url = getUrlBuilder(String.format(API_USER));
 		getJsonObject(url.build(), listener);
 	}
 	

@@ -1,14 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:padding="12dp"
+    android:gravity="center_horizontal"
+    android:background="@drawable/bg_dialog"
     >
+
+    <TextView
+        android:id="@+id/submit_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/prompt_new"
+        android:textSize="16sp"
+        android:gravity="center"
+        />
+
+    <ImageView
+        android:id="@+id/with_camera_btn"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginLeft="48dp"
+        android:layout_marginRight="48dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/with_camera"
+        />
+
     <com.journeyapps.barcodescanner.CompoundBarcodeView
         android:id="@+id/camera"
-        android:layout_width="@dimen/dialog_width_portrait"
-        android:layout_height="@dimen/dialog_width_portrait"
-        android:layout_centerInParent="true"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:visibility="gone"
         />
-</RelativeLayout>
+
+    <ImageView
+        android:id="@+id/with_url_btn"        
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginLeft="48dp"
+        android:layout_marginRight="48dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/with_url"
+        />
+
+    <ImageView
+        android:id="@+id/camera_desc"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginLeft="48dp"
+        android:layout_marginRight="48dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/icon"
+        android:visibility="gone"
+        />
+</LinearLayout>

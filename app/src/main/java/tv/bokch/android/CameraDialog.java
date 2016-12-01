@@ -1,11 +1,15 @@
 package tv.bokch.android;
 
 import android.app.Dialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.zxing.ResultPoint;
 import com.journeyapps.barcodescanner.BarcodeCallback;
@@ -14,11 +18,15 @@ import com.journeyapps.barcodescanner.CompoundBarcodeView;
 
 import java.util.List;
 
+import timber.log.Timber;
 import tv.bokch.R;
 
 public class CameraDialog extends BaseDialog {
 
 	private CompoundBarcodeView mBarcodeView;
+	private View mCameraButton;
+	private View mUrlButton;
+	private View mDescView;
 
 	public static CameraDialog newInstance() {
 		CameraDialog dialog = new CameraDialog();
@@ -34,6 +42,14 @@ public class CameraDialog extends BaseDialog {
 
 		mBarcodeView = (CompoundBarcodeView)view.findViewById(R.id.camera);
 		mBarcodeView.decodeContinuous(mBarcodeCallback);
+		
+		mCameraButton = view.findViewById(R.id.with_camera_btn);
+		mCameraButton.setOnClickListener(mCameraClickListener);
+		
+		mUrlButton = view.findViewById(R.id.with_url_btn);
+		mUrlButton.setOnClickListener(mUrlClickListener);
+
+		mDescView = view.findViewById(R.id.camera_desc);
 
 		Dialog dialog = super.onCreateDialog(savedInstanceState);
 		dialog.setContentView(view);
@@ -55,18 +71,18 @@ public class CameraDialog extends BaseDialog {
 			mBarcodeView.pause();
 		}
 	}
-
-	@Override
-	protected int getWidth(int orientation) {
-		int resId = orientation == Configuration.ORIENTATION_PORTRAIT ? R.dimen.dialog_width_portrait : R.dimen.dialog_height_landscape;
-		return getResources().getDimensionPixelSize(resId);
-	}
-
-	@Override
-	protected int getHeight(int orientation) {
-		int resId = orientation == Configuration.ORIENTATION_PORTRAIT ? R.dimen.dialog_width_portrait : R.dimen.dialog_height_landscape;
-		return getResources().getDimensionPixelSize(resId);
-	}
+//
+//	@Override
+//	protected int getWidth(int orientation) {
+//		int resId = orientation == Configuration.ORIENTATION_PORTRAIT ? R.dimen.dialog_width_portrait : R.dimen.dialog_height_landscape;
+//		return getResources().getDimensionPixelSize(resId);
+//	}
+//
+//	@Override
+//	protected int getHeight(int orientation) {
+//		int resId = orientation == Configuration.ORIENTATION_PORTRAIT ? R.dimen.dialog_width_portrait : R.dimen.dialog_height_landscape;
+//		return getResources().getDimensionPixelSize(resId);
+//	}
 
 	private BarcodeCallback mBarcodeCallback = new BarcodeCallback() {
 		@Override
@@ -83,6 +99,31 @@ public class CameraDialog extends BaseDialog {
 
 		@Override
 		public void possibleResultPoints(List<ResultPoint> resultPoints) {
+		}
+	};
+	
+	private View.OnClickListener mCameraClickListener = new View.OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			mBarcodeView.setVisibility(View.VISIBLE);
+			mDescView.setVisibility(View.VISIBLE);
+
+			mUrlButton.setVisibility(View.GONE);
+			mCameraButton.setVisibility(View.GONE);
+		}
+	};
+	private View.OnClickListener mUrlClickListener = new View.OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			ClipboardManager manager = (ClipboardManager)getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+			ClipData data = manager.getPrimaryClip();
+			if (data != null) {
+				ClipData.Item item = data.getItemAt(0);
+				BaseActivity baseAct = (BaseActivity)getActivity();
+				//baseAct.startBookActivity(item.getText());
+			} else {
+				Toast.makeText(getActivity(), getString(R.string.failed_data_set), Toast.LENGTH_SHORT).show();
+			}
 		}
 	};
 }

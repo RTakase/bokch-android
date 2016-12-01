@@ -159,6 +159,11 @@ public class BaseActivity extends AppCompatActivity {
 		});
 	}
 
+	protected void startUserListActivity() {
+		Intent intent = new Intent(BaseActivity.this, UserListActivity.class);
+		startActivity(intent);
+	}
+
 	protected void startUserActivity(User user) {
 		Intent intent = new Intent(BaseActivity.this, UserActivity.class);
 		intent.putExtra("data", user);

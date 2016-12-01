@@ -21,7 +21,6 @@ import tv.bokch.widget.BaseListView;
 import tv.bokch.widget.UserListView;
 
 public class UserListActivity extends ListActivity<User> {
-	private Book mBook;
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,15 +29,9 @@ public class UserListActivity extends ListActivity<User> {
 		
 		super.onCreate(savedInstanceState);
 		
-		setActionBarTitle(R.string.title_users_with_this_book);
+		setActionBarTitle(R.string.title_all_users);
 		
 		Intent intent = getIntent();
-		mBook = intent.getParcelableExtra("data");
-		if (mBook == null) {
-			finish();
-			return;
-		}
-		Timber.d("tks, %s", mBook.bookId);
 	}
 
 	@Override
@@ -49,23 +42,23 @@ public class UserListActivity extends ListActivity<User> {
 	@Override
 	protected void request(ApiRequest.ApiListener<JSONObject> listener) {
 		ApiRequest r = new ApiRequest();
-		r.recent(mBook.bookId, null, listener);
+		r.user(listener);
 	}
 
 	@Override
 	protected String getKey() {
-		return "histories";
+		return "users";
 	}
 
 	@Override
 	protected ArrayList<User> getData(JSONArray array) throws JSONException {
-		ArrayList<User> histories = new ArrayList<>();
+		ArrayList<User> users = new ArrayList<>();
 		for (int i = 0; i < array.length(); i++) {
-			History history = new History(array.getJSONObject(i));
-			//本IDをもとに取得した履歴には本情報が入っていないので取得中チェックをしなくて良い
-			histories.add(history.user);
+			JSONObject user = array.optJSONObject(i);
+			if (user != null) {
+				users.add(new User(user));
+			}
 		}
-		Collections.reverse(histories);
-		return histories;
+		return users;
 	}
 }

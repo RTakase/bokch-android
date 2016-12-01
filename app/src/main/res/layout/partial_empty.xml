@@ -4,6 +4,7 @@
     android:id="@+id/empty"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingTop="24dp"
     android:text="@string/notify_list_empty"
-    android:gravity="center"
+    android:gravity="top|center_horizontal"
 />

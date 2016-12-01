@@ -47,4 +47,6 @@
     <string name="title_users_with_this_book">この本を読んだ人</string>
     <string name="title_books_with_this_user">この人の読んだ本</string>
     <string name="empty_book">情報の取得に時間がかかっています。\nしばらくしてからご確認ください</string>
+    <string name="prompt_new">本を登録してレビューを書こう！</string>
+    <string name="title_all_users">登録されているユーザ一覧</string>
 </resources>
