@@ -119,7 +119,7 @@ public class HomeActivity extends FabActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		addMenuItem(menu, MENU_ID_USERS, R.string.action_search, R.drawable.people, MenuItem.SHOW_AS_ACTION_ALWAYS);
+		addMenuItem(menu, MENU_ID_USERS, R.string.action_settings, R.drawable.people, MenuItem.SHOW_AS_ACTION_ALWAYS);
 		return super.onCreateOptionsMenu(menu);
 	}
 
