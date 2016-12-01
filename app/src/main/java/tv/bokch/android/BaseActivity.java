@@ -164,6 +164,11 @@ public class BaseActivity extends AppCompatActivity {
 		startActivity(intent);
 	}
 
+	protected void startRankingActivity() {
+		Intent intent = new Intent(BaseActivity.this, WeeklyRankingActivity.class);
+		startActivity(intent);
+	}
+
 	protected void startUserActivity(User user) {
 		Intent intent = new Intent(BaseActivity.this, UserActivity.class);
 		intent.putExtra("data", user);

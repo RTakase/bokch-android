@@ -33,7 +33,7 @@ import tv.bokch.widget.SummarizedRecentListView;
 
 public class HomeActivity extends FabActivity {
 	protected static final int MENU_ID_USERS = Menu.FIRST + 1;
-	protected static final int MENU_ID_MYPAGE = Menu.FIRST + 2;
+	protected static final int MENU_ID_RANKING = Menu.FIRST + 2;
 
 	private StatableListView<History> mRecentView;
 	private StatableListView<User> mUserRankingView;
@@ -140,7 +140,8 @@ public class HomeActivity extends FabActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		addMenuItem(menu, MENU_ID_USERS, R.string.action_settings, R.drawable.people, MenuItem.SHOW_AS_ACTION_ALWAYS);
+		addMenuItem(menu, MENU_ID_USERS, R.string.title_all_users, R.drawable.people, MenuItem.SHOW_AS_ACTION_ALWAYS);
+		addMenuItem(menu, MENU_ID_RANKING, R.string.action_ranking, R.drawable.ranking, MenuItem.SHOW_AS_ACTION_ALWAYS);
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -150,6 +151,8 @@ public class HomeActivity extends FabActivity {
 		case MENU_ID_USERS:
 			startUserListActivity();
 			return true;
+		case MENU_ID_RANKING:
+			startRankingActivity();
 		default:
 			return super.onOptionsItemSelected(item);
 		}

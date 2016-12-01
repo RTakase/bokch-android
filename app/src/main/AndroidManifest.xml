@@ -35,6 +35,7 @@
         <activity android:name=".android.UserActivity" android:screenOrientation="portrait"/>
         <activity android:name=".android.RecentActivity" android:screenOrientation="portrait"/>
         <activity android:name=".android.ReviewActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".android.WeeklyRankingActivity" android:screenOrientation="portrait"/>        
 
         <activity android:name=".android.LoginActivity" android:launchMode="singleTop" android:screenOrientation="portrait">
             <intent-filter>

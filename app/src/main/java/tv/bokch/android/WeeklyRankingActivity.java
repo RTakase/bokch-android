@@ -12,27 +12,28 @@ import java.util.ArrayList;
 
 import tv.bokch.R;
 import tv.bokch.data.Book;
+import tv.bokch.data.User;
 import tv.bokch.util.ApiRequest;
 
-public class BookRankingActivity extends TabActivity {
-
-	public static final int INDEX_WEEKLY = 0;
-	public static final int INDEX_TOTAL = 1;
+public class WeeklyRankingActivity extends TabActivity {
+	
+	public static final int INDEX_BOOK = 0;
+	public static final int INDEX_USER = 1;
 	
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		setContentView(R.layout.activity_ranking);
 		super.onCreate(savedInstanceState);
-		setActionBarTitle(R.string.acitivity_title_book_ranking);
+		setActionBarTitle(R.string.ranking_weekly);
 	}
 	
 	@Override
 	protected String getTabTitle(int index) {
 		switch (index) {
-		case INDEX_WEEKLY:
-			return getString(R.string.ranking_weekly);
-		case INDEX_TOTAL:
-			return getString(R.string.ranking_total);
+		case INDEX_BOOK:
+			return "本";
+		case INDEX_USER:
+			return "人";
 		default:
 			return null;
 		}
@@ -41,9 +42,10 @@ public class BookRankingActivity extends TabActivity {
 	@Override
 	protected BaseFragment createFragment(int index) {
 		switch (index) {
-		case INDEX_WEEKLY:
-		case INDEX_TOTAL:
+		case INDEX_BOOK:
 			return BookRankingFragment.newInstance();
+		case INDEX_USER:
+			return UserRankingFragment.newInstance();
 		default:
 			return null;
 		}
@@ -53,11 +55,11 @@ public class BookRankingActivity extends TabActivity {
 	protected void requestData(int index, TabApiListener listener) {
 		ApiRequest request = new ApiRequest();
 		switch (index) {
-		case INDEX_WEEKLY:
+		case INDEX_BOOK:
 			request.ranking_book_weekly(listener);
 			break;
-		case INDEX_TOTAL:
-			request.ranking_book_total(listener);
+		case INDEX_USER:
+			request.ranking_user_weekly(listener);
 			break;
 		default:
 		}
@@ -71,19 +73,28 @@ public class BookRankingActivity extends TabActivity {
 	@Override
 	protected ArrayList<?> getData(int index, JSONArray array) throws JSONException {
 		switch (index) {
-		case INDEX_WEEKLY:
-		case INDEX_TOTAL:
-			ArrayList<Book> res = new ArrayList<>();
+		case INDEX_BOOK:
+			ArrayList<Book> books = new ArrayList<>();
 			for (int i = 0; i < array.length(); i++) {
 				JSONObject obj = array.optJSONObject(i);
 				if (obj != null) {
 					Book book = new Book(obj);
 					if (!TextUtils.isEmpty(book.title)) {
-						res.add(book);
+						books.add(book);
 					}
 				}
 			}
-			return res;
+			return books;
+		case INDEX_USER:
+			ArrayList<User> users = new ArrayList<>();
+			for (int i = 0; i < array.length(); i++) {
+				JSONObject obj = array.optJSONObject(i);
+				if (obj != null) {
+					User User = new User(obj);
+					users.add(User);
+				}
+			}
+			return users;
 		default:
 			return null;
 		}
@@ -92,9 +103,10 @@ public class BookRankingActivity extends TabActivity {
 	@Override
 	protected String getKey(int index) {
 		switch (index) {
-		case INDEX_WEEKLY:
-		case INDEX_TOTAL:
+		case INDEX_BOOK:
 			return "books";
+		case INDEX_USER:
+			return "users";
 		default:
 			return null;
 		}

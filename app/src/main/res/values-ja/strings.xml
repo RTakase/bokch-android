@@ -2,6 +2,7 @@
     <string name="app_name">BooksChannel</string>
     <string name="action_settings">ログアウト</string>
     <string name="action_mypage">マイページ</string>
+    <string name="action_ranking">ランキング</string>
     <string name="welcome">ようこそ！</string>
 
     <string name="ranking_more">もっと見る</string>
