@@ -41,37 +41,4 @@
         android:layout_toRightOf="@id/jacket_container"
         />
 
-    <TextView
-        android:id="@+id/author"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:gravity="center_vertical|left"
-        android:layout_toRightOf="@id/jacket_container"
-        android:layout_below="@id/title"
-        />
-
-    <RatingBar
-        android:id="@+id/rating_average"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="4dp"
-        android:max="5"
-        android:stepSize="0.01"
-        android:isIndicator="true"
-        android:layout_below="@id/author"
-        android:layout_toRightOf="@id/jacket_container"
-        style="?android:attr/ratingBarStyleIndicator"
-        />
-
-    <TextView
-        android:id="@+id/tag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:maxLines="1"
-        android:gravity="center_vertical|left"
-        android:layout_toRightOf="@id/jacket_container"
-        android:layout_below="@id/rating_average"
-        />
 </RelativeLayout>

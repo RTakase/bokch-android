@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import tv.bokch.R;
+import tv.bokch.data.Book;
 import tv.bokch.data.History;
 import tv.bokch.data.User;
 import tv.bokch.util.ApiRequest;
@@ -55,7 +56,7 @@ public class UserActivity extends TabActivity {
 		case INDEX_REVIEW:
 			return BookReviewFragment.newInstance();
 		case INDEX_STACK:
-			return BookReviewFragment.newInstance();
+			return BookFragment.newInstance();
 		default:
 			return null;
 		}
@@ -98,7 +99,7 @@ public class UserActivity extends TabActivity {
 		case INDEX_REVIEW:
 			return "histories";
 		case INDEX_STACK:
-			return "reviews";
+			return "histories";
 		default:
 			return null;
 		}
@@ -122,16 +123,17 @@ public class UserActivity extends TabActivity {
 			Collections.reverse(histories);
 			return histories;
 		case INDEX_STACK:
-			ArrayList<History> reviewss = new ArrayList<>();
+			ArrayList<Book> books = new ArrayList<>();
 			for (int i = 0; i < array.length(); i++) {
 				JSONObject obj = array.optJSONObject(i);
 				if (obj != null) {
 					History history = new History(obj);
-					history.user = mUser;
-					reviewss.add(history);
+					if (history.review != null && !TextUtils.isEmpty(history.book.title)) {
+						books.add(history.book);
+					}
 				}
 			}
-			return reviewss;
+			return books;
 		default:
 			return null;
 		}

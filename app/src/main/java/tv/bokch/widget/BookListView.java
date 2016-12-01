@@ -65,9 +65,7 @@ public class BookListView extends BaseListView<Book> {
 		
 		public void bindView(final Book book, int position) {
 			super.bindView(book, position);
-			if (!TextUtils.isEmpty(book.title)) {
-				mBook.bindView(book);
-			}
+			mBook.bindView(book);
 			mBook.setOnJacketClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
