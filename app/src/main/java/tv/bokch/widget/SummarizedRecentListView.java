@@ -32,6 +32,9 @@ public class SummarizedRecentListView extends RecentListView {
 
 	@Override
 	protected Cell createCell(View view) {
-		return new RecentCell(view);
+		RecentCell cell = new RecentCell(view);
+		cell.removeBookClicklistener();
+		cell.removeUserClickListener();
+		return cell;
 	}
 }

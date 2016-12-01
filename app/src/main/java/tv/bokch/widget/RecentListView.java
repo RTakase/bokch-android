@@ -52,11 +52,31 @@ public abstract class RecentListView extends BaseListView<History> {
 		public void bindView(final History history, int position) {
 			super.bindView(history, position);
 			mBook.bindView(history.book);
+			mBook.setOnJacketClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					startBookActivity(history.book);
+				}
+			});
 			mUser.bindView(history.user);
+			mUser.setOnIconClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					startUserActivity(history.user);
+				}
+			});
+			
 			mReview.bindView(history.review);
 			if (mCreated != null) {
 				mCreated.setText(DateFormat.format("yyyy/MM/dd", history.created * 1000));
 			}
+		}
+		
+		public void removeBookClicklistener() {
+			mBook.setOnJacketClickListener(null);
+		}
+		public void removeUserClickListener() {
+			mUser.setOnIconClickListener(null);
 		}
 	}
 }
