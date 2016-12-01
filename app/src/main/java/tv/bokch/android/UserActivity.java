@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.view.View;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,7 +21,6 @@ import tv.bokch.util.ApiRequest;
 import tv.bokch.widget.UserView;
 
 public class UserActivity extends TabActivity {
-	
 	public static final int INDEX_REVIEW = 0;
 	public static final int INDEX_STACK = 1;
 	
@@ -30,6 +30,8 @@ public class UserActivity extends TabActivity {
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		setContentView(R.layout.activity_user);
 		super.onCreate(savedInstanceState);
+
+		setActionBarTitle(getString(R.string.title_books_with_this_user));
 		
 		Intent intent = getIntent();
 		mUser = intent.getParcelableExtra("data");
@@ -70,7 +72,7 @@ public class UserActivity extends TabActivity {
 		case INDEX_REVIEW:
 			return getString(R.string.title_reviews);
 		case INDEX_STACK:
-			return getString(R.string.title_book_history);
+			return getString(R.string.title_books_with_this_user);
 		default:
 			return null;
 		}
@@ -112,6 +114,7 @@ public class UserActivity extends TabActivity {
 				if (obj != null) {
 					History history = new History(obj);
 					if (history.review != null && !TextUtils.isEmpty(history.book.title)) {
+						history.user = mUser;
 						histories.add(history);
 					}
 				}
@@ -124,6 +127,7 @@ public class UserActivity extends TabActivity {
 				JSONObject obj = array.optJSONObject(i);
 				if (obj != null) {
 					History history = new History(obj);
+					history.user = mUser;
 					reviewss.add(history);
 				}
 			}

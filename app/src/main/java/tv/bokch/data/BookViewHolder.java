@@ -65,4 +65,10 @@ public class BookViewHolder {
 			tag.setText(book.tag);
 		}
 	}
+
+	public void setOnJacketClickListener(View.OnClickListener listener) {
+		if (jacket != null) {
+			jacket.setOnClickListener(listener);
+		}
+	}
 }

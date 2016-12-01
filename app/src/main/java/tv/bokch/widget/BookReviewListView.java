@@ -43,9 +43,15 @@ public class BookReviewListView extends ReviewListView {
 			mBook = new BookViewHolder(view);
 		}
 		
-		public void bindView(History history, int position) {
+		public void bindView(final History history, int position) {
 			super.bindView(history, position);
 			mBook.bindView(history.book);
+			mBook.setOnJacketClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					startBookActivity(history.book);
+				}
+			});
 		}
 	}
 }

@@ -1,9 +1,11 @@
 package tv.bokch.android;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -15,6 +17,7 @@ import java.util.Collections;
 
 import timber.log.Timber;
 import tv.bokch.R;
+import tv.bokch.data.BookViewHolder;
 import tv.bokch.data.History;
 import tv.bokch.util.ApiRequest;
 
@@ -30,6 +33,11 @@ public class RecentActivity extends ListActivity<History> {
 		super.onCreate(savedInstanceState);
 		
 		setActionBarTitle(R.string.acitivity_title_recent);
+
+		initialize(this);
+	}
+
+	private void initialize(Context context) {
 	}
 	
 	@Override

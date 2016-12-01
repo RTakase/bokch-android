@@ -34,6 +34,7 @@
         <activity android:name=".android.BookActivity" android:screenOrientation="portrait"/>
         <activity android:name=".android.UserActivity" android:screenOrientation="portrait"/>
         <activity android:name=".android.RecentActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".android.ReviewActivity" android:launchMode="singleTop" android:screenOrientation="portrait"/>
 
         <activity android:name=".android.LoginActivity" android:launchMode="singleTop" android:screenOrientation="portrait">
             <intent-filter>

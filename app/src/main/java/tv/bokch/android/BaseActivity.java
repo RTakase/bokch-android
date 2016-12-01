@@ -10,9 +10,18 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import timber.log.Timber;
+import tv.bokch.App;
 import tv.bokch.R;
+import tv.bokch.data.Book;
+import tv.bokch.data.MyBook;
 import tv.bokch.data.User;
+import tv.bokch.util.ApiRequest;
 import tv.bokch.util.Display;
 import tv.bokch.util.ViewServer;
 import tv.bokch.util.ViewUtils;
@@ -115,6 +124,45 @@ public class BaseActivity extends AppCompatActivity {
 		Intent intent = new Intent(context, LoginActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivityForResult(intent, REQUEST_LOGIN);
+	}
+
+	protected void startBookActivity(Book book) {
+		startBookActivity(book.bookId);
+	}
+
+	protected void startBookActivity(String bookId) {
+		App app = (App)getApplicationContext();
+		ApiRequest request = new ApiRequest();
+		showSpinner();
+		request.book(bookId, app.getMyUser().userId, new ApiRequest.ApiListener<JSONObject>() {
+			@Override
+			public void onSuccess(JSONObject response) {
+				dismissSpinner();
+				try {
+					MyBook book = new MyBook(response);
+					book.title = null;
+					Intent intent = new Intent(BaseActivity.this, BookActivity.class);
+					intent.putExtra("data", book);
+					intent.putExtra("review", book.review);
+					intent.putExtra("history", book.history);
+					startActivity(intent);
+				} catch (JSONException e) {
+					Toast.makeText(BaseActivity.this, getString(R.string.failed_data_set), Toast.LENGTH_SHORT).show();
+					Timber.w(e, null);
+				}
+			}
+			@Override
+			public void onError(ApiRequest.ApiError error) {
+				dismissSpinner();
+				Toast.makeText(BaseActivity.this, getString(R.string.failed_data_set), Toast.LENGTH_SHORT).show();
+			}
+		});
+	}
+
+	protected void startUserActivity(User user) {
+		Intent intent = new Intent(BaseActivity.this, UserActivity.class);
+		intent.putExtra("data", user);
+		startActivity(intent);
 	}
 
 	protected void showSpinner() {

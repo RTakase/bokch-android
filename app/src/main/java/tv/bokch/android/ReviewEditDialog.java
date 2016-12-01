@@ -15,6 +15,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Iterator;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import timber.log.Timber;
 import tv.bokch.R;
@@ -24,9 +26,10 @@ import tv.bokch.data.History;
 import tv.bokch.data.Review;
 import tv.bokch.data.User;
 import tv.bokch.util.ApiRequest;
-import tv.bokch.widget.BookView;
 
 public class ReviewEditDialog extends BaseDialog {
+
+	private ExecutorService mExecutor = Executors.newSingleThreadExecutor();
 
 	private BookViewHolder mBookHolder;
 	private EditText mEditor;
@@ -93,8 +96,8 @@ public class ReviewEditDialog extends BaseDialog {
 		@Override
 		public void onClick(View v) {
 
-			int rating = (int)mRatingBar.getRating();
-			String comment = mEditor.getText().toString();
+			final int rating = (int)mRatingBar.getRating();
+			final String comment = mEditor.getText().toString();
 
 			if (rating == 0 && TextUtils.isEmpty(comment)) {
 				Toast.makeText(getActivity(), getString(R.string.empty_review), Toast.LENGTH_SHORT).show();
@@ -103,21 +106,36 @@ public class ReviewEditDialog extends BaseDialog {
 
 			if (mReview == null) {
 				showSpinner();
-				ApiRequest request = new ApiRequest();
-				try {
-					request.post_history(mBook.bookId, mUser.userId, rating, comment, mHistoryApiListener);
-				} catch (JSONException e) {
-					Timber.w(e, null);
-					Toast.makeText(getActivity(), getString(R.string.failed_load), Toast.LENGTH_SHORT).show();
-				}
+				final ApiRequest request = new ApiRequest();
+				mExecutor.submit(new Runnable() {
+					@Override
+					public void run() {
+						try {
+							dismissSpinner();
+							request.post_history(mBook.bookId, mUser.userId, rating, comment, mHistoryApiListener);
+						} catch (JSONException e) {
+							Timber.w(e, null);
+							dismissSpinner();
+							Toast.makeText(getActivity(), getString(R.string.failed_load), Toast.LENGTH_SHORT).show();
+						}
+					}
+				});
 			} else {
-				ApiRequest request = new ApiRequest();
-				try {
-					request.put_review(mReview.id, rating, comment, mReviewApiListener);
-				} catch (JSONException e) {
-					Timber.w(e, null);
-					Toast.makeText(getActivity(), getString(R.string.failed_load), Toast.LENGTH_SHORT).show();
-				}
+				showSpinner();
+				final ApiRequest request = new ApiRequest();
+				mExecutor.submit(new Runnable() {
+					@Override
+					public void run() {
+						try {
+							dismissSpinner();
+							request.put_review(mReview.id, rating, comment, mReviewApiListener);
+						} catch (JSONException e) {
+							Timber.w(e, null);
+							dismissSpinner();
+							Toast.makeText(getActivity(), getString(R.string.failed_load), Toast.LENGTH_SHORT).show();
+						}
+					}
+				});
 			}
 		}
 	};
@@ -138,25 +156,38 @@ public class ReviewEditDialog extends BaseDialog {
 		}
 
 		@Override
-		public void onError(ApiRequest.ApiError error) {
-			try {
-				String message = "";
-				JSONObject obj = new JSONObject(error.getResponseBodyString());
-				Iterator<String> iterator = obj.keys();
-				while (iterator.hasNext()) {
-					String key = iterator.next();
-					JSONArray errors = obj.optJSONArray(key);
-					for (int i = 0; i < errors.length(); i++) {
-						String e = errors.optString(i);
-						message += TextUtils.join(":", new String[]{key, e});
-						message += "\n";
-					}
-				}
-				showAlertDialog(getString(R.string.error), message);
-			} catch (JSONException e) {
-				Timber.w(e, null);
-			}
+		public void onError(final ApiRequest.ApiError error) {
+			dismissSpinner();
+			Toast.makeText(getActivity(), getString(R.string.error), Toast.LENGTH_SHORT).show();
+			Timber.d("tks, %s", error.getLocalizedMessage());
 			Timber.w(error, null);
+			mExecutor.submit(new Runnable() {
+				@Override
+				public void run() {
+					Timber.d("tks, %s", error.getResponseBodyString());
+				}
+			});
+			//					try {
+			//						String message = "";
+			//						JSONObject obj = new JSONObject(error.getResponseBodyString());
+			//						Iterator<String> iterator = obj.keys();
+			//						while (iterator.hasNext()) {
+			//							String key = iterator.next();
+			//							JSONArray errors = obj.optJSONArray(key);
+			//							for (int i = 0; i < errors.length(); i++) {
+			//								String e = errors.optString(i);
+			//								message += TextUtils.join(":", new String[]{key, e});
+			//								message += "\n";
+			//							}
+			//							String value = obj.optString(key);
+			//							message += value;
+			//						}
+			//						showAlertDialog(getString(R.string.error), message);
+			//					} catch (JSONException e) {
+			//						Timber.w(e, null);
+			//					}
+			//				}
+			//			});
 		}
 	};
 

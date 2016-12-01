@@ -3,6 +3,7 @@
     <string name="action_settings">ログアウト</string>
     <string name="action_search">検索</string>
     <string name="action_mypage">マイページ</string>
+    <string name="welcome">ようこそ！</string>
 
     <string name="ranking_more">もっと見る</string>
     <string name="recent_title">最近社内で読まれた本</string>
@@ -19,7 +20,7 @@
     <string name="ranking_weekly">週間ランキング</string>
     <string name="ranking_total">総合ランキング</string>
     <string name="notify_list_empty">データがありません</string>
-    <string name="prompt_login">あなたの名前を教えてください。</string>
+    <string name="prompt_login">あなたのプロフィールを教えてください。</string>
     <string name="login_google">Googleアカウントでログインする</string>
     <string name="loging_in">ログインしています</string>
     <string name="failed_login">ログインできませんでした...</string>
@@ -39,9 +40,11 @@
     <string name="succeed_put_review">レビューを更新しました！</string>
     <string name="error">エラー</string>
     <string name="loading">通信中</string>
-    <string name="empty_review">少なくとも評価とコメントのどちらかは記入してください</string>
+    <string name="empty_review">評価とコメントのどちらかは記入してください</string>
     <string name="title_book_history">読んだ本一覧</string>
     <string name="title_user_history">読んだ人一覧</string>
     <string name="title_stack">積み上げてる本一覧</string>
-    <string name="title_users_with_this_book">この本を読んでいるユーザ一覧</string>
+    <string name="title_users_with_this_book">この本を読んだ人</string>
+    <string name="title_books_with_this_user">この人の読んだ本</string>
+    <string name="empty_book">情報の取得に時間がかかっています。\nしばらくしてからご確認ください</string>
 </resources>

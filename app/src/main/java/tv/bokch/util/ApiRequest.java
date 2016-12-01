@@ -141,10 +141,14 @@ public class ApiRequest {
 		review.put("rating", rating);
 		review.put("comment", comment);
 		
+		JSONObject history = new JSONObject();
+		history.put("user_id", userId);
+		history.put("book_id", bookId);
+		history.put("review_attributes", review);
+		
 		JSONObject json = new JSONObject();
-		json.put("user_id", userId);
-		json.put("book_id", bookId);
-		json.put("review", review);
+		json.put("history", history);
+		
 
 		RequestBody body = RequestBody.create(JSON, json.toString());
 		postJsonObject(url.build(), body, new PostApiListener(listener));
@@ -153,13 +157,13 @@ public class ApiRequest {
 	public void put_review(long reviewId, int rating, String comment, ApiListener<JSONObject> listener) throws JSONException {
 		HttpUrl.Builder url = getUrlBuilder(String.format(API_PUT_REVIEW, reviewId));
 
-		JSONObject review = new JSONObject();
-		review.put("rating", rating);
-		review.put("comment", comment);
+		JSONObject review_attributes = new JSONObject();
+		review_attributes.put("rating", rating);
+		review_attributes.put("comment", comment);
 
 		JSONObject json = new JSONObject();
-		json.put("review", review);
-
+		json.put("review", review_attributes);
+		
 		RequestBody body = RequestBody.create(JSON, json.toString());
 		putJsonObject(url.build(), body, new PostApiListener(listener));
 	}

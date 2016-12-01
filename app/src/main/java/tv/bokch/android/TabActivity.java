@@ -1,5 +1,6 @@
 package tv.bokch.android;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -53,15 +54,25 @@ public abstract class TabActivity extends BaseActivity {
 	}
 
 	@Override
-	protected void onStart() {
-		Timber.d("tks, on start.");
+	protected void onNewIntent(Intent intent) {
+		super.onNewIntent(intent);
 		mLoaded = new boolean[mTabCount];
+	}
+
+	@Override
+	protected void onStart() {
 		super.onStart();
+		mLoaded = new boolean[mTabCount];
+	}
+
+	@Override
+	protected void onRestart() {
+		super.onRestart();
+		mLoaded = new boolean[mTabCount];
 	}
 
 	@Override
 	protected void onResume() {
-		Timber.d("tks, tab act on resume.");
 		super.onResume();
 		loadTabData();
 	}

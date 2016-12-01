@@ -8,15 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import timber.log.Timber;
-import tv.bokch.App;
 import tv.bokch.R;
-import tv.bokch.data.MyBook;
-import tv.bokch.util.ApiRequest;
-import tv.bokch.util.ViewUtils;
 
 public class FabActivity extends BaseActivity {
 
@@ -55,31 +47,6 @@ public class FabActivity extends BaseActivity {
 				}
 			}
 		}
-	}
-
-	protected void startBookActivity(String bookId) {
-		App app = (App)getApplicationContext();
-		ApiRequest request = new ApiRequest();
-		request.book(bookId, app.getMyUser().userId, new ApiRequest.ApiListener<JSONObject>() {
-			@Override
-			public void onSuccess(JSONObject response) {
-				ViewUtils.dismissSpinner(mSpinner);
-				try {
-					MyBook book = new MyBook(response);
-					Intent intent = new Intent(FabActivity.this, BookActivity.class);
-					intent.putExtra("data", book);
-					intent.putExtra("review", book.review);
-					intent.putExtra("history", book.history);
-					startActivity(intent);
-				} catch (JSONException e) {
-					Timber.w(e, null);
-				}
-			}
-			@Override
-			public void onError(ApiRequest.ApiError error) {
-				ViewUtils.dismissSpinner(mSpinner);
-			}
-		});
 	}
 
 	private View.OnClickListener mFabClickListener = new View.OnClickListener() {

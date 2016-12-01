@@ -35,4 +35,10 @@ public class UserViewHolder {
 			tag.setText(user.tag);
 		}
 	}
+
+	public void setOnIconClickListener(View.OnClickListener listener) {
+		if (userIcon != null) {
+			userIcon.setOnClickListener(listener);
+		}
+	}
 }

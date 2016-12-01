@@ -8,6 +8,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,9 +19,11 @@ import timber.log.Timber;
 import tv.bokch.App;
 import tv.bokch.R;
 import tv.bokch.android.BookActivity;
+import tv.bokch.android.ReviewActivity;
 import tv.bokch.android.UserActivity;
 import tv.bokch.android.UserListActivity;
 import tv.bokch.data.Book;
+import tv.bokch.data.History;
 import tv.bokch.data.MyBook;
 import tv.bokch.data.User;
 import tv.bokch.util.ApiRequest;
@@ -174,6 +177,12 @@ public abstract class BaseListView<Data> extends android.support.v7.widget.Recyc
 		getContext().startActivity(intent);
 	}
 
+	protected void startReviewActivity(History history) {
+		Intent intent = new Intent(getContext(), ReviewActivity.class);
+		intent.putExtra("data", history);
+		getContext().startActivity(intent);
+	}
+
 	protected void startBookActivity(Book book) {
 		final App app = (App)getContext().getApplicationContext();
 		ApiRequest request = new ApiRequest();
@@ -197,6 +206,8 @@ public abstract class BaseListView<Data> extends android.support.v7.widget.Recyc
 			@Override
 			public void onError(ApiRequest.ApiError error) {
 				dismissSpinner();
+				Toast.makeText(getContext(), getContext().getString(R.string.failed_load), Toast.LENGTH_SHORT).show();
+
 			}
 		});
 	}

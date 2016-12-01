@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 import java.util.ArrayList;
 
 import tv.bokch.R;
+import tv.bokch.util.Display;
 
 public class StatableListView<Data> extends FrameLayout {
 
@@ -52,6 +53,7 @@ public class StatableListView<Data> extends FrameLayout {
 			ViewGroup.LayoutParams.WRAP_CONTENT
 		);
 		params.gravity = Gravity.TOP | Gravity.CENTER_HORIZONTAL;
+		params.topMargin = Display.dpToPx(context, 8);
 		mProgress.setLayoutParams(params);
 		addView(mProgress, params);
 	}

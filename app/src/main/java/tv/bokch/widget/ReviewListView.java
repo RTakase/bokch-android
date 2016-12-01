@@ -43,6 +43,11 @@ public abstract class ReviewListView extends BaseListView<History> {
 		return R.layout.cell_footer;
 	}
 
+	@Override
+	protected void onCellClick(History history) {
+		startReviewActivity(history);
+	}
+
 	protected class ReviewCell extends Cell {
 		protected ReviewViewHolder mReview;
 

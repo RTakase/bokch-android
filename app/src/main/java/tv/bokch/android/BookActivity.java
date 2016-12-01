@@ -46,6 +46,8 @@ public class BookActivity extends TabActivity {
 		setContentView(R.layout.activity_book);
 		super.onCreate(savedInstanceState);
 
+		setActionBarTitle(getString(R.string.title_users_with_this_book));
+
 		Intent intent = getIntent();
 		mBook = intent.getParcelableExtra("data");
 		if (mBook == null) {
@@ -63,7 +65,10 @@ public class BookActivity extends TabActivity {
 		BookView book = (BookView)findViewById(R.id.book);
 		assert book != null;
 		book.bindView(mBook);
-		
+
+		//情報取得中なのでビューを変える
+		book.setEmpty(TextUtils.isEmpty(mBook.title));
+
 		mNewReviewButton = (Button)findViewById(R.id.new_review_btn);
 		assert mNewReviewButton != null;
 		mNewReviewButton.setOnClickListener(mReviewClickListener);
@@ -98,7 +103,7 @@ public class BookActivity extends TabActivity {
 		case INDEX_REVIEW:
 			return getString(R.string.title_reviews);
 		case INDEX_USERS:
-			return getString(R.string.title_user_history);
+			return getString(R.string.title_users_with_this_book);
 		default:
 			return null;
 		}
@@ -139,6 +144,7 @@ public class BookActivity extends TabActivity {
 				if (obj != null) {
 					History history = new History(obj);
 					if (history.review != null) {
+						history.book = mBook;
 						histories.add(history);
 					}
 				}
@@ -151,6 +157,7 @@ public class BookActivity extends TabActivity {
 				JSONObject obj = array.optJSONObject(i);
 				if (obj != null) {
 					History history = new History(obj);
+					history.book = mBook;
 					users.add(history.user);
 				}
 			}

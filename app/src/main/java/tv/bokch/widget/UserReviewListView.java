@@ -38,15 +38,21 @@ public class UserReviewListView extends ReviewListView {
 	
 	protected class UserReviewCell extends ReviewCell {
 		protected UserViewHolder mUser;
-		
+
 		public UserReviewCell(View view) {
 			super(view);
 			mUser = new UserViewHolder(view);
 		}
 		
-		public void bindView(History history, int position) {
+		public void bindView(final History history, int position) {
 			super.bindView(history, position);
 			mUser.bindView(history.user);
+			mUser.setOnIconClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					startUserActivity(history.user);
+				}
+			});
 		}
 	}
 }

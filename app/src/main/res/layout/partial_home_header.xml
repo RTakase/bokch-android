@@ -12,6 +12,7 @@
         android:id="@+id/header_text"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:layout_marginLeft="4dp"
         android:textSize="14sp"
         android:gravity="center_vertical|left"
         android:textColor="@android:color/white"

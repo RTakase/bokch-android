@@ -32,7 +32,7 @@ public abstract class RecentListView extends BaseListView<History> {
 
 	@Override
 	protected void onCellClick(History history) {
-		//startUserActivity(history.user);
+		startReviewActivity(history);
 	}
 
 	protected class RecentCell extends Cell {
@@ -49,7 +49,7 @@ public abstract class RecentListView extends BaseListView<History> {
 			mCreated = (TextView)view.findViewById(R.id.created);
 		}
 
-		public void bindView(History history, int position) {
+		public void bindView(final History history, int position) {
 			super.bindView(history, position);
 			mBook.bindView(history.book);
 			mUser.bindView(history.user);

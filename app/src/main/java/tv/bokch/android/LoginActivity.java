@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -38,6 +39,8 @@ public class LoginActivity extends BaseActivity {
 
 		setContentView(R.layout.activity_login);
 
+		setActionBarTitle(getString(R.string.welcome));
+
 		SharedPreferences pref = this.getSharedPreferences("bokch", MODE_PRIVATE);
 
 		String userId = pref.getString("user_id", null);
@@ -47,6 +50,11 @@ public class LoginActivity extends BaseActivity {
 		}
 
 		initViews();
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		return false;
 	}
 
 	@Override
