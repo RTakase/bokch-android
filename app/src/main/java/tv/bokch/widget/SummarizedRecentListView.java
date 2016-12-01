@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import tv.bokch.R;
+import tv.bokch.data.History;
 
 public class SummarizedRecentListView extends RecentListView {
 
@@ -31,10 +32,15 @@ public class SummarizedRecentListView extends RecentListView {
 	}
 
 	@Override
+	protected void onCellClick(History history) {
+		startBookActivity(history.book);
+	}
+
+	@Override
 	protected Cell createCell(View view) {
 		RecentCell cell = new RecentCell(view);
-		cell.removeBookClicklistener();
-		cell.removeUserClickListener();
+//		cell.disableBookClick();
+//		cell.disableUserClick();
 		return cell;
 	}
 }

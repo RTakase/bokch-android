@@ -38,6 +38,9 @@ public class HomeActivity extends FabActivity {
 	private StatableListView<History> mRecentView;
 	private StatableListView<User> mUserRankingView;
 	private StatableListView<Book> mBookRankingView;
+	private StatableListView<History> mRecentView2;
+	private StatableListView<User> mUserRankingView2;
+	private StatableListView<Book> mBookRankingView2;
 
 	private boolean mLoadedRecent;
 	private boolean mLoadedUserRanking;
@@ -86,6 +89,24 @@ public class HomeActivity extends FabActivity {
 		mBookRankingView = (StatableListView<Book>)partial.findViewById(R.id.content);
 		listview = new SummarizedBookRankingListView(this);
 		mBookRankingView.addListView(listview);
+
+		partial = findViewById(R.id.recent2);
+		initHeader(partial, R.string.recent_title, mRecentMoreClickListener);
+		mRecentView2 = (StatableListView<History>)partial.findViewById(R.id.content);
+		listview = new SummarizedRecentListView(this);
+		mRecentView2.addListView(listview);
+
+		partial = findViewById(R.id.ranking_user_weekly2);
+		initHeader(partial, R.string.ranking_user_weekly_title, mUserRankingMoreClickListener);
+		mUserRankingView2 = (StatableListView<User>)partial.findViewById(R.id.content);
+		listview = new SummarizedUserRankingListView(this);
+		mUserRankingView2.addListView(listview);
+
+		partial = findViewById(R.id.ranking_book_weekly2);
+		initHeader(partial, R.string.ranking_book_weekly_title, mBookRankingMoreClickListener);
+		mBookRankingView2 = (StatableListView<Book>)partial.findViewById(R.id.content);
+		listview = new SummarizedBookRankingListView(this);
+		mBookRankingView2.addListView(listview);
 		
 		Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
@@ -200,6 +221,7 @@ public class HomeActivity extends FabActivity {
 
 				Collections.reverse(histories);
 				mLoadedRecent = mRecentView.onData(histories);
+				mLoadedRecent = mRecentView2.onData(histories);
 			} catch (JSONException e) {
 				Toast.makeText(HomeActivity.this, getString(R.string.failed_data_set), Toast.LENGTH_SHORT).show();
 				Timber.w(e, null);
@@ -233,6 +255,7 @@ public class HomeActivity extends FabActivity {
 					}
 				}
 				mLoadedBookRanking = mBookRankingView.onData(books);
+				mLoadedBookRanking = mBookRankingView2.onData(books);
 			} catch (JSONException e) {
 				Toast.makeText(HomeActivity.this, getString(R.string.failed_data_set), Toast.LENGTH_SHORT).show();
 				Timber.w(e, null);
@@ -262,6 +285,7 @@ public class HomeActivity extends FabActivity {
 					}
 				}
 				mLoadedUserRanking = mUserRankingView.onData(users);
+				mLoadedUserRanking = mUserRankingView2.onData(users);
 			} catch (JSONException e) {
 				Toast.makeText(HomeActivity.this, getString(R.string.failed_data_set), Toast.LENGTH_SHORT).show();
 				Timber.w(e, null);

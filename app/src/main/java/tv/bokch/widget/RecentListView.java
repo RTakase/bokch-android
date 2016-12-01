@@ -32,7 +32,7 @@ public abstract class RecentListView extends BaseListView<History> {
 
 	@Override
 	protected void onCellClick(History history) {
-		startReviewActivity(history);
+		//startReviewActivity(history);
 	}
 
 	protected class RecentCell extends Cell {
@@ -40,6 +40,9 @@ public abstract class RecentListView extends BaseListView<History> {
 		protected UserViewHolder mUser;
 		protected ReviewViewHolder mReview;
 		protected TextView mCreated;
+		
+		private boolean mDisableBookClick;
+		private boolean mDisableUserClick;
 
 		public RecentCell(View view) {
 			super(view);
@@ -52,19 +55,23 @@ public abstract class RecentListView extends BaseListView<History> {
 		public void bindView(final History history, int position) {
 			super.bindView(history, position);
 			mBook.bindView(history.book);
-			mBook.setOnJacketClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					startBookActivity(history.book);
-				}
-			});
+			if (!mDisableBookClick) {
+				mBook.setOnJacketClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						startBookActivity(history.book);
+					}
+				});
+			}
 			mUser.bindView(history.user);
-			mUser.setOnIconClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					startUserActivity(history.user);
-				}
-			});
+			if (!mDisableUserClick) {
+				mUser.setOnIconClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						startUserActivity(history.user);
+					}
+				});
+			}
 			
 			mReview.bindView(history.review);
 			if (mCreated != null) {
@@ -72,11 +79,11 @@ public abstract class RecentListView extends BaseListView<History> {
 			}
 		}
 		
-		public void removeBookClicklistener() {
-			mBook.setOnJacketClickListener(null);
+		public void disableBookClick() {
+			mDisableBookClick = true;
 		}
-		public void removeUserClickListener() {
-			mUser.setOnIconClickListener(null);
+		public void disableUserClick() {
+			mDisableUserClick = true;
 		}
 	}
 }
