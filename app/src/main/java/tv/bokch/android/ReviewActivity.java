@@ -106,16 +106,17 @@ public class ReviewActivity extends TabActivity {
 	}
 	
 	@Override
-	protected void requestData(int index, TabApiListener listener) {
+	protected boolean requestData(int index, TabApiListener listener) {
 		ApiRequest request = new ApiRequest();
 		switch (index) {
 		case INDEX_BOOKS:
-			request.recent(mHistory.book.bookId, null, listener);
-			break;
+			request.recent(mHistory.book.bookId, null, null, listener);
+			return true;
 		case INDEX_USERS:
-			request.recent(null, mHistory.user.userId, listener);
-			break;
+			request.recent(null, mHistory.user.userId, null, listener);
+			return true;
 		default:
+			return false;
 		}
 	}
 	

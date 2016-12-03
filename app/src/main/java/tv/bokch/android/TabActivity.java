@@ -28,8 +28,8 @@ public abstract class TabActivity extends BaseActivity {
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
 		initTabs();
+		super.onCreate(savedInstanceState);
 	}
 
 	protected void initTabs() {
@@ -41,7 +41,7 @@ public abstract class TabActivity extends BaseActivity {
 		ViewPager pager = (ViewPager)findViewById(R.id.pager);
 		assert pager != null;
 		pager.setAdapter(mAdapter);
-		
+
 		TabLayout tab = (TabLayout)findViewById(R.id.tab);
 		assert tab != null;
 		tab.setupWithViewPager(pager);
@@ -86,16 +86,21 @@ public abstract class TabActivity extends BaseActivity {
 		for (int i = 0; i < mTabCount; i++) {
 			if (!mLoaded[i]) {
 				TabApiListener listener = new TabApiListener(i);
-				requestData(i, listener);
-				mPages[i].setState(StatableListView.State.Loading);
+				if (requestData(i, listener)) {
+					mPages[i].setState(StatableListView.State.Loading);
+				}
 			}
 		}
+	}
+	
+	protected void setData(int index, ArrayList<?> array) {
+		mLoaded[index] = mPages[index].onData(array);
 	}
 
 	protected abstract int getTabCount();
 	protected abstract String getTabTitle(int index);
 	protected abstract BaseFragment createFragment(int index);
-	protected abstract void requestData(int index, TabApiListener listener);
+	protected abstract boolean requestData(int index, TabApiListener listener);
 	protected abstract ArrayList<?> getData(int index, JSONArray array) throws JSONException;
 	protected abstract String getKey(int index);
 
@@ -123,8 +128,7 @@ public abstract class TabActivity extends BaseActivity {
 				if (array == null) {
 					return;
 				}
-				ArrayList<?> results = getData(mIndex, array);
-				mLoaded[mIndex] = mPages[mIndex].onData(results);
+				setData(mIndex, getData(mIndex, array));
 			} catch (JSONException e) {
 				mPages[mIndex].setState(StatableListView.State.Failed);
 				Toast.makeText(TabActivity.this, getString(R.string.failed_data_set), Toast.LENGTH_SHORT).show();

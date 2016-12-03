@@ -5,84 +5,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     android:background="@color/activity_background"
-    tools:context="tv.bokch.android.HomeActivity"
     >
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:fitsSystemWindows="true"
+        android:background="@null"
+        app:elevation="0dp"
+        >
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay"/>
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            app:tabTextColor="#000000"
+            app:layout_scrollFlags="scroll|enterAlways"
+            />
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.widget.NestedScrollView
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        >
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:background="@color/activity_background"
-                >
-
-                <android.support.v4.widget.Space
-                    android:layout_width="1dp"
-                    android:layout_height="12dp"
-                    />
-
-                <include
-                    layout="@layout/partial_list_summarized"
-                    android:id="@+id/recent"
-                    />
-
-                <include
-                    layout="@layout/partial_list_summarized"
-                    android:id="@+id/ranking_user_weekly"
-                    />
-
-                <include
-                    layout="@layout/partial_list_summarized"
-                    android:id="@+id/ranking_book_weekly"
-                    />
-
-                <include
-                    layout="@layout/partial_list_summarized"
-                    android:id="@+id/recent2"
-                    />
-
-                <include
-                    layout="@layout/partial_list_summarized"
-                    android:id="@+id/ranking_user_weekly2"
-                    />
-
-                <include
-                    layout="@layout/partial_list_summarized"
-                    android:id="@+id/ranking_book_weekly2"
-                    />
-
-                <android.support.v4.widget.Space
-                    android:layout_width="1dp"
-                    android:layout_height="84dp"
-                    />
-            </LinearLayout>
-        </ScrollView>
-    </android.support.v4.widget.NestedScrollView>
+        />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

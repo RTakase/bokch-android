@@ -2,20 +2,15 @@ package tv.bokch.android;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.text.TextUtils;
-
-import java.util.ArrayList;
-import java.util.Collections;
 
 import tv.bokch.data.History;
 import tv.bokch.widget.BaseListView;
-import tv.bokch.widget.RecentListView;
-import tv.bokch.widget.ReviewListView;
+import tv.bokch.widget.FullRecentListView;
 
 public class RecentFragment extends BaseFragment<History> {
 	@Override
 	protected BaseListView<History> createListView(Context context) {
-		return null;
+		return new FullRecentListView(context);
 	}
 	public static RecentFragment newInstance() {
 		RecentFragment fragment = new RecentFragment();

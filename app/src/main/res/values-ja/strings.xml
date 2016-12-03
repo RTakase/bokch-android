@@ -6,7 +6,7 @@
     <string name="welcome">ようこそ！</string>
 
     <string name="ranking_more">もっと見る</string>
-    <string name="recent_title">最近社内で読まれた本</string>
+    <string name="title_recent">社内全体</string>
     <string name="ranking_user_weekly_title">本を読んでる人ランキング</string>
     <string name="ranking_book_weekly_title">社内で読まれた本ランキング</string>
     <string name="failed_data_set">予期せぬデータが見つかりました</string>
@@ -49,4 +49,5 @@
     <string name="empty_book">情報の取得に時間がかかっています。\nしばらくしてからご確認ください</string>
     <string name="prompt_new">本を登録してレビューを書こう！</string>
     <string name="title_all_users">登録されているユーザ一覧</string>
+    <string name="title_follower">フォロワー</string>
 </resources>

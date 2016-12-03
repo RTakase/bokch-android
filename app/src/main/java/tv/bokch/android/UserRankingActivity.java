@@ -49,16 +49,17 @@ public class UserRankingActivity extends TabActivity {
 	}
 	
 	@Override
-	protected void requestData(int index, TabApiListener listener) {
+	protected boolean requestData(int index, TabApiListener listener) {
 		ApiRequest request = new ApiRequest();
 		switch (index) {
 		case INDEX_WEEKLY:
 			request.ranking_user_weekly(listener);
-			break;
+			return true;
 		case INDEX_TOTAL:
 			request.ranking_user_total(listener);
-			break;
+			return true;
 		default:
+			return false;
 		}
 	}
 	

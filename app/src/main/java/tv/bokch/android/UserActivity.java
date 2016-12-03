@@ -31,7 +31,7 @@ public class UserActivity extends TabActivity {
 		setContentView(R.layout.activity_user);
 		super.onCreate(savedInstanceState);
 
-		setActionBarTitle(getString(R.string.title_books_with_this_user));
+		//setActionBarTitle(getString(R.string.title_books_with_this_user));
 		
 		Intent intent = getIntent();
 		mUser = intent.getParcelableExtra("data");
@@ -79,16 +79,17 @@ public class UserActivity extends TabActivity {
 	}
 	
 	@Override
-	protected void requestData(int index, TabApiListener listener) {
+	protected boolean requestData(int index, TabApiListener listener) {
 		ApiRequest request = new ApiRequest();
 		switch (index) {
 		case INDEX_REVIEW:
-			request.recent(null, mUser.userId, listener);
-			break;
+			request.recent(null, mUser.userId, null, listener);
+			return true;
 		case INDEX_STACK:
-			request.recent(null, mUser.userId, listener);
-			break;
+			request.recent(null, mUser.userId, null, listener);
+			return true;
 		default:
+			return false;
 		}
 	}
 	

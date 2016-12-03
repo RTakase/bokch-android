@@ -19,6 +19,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import timber.log.Timber;
+import tv.bokch.App;
 import tv.bokch.data.Review;
 
 public class ApiRequest {
@@ -108,16 +109,19 @@ public class ApiRequest {
 	}
 
 	public void recent(ApiListener<JSONObject> listener) {
-		recent(null, null, listener);
+		recent(null, null, null, listener);
 	}
 
-	public void recent(String bookId, String userId, ApiListener<JSONObject> listener) {
+	public void recent(String bookId, String userId, String myUserId, ApiListener<JSONObject> listener) {
 		HttpUrl.Builder url = getUrlBuilder(API_RECENT);
 		if (bookId != null) {
 			url.addQueryParameter("book_id", bookId);
 		}
 		if (userId != null) {
 			url.addQueryParameter("user_id", userId);
+		}
+		if (myUserId != null) {
+			url.addQueryParameter("my_user_id", myUserId);
 		}
 		getJsonObject(url.build(), listener);
 	}

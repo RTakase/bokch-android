@@ -50,7 +50,7 @@ public class BookListActivity extends BaseActivity {
 		super.onResume();
 		if (!mLoaded) {
 			ApiRequest request = new ApiRequest();
-			request.recent(null, mUserId, mRecentApiListener);
+			request.recent(null, mUserId, null, mRecentApiListener);
 		}
 	}
 	
