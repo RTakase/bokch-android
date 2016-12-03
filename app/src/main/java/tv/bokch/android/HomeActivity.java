@@ -173,7 +173,7 @@ public class HomeActivity extends TabActivity {
 		switch(requestCode) {
 		case REQUEST_LOGIN:
 			if (resultCode == RESULT_OK) {
-				App app = (App)getApplicationContext();
+				App app = (App)getApplication();
 				mMyUser = app.getMyUser();
 				mDisableLoad = false;
 				loadTabData();
