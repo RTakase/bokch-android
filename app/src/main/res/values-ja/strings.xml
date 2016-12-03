@@ -44,8 +44,8 @@
     <string name="title_book_history">読んだ本一覧</string>
     <string name="title_user_history">読んだ人一覧</string>
     <string name="title_stack">積み上げてる本一覧</string>
-    <string name="title_users_with_this_book">この本を読んだ人</string>
-    <string name="title_books_with_this_user">最近読んだ本</string>
+    <string name="title_users_with_this_book">読んだ人一覧</string>
+    <string name="title_books_with_this_user">読んだ本一覧</string>
     <string name="empty_book">情報の取得に時間がかかっています。\nしばらくしてからご確認ください</string>
     <string name="prompt_new">本を登録してレビューを書こう！</string>
     <string name="title_all_users">登録されているユーザ一覧</string>

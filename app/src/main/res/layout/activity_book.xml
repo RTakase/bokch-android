@@ -21,6 +21,15 @@
             app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
             />
 
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
+            />
+
         <info.hoang8f.widget.FButton
             android:id="@+id/new_review_btn"
             android:layout_width="match_parent"
@@ -34,15 +43,27 @@
             android:text="@string/label_submit_review"
             />
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tab"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#ffffff"
-            android:layout_marginTop="12dp"
-            />
 
     </android.support.design.widget.AppBarLayout>
+
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/jacket_container"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:translationZ="-1dp"-->
+        <!--&gt;-->
+        <!--<tv.bokch.widget.NetworkImageView-->
+            <!--android:id="@+id/jacket"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:scaleType="centerInside"-->
+            <!--android:layout_alignParentTop="true"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:alpha="0.8"-->
+            <!--/>-->
+    <!--</RelativeLayout>-->
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"

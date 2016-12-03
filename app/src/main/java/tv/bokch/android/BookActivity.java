@@ -27,6 +27,7 @@ import tv.bokch.data.Review;
 import tv.bokch.data.User;
 import tv.bokch.util.ApiRequest;
 import tv.bokch.widget.BookView;
+import tv.bokch.widget.NetworkImageView;
 
 public class BookActivity extends TabActivity {
 
@@ -67,6 +68,9 @@ public class BookActivity extends TabActivity {
 
 		//情報取得中なのでビューを変える
 		book.setEmpty(TextUtils.isEmpty(mBook.title));
+
+//		NetworkImageView jacket = (NetworkImageView)findViewById(R.id.jacket);
+//		jacket.setImageUrl(mBook.largeImageUrl);
 
 		mNewReviewButton = (Button)findViewById(R.id.new_review_btn);
 		assert mNewReviewButton != null;
