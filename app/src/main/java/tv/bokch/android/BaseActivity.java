@@ -140,7 +140,6 @@ public class BaseActivity extends AppCompatActivity {
 				dismissSpinner();
 				try {
 					MyBook book = new MyBook(response);
-					book.title = null;
 					Intent intent = new Intent(BaseActivity.this, BookActivity.class);
 					intent.putExtra("data", book);
 					intent.putExtra("review", book.review);
