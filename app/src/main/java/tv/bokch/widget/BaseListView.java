@@ -1,5 +1,6 @@
 package tv.bokch.widget;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -21,6 +22,7 @@ import tv.bokch.R;
 import tv.bokch.android.BaseActivity;
 import tv.bokch.android.BookActivity;
 import tv.bokch.android.ReviewActivity;
+import tv.bokch.android.ReviewDialog;
 import tv.bokch.android.UserActivity;
 import tv.bokch.android.UserListActivity;
 import tv.bokch.data.Book;
@@ -200,9 +202,11 @@ public abstract class BaseListView<Data> extends android.support.v7.widget.Recyc
 	}
 
 	protected void startReviewActivity(History history) {
-		Intent intent = new Intent(getContext(), ReviewActivity.class);
-		intent.putExtra("data", history);
-		getContext().startActivity(intent);
+//		Intent intent = new Intent(getContext(), ReviewActivity.class);
+//		intent.putExtra("data", history);
+//		getContext().startActivity(intent);
+		ReviewDialog dialog = ReviewDialog.newInstance(history);
+		dialog.show(((Activity)getContext()).getFragmentManager(), "ReviewDialog");
 	}
 
 	protected void startBookActivity(Book book) {

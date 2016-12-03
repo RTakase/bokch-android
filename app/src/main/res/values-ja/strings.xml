@@ -28,7 +28,7 @@
     <string name="label_submit_review">レビューを書く</string>
     <string name="label_edit_review">レビューを修正する</string>
     <string name="action_amazon">アマゾンで開く</string>
-    <string name="title_reviews">最近投稿したレビュー</string>
+    <string name="title_reviews">最近のレビュー</string>
     <string name="failed_load_isbn">ISBNコードを読み取れませんでした</string>
     <string name="label_review">レビュー</string>
     <string name="prompt_review">レビューを書こう！</string>
@@ -57,4 +57,7 @@
     <string name="prompt_follow">あの人の読んでる本をチェックしよう！</string>
     <string name="label_find_from_ranking">ランキングから探す</string>
     <string name="label_find_from_list">一覧から探す</string>
+    <string name="review">評価</string>
+    <string name="comment">コメント</string>
+    <string name="empty_comment">コメントがありません</string>
 </resources>

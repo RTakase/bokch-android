@@ -32,7 +32,7 @@ public abstract class RecentListView extends BaseListView<History> {
 
 	@Override
 	protected void onCellClick(History history) {
-		//startReviewActivity(history);
+		startReviewActivity(history);
 	}
 
 	protected class RecentCell extends Cell {
