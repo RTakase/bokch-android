@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -81,20 +82,39 @@
         android:layout_alignParentLeft="true"
         />
 
+
+    <info.hoang8f.widget.FButton
+        android:id="@+id/more_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        app:buttonColor="#ff225b1e"
+        android:textColor="#ffffff"
+        android:text="@string/label_reviews_more"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:layout_marginTop="4dp"
+        android:layout_marginBottom="12dp"
         android:layout_below="@id/label_comment"
+        android:layout_above="@id/more_btn"
         >
         <TextView
             android:id="@+id/comment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="14sp"
+            android:textSize="13sp"
             />
     </ScrollView>
+
 
 
 </RelativeLayout>

@@ -60,4 +60,5 @@
     <string name="review">評価</string>
     <string name="comment">コメント</string>
     <string name="empty_comment">コメントがありません</string>
+    <string name="label_reviews_more">この本のレビューをもっと見る</string>
 </resources>

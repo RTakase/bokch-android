@@ -57,6 +57,15 @@ public class ReviewDialog extends BaseDialog {
 			}
 		}
 
+		View view = root.findViewById(R.id.more_btn);
+		view.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				((BaseActivity)getActivity()).startBookActivity(history.book);
+				dismiss();
+			}
+		});
+
 		Dialog dialog = super.onCreateDialog(savedInstanceState);
 		dialog.setContentView(root);
 		return dialog;
