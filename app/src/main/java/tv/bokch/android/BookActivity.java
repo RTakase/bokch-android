@@ -39,7 +39,6 @@ public class BookActivity extends TabActivity {
 	private History mHistory;
 	
 	private Button mNewReviewButton;
-	private Button mEditReviewButton;
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,10 +71,6 @@ public class BookActivity extends TabActivity {
 		mNewReviewButton = (Button)findViewById(R.id.new_review_btn);
 		assert mNewReviewButton != null;
 		mNewReviewButton.setOnClickListener(mReviewClickListener);
-		
-		mEditReviewButton = (Button)findViewById(R.id.edit_review_btn);
-		assert mEditReviewButton != null;
-		mEditReviewButton.setOnClickListener(mReviewClickListener);
 
 		setReviewButtonVisibility();
 	}
@@ -172,10 +167,8 @@ public class BookActivity extends TabActivity {
 	private void setReviewButtonVisibility() {
 		if (mReview == null) {
 			mNewReviewButton.setVisibility(View.VISIBLE);
-			mEditReviewButton.setVisibility(View.GONE);
 		} else {
 			mNewReviewButton.setVisibility(View.GONE);
-			mEditReviewButton.setVisibility(View.VISIBLE);
 		}
 	}
 	@Override

@@ -115,6 +115,7 @@ public class LoginActivity extends BaseActivity {
 		@Override
 		public void onSuccess(JSONObject response) {
 			mLogining = false;
+			Timber.d("tks, %s", response.toString());
 			try {
 				if (response.isNull("user")) {
 					mMessageTextView.setText(getString(R.string.failed_login));
@@ -125,6 +126,7 @@ public class LoginActivity extends BaseActivity {
 					mProgressBar.setVisibility(View.GONE);
 					App app = (App)getApplication();
 					app.setMyUser(new User(response.optJSONObject("user")));
+					setResult(RESULT_OK);
 					finish();
 				}
 			} catch (JSONException e) {

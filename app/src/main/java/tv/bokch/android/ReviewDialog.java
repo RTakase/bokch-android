@@ -2,9 +2,11 @@ package tv.bokch.android;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.WindowManager;
 
 import tv.bokch.R;
 import tv.bokch.data.BookViewHolder;
@@ -28,6 +30,17 @@ public class ReviewDialog extends BaseDialog {
 
 		View root = getActivity().getLayoutInflater().inflate(R.layout.dialog_review, null);
 
+		root.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dismiss();
+			}
+		});
+
+		//コンテンツのクリックがルートへ伝搬することを防ぐ
+		View content = root.findViewById(R.id.content);
+		content.setOnClickListener(null);
+
 		UserViewHolder user = new UserViewHolder(root);
 		user.bindView(history.user);
 		user.setOnIconClickListener(new View.OnClickListener() {
@@ -50,10 +63,10 @@ public class ReviewDialog extends BaseDialog {
 
 		ReviewViewHolder review = new ReviewViewHolder(root);
 		review.bindView(history.review);
-		if (TextUtils.isEmpty(history.review.comment)) {
+		if (history.review != null && TextUtils.isEmpty(history.review.comment)) {
 			if (review.comment != null) {
 				review.comment.setText(getString(R.string.empty_comment));
-				review.comment.setTextColor(0x60000000);
+				review.comment.setTextColor(0x60ffffff);
 			}
 		}
 
@@ -69,5 +82,15 @@ public class ReviewDialog extends BaseDialog {
 		Dialog dialog = super.onCreateDialog(savedInstanceState);
 		dialog.setContentView(root);
 		return dialog;
+	}
+
+	@Override
+	protected int getWidth(int orientation) {
+		return WindowManager.LayoutParams.MATCH_PARENT;
+	}
+
+	@Override
+	protected int getHeight(int orientation) {
+		return WindowManager.LayoutParams.MATCH_PARENT;
 	}
 }
