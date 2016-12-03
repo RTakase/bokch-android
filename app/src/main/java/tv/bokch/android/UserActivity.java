@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.view.View;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -13,11 +14,14 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import timber.log.Timber;
+import tv.bokch.App;
 import tv.bokch.R;
 import tv.bokch.data.Book;
 import tv.bokch.data.History;
 import tv.bokch.data.User;
 import tv.bokch.util.ApiRequest;
+import tv.bokch.util.ViewUtils;
 import tv.bokch.widget.UserView;
 
 public class UserActivity extends TabActivity {
@@ -25,13 +29,15 @@ public class UserActivity extends TabActivity {
 	public static final int INDEX_STACK = 1;
 	
 	private User mUser;
+	private UserView mUserView;
+	private boolean mFollowed;
 	
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		setContentView(R.layout.activity_user);
 		super.onCreate(savedInstanceState);
 
-		//setActionBarTitle(getString(R.string.title_books_with_this_user));
+		setActionBarTitle(getString(R.string.title_books_with_this_user));
 		
 		Intent intent = getIntent();
 		mUser = intent.getParcelableExtra("data");
@@ -39,14 +45,21 @@ public class UserActivity extends TabActivity {
 			finish();
 			return;
 		}
+
+		mMyUser = ((App)getApplicationContext()).getMyUser();
+
+		mFollowed = intent.getBooleanExtra("follow", false);
 		
 		initialize();
 	}
 	
 	private void initialize() {
-		UserView user = (UserView)findViewById(R.id.user);
-		assert user != null;
-		user.bindView(mUser);
+		mUserView = (UserView)findViewById(R.id.user);
+		assert mUserView != null;
+		mUserView.bindView(mUser);
+		mUserView.setFollowed(mFollowed);
+		mUserView.setFollowClickListener(true, mFollowClickListener);
+		mUserView.setFollowClickListener(false, mUnfollowClickListener);
 	}
 	
 	@Override
@@ -138,4 +151,61 @@ public class UserActivity extends TabActivity {
 			return null;
 		}
 	}
+	
+	
+	private View.OnClickListener mFollowClickListener = new View.OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			ApiRequest request = new ApiRequest();
+			try {
+				showSpinner();
+				request.follow(mUser.userId, mMyUser.userId, mFollowApiListener);
+			} catch (JSONException e) {
+				Timber.w(e, null);
+			}
+		}
+	};
+	
+	private View.OnClickListener mUnfollowClickListener = new View.OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			ApiRequest request = new ApiRequest();
+			try {
+				showSpinner();
+				request.unfollow(mUser.userId, mMyUser.userId, mUnfollowApiListener);
+			} catch (JSONException e) {
+				Timber.w(e, null);
+			}
+		}
+	};
+
+	private ApiRequest.ApiListener<JSONObject> mFollowApiListener = new ApiRequest.ApiListener<JSONObject>() {
+		@Override
+		public void onSuccess(JSONObject response) {
+			dismissSpinner();
+			mUserView.setFollowed(true);
+			ViewUtils.showSuccessToast(UserActivity.this, R.string.succeed_follow);
+		}
+		@Override
+		public void onError(ApiRequest.ApiError error) {
+			dismissSpinner();
+			Timber.w(error, null);
+			ViewUtils.showErrorToast(UserActivity.this, R.string.failed_load);
+		}
+	};
+	
+	private ApiRequest.ApiListener<JSONObject> mUnfollowApiListener = new ApiRequest.ApiListener<JSONObject>() {
+		@Override
+		public void onSuccess(JSONObject response) {
+			dismissSpinner();
+			mUserView.setFollowed(false);
+			ViewUtils.showSuccessToast(UserActivity.this, R.string.succeed_unfollow);
+		}
+		@Override
+		public void onError(ApiRequest.ApiError error) {
+			dismissSpinner();
+			Timber.w(error, null);
+			ViewUtils.showErrorToast(UserActivity.this, R.string.failed_load);
+		}
+	};
 }

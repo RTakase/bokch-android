@@ -170,9 +170,32 @@ public class BaseActivity extends AppCompatActivity {
 	}
 
 	protected void startUserActivity(User user) {
-		Intent intent = new Intent(BaseActivity.this, UserActivity.class);
-		intent.putExtra("data", user);
-		startActivity(intent);
+		App app = (App)getApplicationContext();
+		ApiRequest request = new ApiRequest();
+		showSpinner();
+		request.user(user.userId, app.getMyUser().userId, new ApiRequest.ApiListener<JSONObject>() {
+			@Override
+			public void onSuccess(JSONObject response) {
+				dismissSpinner();
+				try {
+					User user = new User(response);
+					boolean isFollow = response.optBoolean("my_followee");
+					Intent intent = new Intent(BaseActivity.this, UserActivity.class);
+					intent.putExtra("follow", isFollow);
+					intent.putExtra("data", user);
+					startActivity(intent);
+				} catch (JSONException e) {
+					Toast.makeText(BaseActivity.this, getString(R.string.failed_data_set), Toast.LENGTH_SHORT).show();
+					Timber.w(e, null);
+				}
+			}
+			@Override
+			public void onError(ApiRequest.ApiError error) {
+				dismissSpinner();
+				Timber.w(error, null);
+				Toast.makeText(BaseActivity.this, getString(R.string.failed_load), Toast.LENGTH_SHORT).show();
+			}
+		});
 	}
 
 	protected void showSpinner() {

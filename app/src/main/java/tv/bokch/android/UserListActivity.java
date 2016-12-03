@@ -9,12 +9,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
-import timber.log.Timber;
 import tv.bokch.R;
-import tv.bokch.data.Book;
-import tv.bokch.data.History;
 import tv.bokch.data.User;
 import tv.bokch.util.ApiRequest;
 import tv.bokch.widget.BaseListView;
@@ -42,7 +38,7 @@ public class UserListActivity extends ListActivity<User> {
 	@Override
 	protected void request(ApiRequest.ApiListener<JSONObject> listener) {
 		ApiRequest r = new ApiRequest();
-		r.user(listener);
+		r.users(listener);
 	}
 
 	@Override

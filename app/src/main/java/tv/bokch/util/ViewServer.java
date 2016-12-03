@@ -46,7 +46,7 @@ import android.view.ViewDebug;
 /**
  * <p>This class can be used to enable the use of HierarchyViewer inside an
  * application. HierarchyViewer is an Android SDK tool that can be used
- * to inspect and debug the user interface of running applications. For
+ * to inspect and debug the users interface of running applications. For
  * security reasons, HierarchyViewer does not work on production builds
  * (for instance phones bought in store.) By using this class, you can
  * make HierarchyViewer work on any device. You must be very careful
@@ -112,7 +112,7 @@ public class ViewServer implements Runnable {
 	 */
 	private static final int VIEW_SERVER_DEFAULT_PORT = 4939;
 	private static final int VIEW_SERVER_MAX_CONNECTIONS = 10;
-	private static final String BUILD_TYPE_USER = "user";
+	private static final String BUILD_TYPE_USER = "users";
 
 	// Debug facility
 	private static final String LOG_TAG = "ViewServer";

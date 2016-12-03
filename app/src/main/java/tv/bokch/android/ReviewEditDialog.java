@@ -44,7 +44,7 @@ public class ReviewEditDialog extends BaseDialog {
 	public static ReviewEditDialog newInstance(Book book, User user, Review review, History history) {
 		ReviewEditDialog dialog = new ReviewEditDialog();
 		Bundle args = new Bundle();
-		args.putParcelable("user", user);
+		args.putParcelable("users", user);
 		args.putParcelable("book", book);
 		args.putParcelable("review", review);
 		args.putParcelable("history", history);
@@ -54,7 +54,7 @@ public class ReviewEditDialog extends BaseDialog {
 
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
-		mUser = getArguments().getParcelable("user");
+		mUser = getArguments().getParcelable("users");
 		mBook = getArguments().getParcelable("book");
 		mReview = getArguments().getParcelable("review");
 		mHistory = getArguments().getParcelable("history");

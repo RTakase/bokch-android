@@ -1,6 +1,5 @@
 package tv.bokch.util;
 
-import android.net.Uri;
 import android.text.TextUtils;
 
 import org.json.JSONException;
@@ -19,8 +18,6 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import timber.log.Timber;
-import tv.bokch.App;
-import tv.bokch.data.Review;
 
 public class ApiRequest {
 
@@ -31,12 +28,14 @@ public class ApiRequest {
 	public static String API_RECENT = "histories";
 	public static String API_REVIEW = "reviews";
 	public static String API_BOOK = "books/%s";
-	public static String API_USER = "users";
-	public static String API_RANKING_USER_WEEKLY = "ranking/user/weekly";
+	public static String API_USERS = "users";
+	public static String API_USER = "users/%s";
+	public static String API_RANKING_USER_WEEKLY = "ranking/users/weekly";
 	public static String API_RANKING_BOOK_WEEKLY = "ranking/book/weekly";
-	public static String API_RANKING_USER_TOTAL = "ranking/user/total";
+	public static String API_RANKING_USER_TOTAL = "ranking/users/total";
 	public static String API_RANKING_BOOK_TOTAL = "ranking/book/total";
 	public static String API_PUT_REVIEW = "reviews/%d";
+	public static String API_FOLLOW = "relations";
 
 	public static String API_LOGIN = "login";
 
@@ -48,11 +47,11 @@ public class ApiRequest {
 	}
 
 	private HttpUrl getUrl(String path) {
-		return HttpUrl.parse(API_HOME + path);
+		return HttpUrl.parse(API_HOME + path + PREFIX);
 	}
 
 	private HttpUrl.Builder getUrlBuilder(String path) {
-		return getUrl(TextUtils.concat(path, PREFIX).toString()).newBuilder();
+		return getUrl(TextUtils.concat(path).toString()).newBuilder();
 	}
 
 	private void getJsonObject(HttpUrl url, ApiListener<JSONObject> listener) {
@@ -78,6 +77,14 @@ public class ApiRequest {
 		startJsonObjectApiDeliver(request, listener);
 	}
 
+	private void deleteJsonObject(HttpUrl url, RequestBody body, ApiListener<JSONObject> listener) {
+		if (body == null) {
+			FormBody.Builder formBodyBuilder = new FormBody.Builder();
+			body = formBodyBuilder.build();
+		}
+		Request request = newRequestBuilder(url).delete(body).build();
+		startJsonObjectApiDeliver(request, listener);
+	}
 	private Request.Builder newRequestBuilder(HttpUrl url) {
 		Request.Builder builder = new Request.Builder();
 		builder.url(url);
@@ -160,7 +167,7 @@ public class ApiRequest {
 	}
 	
 	public void put_review(long reviewId, int rating, String comment, ApiListener<JSONObject> listener) throws JSONException {
-		HttpUrl.Builder url = getUrlBuilder(String.format(API_PUT_REVIEW, reviewId));
+		HttpUrl url = getUrl(String.format(API_PUT_REVIEW, reviewId));
 
 		JSONObject review_attributes = new JSONObject();
 		review_attributes.put("rating", rating);
@@ -168,9 +175,9 @@ public class ApiRequest {
 
 		JSONObject json = new JSONObject();
 		json.put("review", review_attributes);
-		
+
 		RequestBody body = RequestBody.create(JSON, json.toString());
-		putJsonObject(url.build(), body, new PostApiListener(listener));
+		putJsonObject(url, body, new PostApiListener(listener));
 	}
 
 	public void ranking_user_weekly(ApiListener<JSONObject> listener) {
@@ -199,9 +206,45 @@ public class ApiRequest {
 		getJsonObject(url.build(), listener);
 	}
 	
-	public void user(ApiListener<JSONObject> listener) {
-		HttpUrl.Builder url = getUrlBuilder(String.format(API_USER));
+	public void users(ApiListener<JSONObject> listener) {
+		HttpUrl.Builder url = getUrlBuilder(API_USERS);
 		getJsonObject(url.build(), listener);
+	}
+	
+	public void user(String userId, String myUserId, ApiListener<JSONObject> listener) {
+		HttpUrl.Builder url = getUrlBuilder(String.format(API_USER, userId));
+		if (myUserId != null) {
+			url.addQueryParameter("my_user_id", myUserId);
+		}
+		getJsonObject(url.build(), listener);
+	}
+
+	public void follow(String userId, String myUserId, ApiListener<JSONObject> listener) throws JSONException {
+		HttpUrl url = getUrl(API_FOLLOW);
+		
+		JSONObject relation = new JSONObject();
+		relation.put("follower_id", userId);
+		relation.put("followee_id", myUserId);
+
+		JSONObject json = new JSONObject();
+		json.put("relation", relation);
+
+		RequestBody body = RequestBody.create(JSON, json.toString());
+		postJsonObject(url, body, listener);
+	}
+
+	public void unfollow(String userId, String myUserId, ApiListener<JSONObject> listener) throws JSONException {
+		HttpUrl url = getUrl(API_FOLLOW);
+
+		JSONObject relation = new JSONObject();
+		relation.put("follower_id", userId);
+		relation.put("followee_id", myUserId);
+
+		JSONObject json = new JSONObject();
+		json.put("relation", relation);
+
+		RequestBody body = RequestBody.create(JSON, json.toString());
+		deleteJsonObject(url, body, listener);
 	}
 	
 	public interface ApiListener<T> {

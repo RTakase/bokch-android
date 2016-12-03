@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import timber.log.Timber;
 import tv.bokch.App;
 import tv.bokch.R;
+import tv.bokch.android.BaseActivity;
 import tv.bokch.android.BookActivity;
 import tv.bokch.android.ReviewActivity;
 import tv.bokch.android.UserActivity;
@@ -164,13 +165,35 @@ public abstract class BaseListView<Data> extends android.support.v7.widget.Recyc
 			return mDataSet.size();
 		}
 	};
-
+	
 	protected void startUserActivity(User user) {
-		Intent intent = new Intent(getContext(), UserActivity.class);
-		intent.putExtra("data", user);
-		getContext().startActivity(intent);
+		App app = (App)getContext().getApplicationContext();
+		ApiRequest request = new ApiRequest();
+		showSpinner();
+		request.user(user.userId, app.getMyUser().userId, new ApiRequest.ApiListener<JSONObject>() {
+			@Override
+			public void onSuccess(JSONObject response) {
+				dismissSpinner();
+				try {
+					User user = new User(response);
+					boolean isFollow = response.optBoolean("my_followee");
+					Intent intent = new Intent(getContext(), UserActivity.class);
+					intent.putExtra("follow", isFollow);
+					intent.putExtra("data", user);
+					getContext().startActivity(intent);
+				} catch (JSONException e) {
+					Toast.makeText(getContext(), getContext().getString(R.string.failed_data_set), Toast.LENGTH_SHORT).show();
+					Timber.w(e, null);
+				}
+			}
+			@Override
+			public void onError(ApiRequest.ApiError error) {
+				dismissSpinner();
+				Timber.w(error, null);
+				Toast.makeText(getContext(), getContext().getString(R.string.failed_load), Toast.LENGTH_SHORT).show();
+			}
+		});
 	}
-
 	protected void startUserListActivity(Book book) {
 		Intent intent = new Intent(getContext(), UserListActivity.class);
 		intent.putExtra("data", book);

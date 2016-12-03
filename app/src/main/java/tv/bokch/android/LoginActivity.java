@@ -114,8 +114,6 @@ public class LoginActivity extends BaseActivity {
 	private ApiRequest.ApiListener<JSONObject> mLoginApiListener = new ApiRequest.ApiListener<JSONObject>() {
 		@Override
 		public void onSuccess(JSONObject response) {
-			Timber.d("tks, %s", response.toString());
-			Timber.d("tks, on code login success.");
 			mLogining = false;
 			try {
 				if (response.isNull("user")) {

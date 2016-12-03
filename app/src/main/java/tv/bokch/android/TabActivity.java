@@ -20,7 +20,7 @@ import tv.bokch.R;
 import tv.bokch.util.ApiRequest;
 import tv.bokch.widget.StatableListView;
 
-public abstract class TabActivity extends BaseActivity {
+public abstract class TabActivity extends FabActivity {
 	protected BaseFragment[] mPages;
 	protected boolean[] mLoaded;
 	protected int[] mIndexes;

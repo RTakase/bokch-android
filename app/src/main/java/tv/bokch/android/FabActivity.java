@@ -21,7 +21,9 @@ public class FabActivity extends BaseActivity {
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mFab = (FloatingActionButton)findViewById(R.id.fab);
-		mFab.setOnClickListener(mFabClickListener);
+		if (mFab != null) {
+			mFab.setOnClickListener(mFabClickListener);
+		}
 	}
 
 	@Override

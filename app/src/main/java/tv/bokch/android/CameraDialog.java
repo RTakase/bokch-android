@@ -120,7 +120,7 @@ public class CameraDialog extends BaseDialog {
 			if (data != null) {
 				ClipData.Item item = data.getItemAt(0);
 				BaseActivity baseAct = (BaseActivity)getActivity();
-				//baseAct.startBookActivity(item.getText());
+				//baseAct.startBookActivity(item.getLabel());
 			} else {
 				Toast.makeText(getActivity(), getString(R.string.failed_data_set), Toast.LENGTH_SHORT).show();
 			}

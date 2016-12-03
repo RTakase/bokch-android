@@ -3,7 +3,6 @@ package tv.bokch.android;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -55,10 +54,6 @@ public class HomeActivity extends TabActivity {
 			ApiRequest request = new ApiRequest();
 			request.login(myUserId, null, mLoginApiListener);
 		}
-		initViews();
-	}
-
-	private void initViews() {
 		setActionBarTitle(getString(R.string.app_name));
 	}
 
@@ -145,7 +140,6 @@ public class HomeActivity extends TabActivity {
 					histories.add(history);
 
 					boolean myFollowee = obj.optBoolean("my_followee");
-					Timber.d("tks, followee? %b", myFollowee);
 					if (myFollowee) {
 						followeeHistories.add(history);
 					}
