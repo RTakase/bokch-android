@@ -158,7 +158,7 @@ public class ReviewEditDialog extends BaseDialog {
 		@Override
 		public void onError(final ApiRequest.ApiError error) {
 			dismissSpinner();
-			Toast.makeText(getActivity(), getString(R.string.error), Toast.LENGTH_SHORT).show();
+			Toast.makeText(getActivity(), getString(R.string.failed_load), Toast.LENGTH_SHORT).show();
 			Timber.d("tks, %s", error.getLocalizedMessage());
 			Timber.w(error, null);
 			mExecutor.submit(new Runnable() {

@@ -6,7 +6,7 @@
     <string name="welcome">ようこそ！</string>
 
     <string name="ranking_more">もっと見る</string>
-    <string name="title_recent">社内全体</string>
+    <string name="title_recent">最近社内で読まれた本</string>
     <string name="ranking_user_weekly_title">本を読んでる人ランキング</string>
     <string name="ranking_book_weekly_title">社内で読まれた本ランキング</string>
     <string name="failed_data_set">予期せぬデータが見つかりました</string>
@@ -28,7 +28,7 @@
     <string name="label_submit_review">レビューを書く</string>
     <string name="label_edit_review">レビューを修正する</string>
     <string name="action_amazon">アマゾンで開く</string>
-    <string name="title_reviews">レビュー一覧</string>
+    <string name="title_reviews">最近投稿したレビュー</string>
     <string name="failed_load_isbn">ISBNコードを読み取れませんでした</string>
     <string name="label_review">レビュー</string>
     <string name="prompt_review">レビューを書こう！</string>
@@ -45,7 +45,7 @@
     <string name="title_user_history">読んだ人一覧</string>
     <string name="title_stack">積み上げてる本一覧</string>
     <string name="title_users_with_this_book">この本を読んだ人</string>
-    <string name="title_books_with_this_user">この人の読んだ本</string>
+    <string name="title_books_with_this_user">最近読んだ本</string>
     <string name="empty_book">情報の取得に時間がかかっています。\nしばらくしてからご確認ください</string>
     <string name="prompt_new">本を登録してレビューを書こう！</string>
     <string name="title_all_users">登録されているユーザ一覧</string>
@@ -54,5 +54,7 @@
     <string name="after_follow">フォロー中</string>
     <string name="succeed_follow">フォローしました！</string>
     <string name="succeed_unfollow">フォローを解除しました</string>
-
+    <string name="prompt_follow">あの人の読んでる本をチェックしよう！</string>
+    <string name="label_find_from_ranking">ランキングから探す</string>
+    <string name="label_find_from_list">一覧から探す</string>
 </resources>

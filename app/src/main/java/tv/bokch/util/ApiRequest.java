@@ -30,9 +30,9 @@ public class ApiRequest {
 	public static String API_BOOK = "books/%s";
 	public static String API_USERS = "users";
 	public static String API_USER = "users/%s";
-	public static String API_RANKING_USER_WEEKLY = "ranking/users/weekly";
+	public static String API_RANKING_USER_WEEKLY = "ranking/user/weekly";
 	public static String API_RANKING_BOOK_WEEKLY = "ranking/book/weekly";
-	public static String API_RANKING_USER_TOTAL = "ranking/users/total";
+	public static String API_RANKING_USER_TOTAL = "ranking/user/total";
 	public static String API_RANKING_BOOK_TOTAL = "ranking/book/total";
 	public static String API_PUT_REVIEW = "reviews/%d";
 	public static String API_FOLLOW = "relations";
@@ -51,7 +51,7 @@ public class ApiRequest {
 	}
 
 	private HttpUrl.Builder getUrlBuilder(String path) {
-		return getUrl(TextUtils.concat(path).toString()).newBuilder();
+		return getUrl(path).newBuilder();
 	}
 
 	private void getJsonObject(HttpUrl url, ApiListener<JSONObject> listener) {
@@ -145,7 +145,7 @@ public class ApiRequest {
 	}
 
 	public void post_history(String bookId, String userId, int rating, String comment, ApiListener<JSONObject> listener) throws JSONException {
-		HttpUrl.Builder url = getUrlBuilder(API_RECENT);
+		HttpUrl url = getUrl(API_RECENT);
 
 		JSONObject review = new JSONObject();
 		review.put("book_id", bookId);
@@ -163,7 +163,7 @@ public class ApiRequest {
 		
 
 		RequestBody body = RequestBody.create(JSON, json.toString());
-		postJsonObject(url.build(), body, new PostApiListener(listener));
+		postJsonObject(url, body, new PostApiListener(listener));
 	}
 	
 	public void put_review(long reviewId, int rating, String comment, ApiListener<JSONObject> listener) throws JSONException {

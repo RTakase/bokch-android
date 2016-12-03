@@ -42,7 +42,7 @@ public class StatableListView<Data> extends FrameLayout {
 	}
 
 	private void initialize(Context context) {
-		mEmptyView = LayoutInflater.from(context).inflate(R.layout.partial_empty, this, false);
+		mEmptyView = createEmptyView(context);
 		mEmptyView.setVisibility(INVISIBLE);
 		addView(mEmptyView, createLayoutParams());
 
@@ -56,6 +56,11 @@ public class StatableListView<Data> extends FrameLayout {
 		params.topMargin = Display.dpToPx(context, 8);
 		mProgress.setLayoutParams(params);
 		addView(mProgress, params);
+	}
+
+	protected View createEmptyView(Context context) {
+		View view = LayoutInflater.from(context).inflate(R.layout.partial_empty, this, false);
+		return view;
 	}
 
 	public void addListView(BaseListView<Data> listview) {

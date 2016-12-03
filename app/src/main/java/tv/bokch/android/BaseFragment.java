@@ -17,13 +17,17 @@ import tv.bokch.widget.StatableListView;
 public abstract class BaseFragment<Data extends Parcelable> extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		StatableListView<Data> content = new StatableListView<>(getContext());
+		StatableListView<Data> content = createStatableListView(getContext());
 		BaseListView<Data> listview = createListView(getContext());
 		content.addListView(listview);
 		return content;
 	}
 
 	protected abstract BaseListView<Data> createListView(Context context);
+
+	protected StatableListView<Data> createStatableListView(Context context) {
+		return new StatableListView<>(context);
+	}
 
 	protected ArrayList<Data> filterData(ArrayList<Data> data) {
 		return data;

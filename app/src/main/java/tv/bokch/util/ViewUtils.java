@@ -2,6 +2,7 @@ package tv.bokch.util;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,7 +79,8 @@ public class ViewUtils {
 			return;
 		}
 		Toast t = Toast.makeText(context, messageResource, Toast.LENGTH_SHORT);
-		showToast(t, iconResource);
+		Drawable icon = context.getResources().getDrawable(iconResource);
+		showToast(t, icon);
 	}
 
 
@@ -87,14 +89,15 @@ public class ViewUtils {
 			return;
 		}
 		Toast t = Toast.makeText(context, message, Toast.LENGTH_SHORT);
-		showToast(t, iconResource);
+		Drawable icon = context.getResources().getDrawable(iconResource);
+		showToast(t, icon);
 	}
 
-	private static void showToast(Toast toast, int iconResource) {
+	private static void showToast(Toast toast, Drawable icon) {
 		LinearLayout l = (LinearLayout)toast.getView();
 		TextView tv = (TextView)l.findViewById(android.R.id.message);
 		tv.setGravity(Gravity.CENTER_VERTICAL);
-		tv.setCompoundDrawablesWithIntrinsicBounds(iconResource, 0, 0, 0);
+		tv.setCompoundDrawables(icon, null, null, null);
 		tv.setCompoundDrawablePadding(25);
 		toast.show();
 	}

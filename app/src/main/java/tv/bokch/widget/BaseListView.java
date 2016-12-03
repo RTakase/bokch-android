@@ -194,9 +194,8 @@ public abstract class BaseListView<Data> extends android.support.v7.widget.Recyc
 			}
 		});
 	}
-	protected void startUserListActivity(Book book) {
+	protected void startUserListActivity() {
 		Intent intent = new Intent(getContext(), UserListActivity.class);
-		intent.putExtra("data", book);
 		getContext().startActivity(intent);
 	}
 

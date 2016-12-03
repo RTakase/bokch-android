@@ -107,7 +107,7 @@ public class HomeActivity extends TabActivity {
 		case INDEX_HISTORY:
 			return RecentFragment.newInstance();
 		case INDEX_FOLLOW:
-			return RecentFragment.newInstance();
+			return FollowerRecentFragment.newInstance();
 		default:
 			return null;
 		}
