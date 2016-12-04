@@ -14,7 +14,7 @@ public class FabActivity extends BaseActivity {
 
 	public static final int REQUEST_CODE_CAMERA = 999;
 
-	private CameraDialog mCameraDialog;
+	private SearchDialog mSearchDialog;
 	private FloatingActionButton mFab;
 
 	@Override
@@ -29,10 +29,10 @@ public class FabActivity extends BaseActivity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		if (mCameraDialog != null) {
-			mCameraDialog.dismiss();
+		if (mSearchDialog != null) {
+			//mSearchDialog.dismiss();
 		}
-		mCameraDialog = null;
+		mSearchDialog = null;
 	}
 
 	@Override
@@ -42,10 +42,13 @@ public class FabActivity extends BaseActivity {
 		case REQUEST_CODE_CAMERA:
 			if (resultCode == RESULT_OK) {
 				String isbn = data.getStringExtra("barcode");
-				if (TextUtils.isEmpty(isbn)) {
-					Toast.makeText(FabActivity.this, getString(R.string.failed_load_isbn), Toast.LENGTH_SHORT).show();
+				String amazon = data.getStringExtra("amazon");
+				if (TextUtils.isEmpty(isbn) && !TextUtils.isEmpty(amazon)) {
+					startBookActivityWithUrl(amazon);
+				} else if (!TextUtils.isEmpty(isbn) && TextUtils.isEmpty(amazon)) {
+					startBookActivity(isbn);
 				} else {
-					startBookActivity(isbn, true);
+					Toast.makeText(FabActivity.this, getString(R.string.failed_data_set), Toast.LENGTH_SHORT).show();
 				}
 			}
 		}
@@ -54,9 +57,9 @@ public class FabActivity extends BaseActivity {
 	private View.OnClickListener mFabClickListener = new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			mCameraDialog = CameraDialog.newInstance();
-			mCameraDialog.setTargetFragment(null, REQUEST_CODE_CAMERA);
-			mCameraDialog.show(getFragmentManager(), "CameraDialog");
+			mSearchDialog = SearchDialog.newInstance();
+			mSearchDialog.setTargetFragment(null, REQUEST_CODE_CAMERA);
+			mSearchDialog.show(getFragmentManager(), "SearchDialog");
 		}
 	};
 }

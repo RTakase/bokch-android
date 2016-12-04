@@ -151,6 +151,9 @@ public class BaseActivity extends AppCompatActivity {
 	public void startBookActivity(Book book) {
 		startBookActivity(book.bookId, false);
 	}
+	public void startBookActivity(String isbn) {
+		startBookActivity(isbn,  false);
+	}
 	protected void startBookActivity(String bookId, final boolean withReviewEdit) {
 		showSpinner();
 		getMyBookStatus(bookId, new ApiRequest.ApiListener<JSONObject>() {
@@ -169,6 +172,7 @@ public class BaseActivity extends AppCompatActivity {
 			public void onError(ApiRequest.ApiError error) {
 				dismissSpinner();
 				Toast.makeText(BaseActivity.this, getString(R.string.failed_load), Toast.LENGTH_SHORT).show();
+				Timber.w(error, null);
 			}
 		});
 	}
@@ -188,6 +192,28 @@ public class BaseActivity extends AppCompatActivity {
 		startActivity(intent);
 	}
 
+	public void startBookActivityWithUrl(String amazon) {
+		showSpinner();
+		getMyBookStatusFromUrl(amazon, new ApiRequest.ApiListener<JSONObject>() {
+			@Override
+			public void onSuccess(JSONObject response) {
+				try {
+					JSONObject obj = response.optJSONObject("book");
+					Book book = new Book(obj);
+					startBookActivity(book);
+				} catch (JSONException e) {
+					Toast.makeText(BaseActivity.this, getString(R.string.failed_data_set), Toast.LENGTH_SHORT).show();
+					Timber.w(e, null);
+				}
+			}
+			@Override
+			public void onError(ApiRequest.ApiError error) {
+				dismissSpinner();
+				Toast.makeText(BaseActivity.this, getString(R.string.failed_data_set), Toast.LENGTH_SHORT).show();
+				Timber.w(error, null);
+			}
+		});
+	}
 	/**
 	 * ユーザ画面への遷移（ステータスを取得してから）
 	 */
@@ -232,6 +258,16 @@ public class BaseActivity extends AppCompatActivity {
 		App app = (App)getApplicationContext();
 		ApiRequest request = new ApiRequest();
 		request.book(bookId, app.getMyUser().userId, listener);
+	}
+
+	public void getMyBookStatusFromUrl(String amazon, ApiRequest.ApiListener<JSONObject> listener) {
+		App app = (App)getApplicationContext();
+		ApiRequest request = new ApiRequest();
+		try {
+			request.book_from_url(amazon, app.getMyUser().userId, listener);
+		} catch (JSONException e) {
+			Timber.w(e, null);
+		}
 	}
 
 	public void getMyUserStatus(String userId, ApiRequest.ApiListener<JSONObject> listener) {

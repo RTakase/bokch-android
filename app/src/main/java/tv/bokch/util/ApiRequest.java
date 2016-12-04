@@ -1,5 +1,6 @@
 package tv.bokch.util;
 
+import android.net.Uri;
 import android.text.TextUtils;
 
 import org.json.JSONException;
@@ -27,6 +28,7 @@ public class ApiRequest {
 	
 	public static String API_RECENT = "histories";
 	public static String API_REVIEW = "reviews";
+	public static String API_BOOKS = "books";
 	public static String API_BOOK = "books/%s";
 	public static String API_USERS = "users";
 	public static String API_USER = "users/%s";
@@ -204,6 +206,19 @@ public class ApiRequest {
 		HttpUrl.Builder url = getUrlBuilder(String.format(API_BOOK, bookId));
 		url.addQueryParameter("user_id", userId);
 		getJsonObject(url.build(), listener);
+	}
+
+	public void book_from_url(String amazon, String userId, ApiListener<JSONObject> listener) throws JSONException {
+		HttpUrl url = getUrl(API_BOOKS);
+
+		JSONObject book = new JSONObject();
+		book.put("detail_page_url", Uri.encode(amazon));
+
+		JSONObject json = new JSONObject();
+		json.put("book", book);
+
+		RequestBody body = RequestBody.create(JSON, json.toString());
+		postJsonObject(url, body, listener);
 	}
 	
 	public void users(ApiListener<JSONObject> listener) {

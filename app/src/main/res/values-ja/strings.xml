@@ -47,7 +47,7 @@
     <string name="title_users_with_this_book">読んだ人一覧</string>
     <string name="title_books_with_this_user">読んだ本一覧</string>
     <string name="empty_book">情報の取得に時間がかかっています。\nしばらくしてからご確認ください</string>
-    <string name="prompt_new">本を登録してレビューを書こう！</string>
+    <string name="prompt_new">本を検索してレビューを書こう！</string>
     <string name="title_all_users">登録されているユーザ一覧</string>
     <string name="title_follower">フォロワー</string>
     <string name="label_follow">フォローする</string>
@@ -66,4 +66,10 @@
     <string name="label_update_review">自分のレビューです</string>
     <string name="loading_review">レビュー状態を確認しています</string>
     <string name="loading_follow">確認中</string>
+    <string name="failed_read_clipboard">クリップボードの内容を読み取れませんでした</string>
+    <string name="label_open_amazon">Amazonに行く</string>
+    <string name="label_read_clipboard">クリップボードのURLを読み込む</string>
+    <string name="desc_url_1">Amazonで本を検索してURLをコピーする</string>
+    <string name="desc_url_2">コピーしたURLを読み込ませる</string>
+    <string name="desc_url_3">本のページが自動的に開きます</string>
 </resources>
