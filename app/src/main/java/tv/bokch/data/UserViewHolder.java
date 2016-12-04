@@ -7,7 +7,6 @@ import android.widget.TextView;
 import tv.bokch.R;
 import tv.bokch.widget.CircleNetworkImageView;
 import tv.bokch.widget.FollowButton;
-import tv.bokch.widget.StatableFButton;
 
 public class UserViewHolder {
 	public CircleNetworkImageView userIcon;
@@ -45,15 +44,15 @@ public class UserViewHolder {
 		}
 	}
 
-	public void setFollowed(boolean followed) {
+	public void setFollowState(FollowButton.State state) {
 		if (followButton != null) {
-			followButton.setState(followed);
+			followButton.setState(state);
 		}
 	}
 
-	public void setFollowClickListener(boolean isFollow, View.OnClickListener listener) {
+	public void setFollowClickListener(FollowButton.ClickListener listener) {
 		if (followButton != null) {
-			followButton.setFollowClickListner(isFollow, listener);
+			followButton.setClickListener(listener);
 		}
 	}
 }

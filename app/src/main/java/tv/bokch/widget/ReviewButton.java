@@ -83,7 +83,7 @@ public class ReviewButton extends FButton {
 		setButtonColor(state.buttonColor);
 		setText(state.label);
 		setTextColor(state.labelColor);
-		
+
 		if (state == State.LOADING) {
 			setEnabled(false);
 		} else {

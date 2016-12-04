@@ -22,6 +22,7 @@ import tv.bokch.R;
 import tv.bokch.data.Book;
 import tv.bokch.data.History;
 import tv.bokch.data.MyBook;
+import tv.bokch.data.MyUser;
 import tv.bokch.data.User;
 import tv.bokch.util.ApiRequest;
 import tv.bokch.util.Display;
@@ -122,19 +123,34 @@ public class BaseActivity extends AppCompatActivity {
 		}
 	}
 
+	protected void startUserListActivity() {
+		Intent intent = new Intent(BaseActivity.this, UserListActivity.class);
+		startActivity(intent);
+	}
+
+	protected void startRankingActivity() {
+		Intent intent = new Intent(BaseActivity.this, WeeklyRankingActivity.class);
+		startActivity(intent);
+	}
+
+	public void startReviewActivity(History history) {
+		ReviewDialog dialog = ReviewDialog.newInstance(history);
+		dialog.show(getFragmentManager(), "ReviewDialog");
+	}
+
 	protected void startLoginActivity(Context context) {
 		Intent intent = new Intent(context, LoginActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivityForResult(intent, REQUEST_LOGIN);
 	}
 
+	/**
+	 * 本画面への遷移（ユーザステータスを取得してから）
+	 */
+
 	public void startBookActivity(Book book) {
 		startBookActivity(book.bookId, false);
 	}
-	
-	/**
-	 * 本画面への遷移（ユーザステータスを取得してから）
-	 */	
 	protected void startBookActivity(String bookId, final boolean withReviewEdit) {
 		showSpinner();
 		getMyBookStatus(bookId, new ApiRequest.ApiListener<JSONObject>() {
@@ -157,13 +173,12 @@ public class BaseActivity extends AppCompatActivity {
 		});
 	}
 
-	protected void startBookActivity(MyBook myBook) {
-		startBookActivity(myBook, false);
-	}
-
 	/**
 	 * 本画面への遷移（ユーザステータスはもうある）
 	 */
+	protected void startBookActivity(MyBook myBook) {
+		startBookActivity(myBook, false);
+	}
 	public void startBookActivity(MyBook myBook, boolean withReviewEdit) {
 		Intent intent = new Intent(BaseActivity.this, BookActivity.class);
 		intent.putExtra("data", myBook);
@@ -173,36 +188,21 @@ public class BaseActivity extends AppCompatActivity {
 		startActivity(intent);
 	}
 
-	protected void startUserListActivity() {
-		Intent intent = new Intent(BaseActivity.this, UserListActivity.class);
-		startActivity(intent);
-	}
-
-	protected void startRankingActivity() {
-		Intent intent = new Intent(BaseActivity.this, WeeklyRankingActivity.class);
-		startActivity(intent);
-	}
-
+	/**
+	 * ユーザ画面への遷移（ステータスを取得してから）
+	 */
 	public void startUserActivity(User user) {
 		startUserActivity(user, null);
 	}
-
 	protected void startUserActivity(User user, final String bookId) {
-		App app = (App)getApplicationContext();
-		ApiRequest request = new ApiRequest();
 		showSpinner();
-		request.user(user.userId, app.getMyUser().userId, new ApiRequest.ApiListener<JSONObject>() {
+		getMyUserStatus(user.userId, new ApiRequest.ApiListener<JSONObject>() {
 			@Override
 			public void onSuccess(JSONObject response) {
 				dismissSpinner();
 				try {
-					User user = new User(response);
-					boolean isFollow = response.optBoolean("my_followee");
-					Intent intent = new Intent(BaseActivity.this, UserActivity.class);
-					intent.putExtra("follow", isFollow);
-					intent.putExtra("data", user);
-					intent.putExtra("book_id", bookId);
-					startActivity(intent);
+					MyUser myUser = new MyUser(response);
+					startUserActivity(myUser, bookId);
 				} catch (JSONException e) {
 					Toast.makeText(BaseActivity.this, getString(R.string.failed_data_set), Toast.LENGTH_SHORT).show();
 					Timber.w(e, null);
@@ -216,15 +216,28 @@ public class BaseActivity extends AppCompatActivity {
 			}
 		});
 	}
-	public void startReviewActivity(History history) {
-		ReviewDialog dialog = ReviewDialog.newInstance(history);
-		dialog.show(getFragmentManager(), "ReviewDialog");
+
+	/**
+	 * ユーザ画面への遷移（ステータス情報はもうある）
+	 */
+	public void startUserActivity(MyUser myUser, String bookId) {
+		Intent intent = new Intent(BaseActivity.this, UserActivity.class);
+		intent.putExtra("data", myUser);
+		intent.putExtra("follow", myUser.isFollow);
+		intent.putExtra("with_my_review", bookId);
+		startActivity(intent);
 	}
 
 	public void getMyBookStatus(String bookId, ApiRequest.ApiListener<JSONObject> listener) {
 		App app = (App)getApplicationContext();
 		ApiRequest request = new ApiRequest();
 		request.book(bookId, app.getMyUser().userId, listener);
+	}
+
+	public void getMyUserStatus(String userId, ApiRequest.ApiListener<JSONObject> listener) {
+		App app = (App)getApplicationContext();
+		ApiRequest request = new ApiRequest();
+		request.user(userId, app.getMyUser().userId, listener);
 	}
 
 	protected void showSpinner() {

@@ -27,7 +27,6 @@ public class MyBook extends Book {
 	
 	public void setStatus(JSONObject obj) throws JSONException {
 		JSONObject status = obj.optJSONObject("my_status");
-		Timber.d("tks, %s", status == null ? null : status.toString());
 		if (status == null) {
 			return;
 		}

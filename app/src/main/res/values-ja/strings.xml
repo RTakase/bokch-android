@@ -50,8 +50,8 @@
     <string name="prompt_new">本を登録してレビューを書こう！</string>
     <string name="title_all_users">登録されているユーザ一覧</string>
     <string name="title_follower">フォロワー</string>
-    <string name="before_follow">フォローする</string>
-    <string name="after_follow">フォロー中</string>
+    <string name="label_follow">フォローする</string>
+    <string name="label_unfollow">フォロー中</string>
     <string name="succeed_follow">フォローしました！</string>
     <string name="succeed_unfollow">フォローを解除しました</string>
     <string name="prompt_follow">あの人の読んでる本をチェックしよう！</string>
@@ -65,4 +65,5 @@
     <string name="label_confirm_review">自分のレビューを\n確認する</string>
     <string name="label_update_review">自分のレビューです</string>
     <string name="loading_review">レビュー状態を確認しています</string>
+    <string name="loading_follow">確認中</string>
 </resources>
