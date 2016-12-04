@@ -1,12 +1,9 @@
 package tv.bokch.widget;
 
 import android.content.Context;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
 
-import timber.log.Timber;
 import tv.bokch.R;
 import tv.bokch.android.BaseActivity;
 import tv.bokch.data.BookViewHolder;

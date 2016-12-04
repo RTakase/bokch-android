@@ -4,10 +4,9 @@ import android.content.Context;
 import android.os.Bundle;
 
 import tv.bokch.data.History;
-import tv.bokch.widget.FollowerStatableListView;
-import tv.bokch.widget.StatableListView;
+import tv.bokch.widget.*;
 
-public class FollowerRecentFragment extends tv.bokch.RecentFragment {
+public class FollowerRecentFragment extends tv.bokch.widget.RecentFragment {
 
 	public static FollowerRecentFragment newInstance() {
 		FollowerRecentFragment fragment = new FollowerRecentFragment();

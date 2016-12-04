@@ -1,33 +1,17 @@
 package tv.bokch.widget;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import timber.log.Timber;
-import tv.bokch.App;
 import tv.bokch.R;
-import tv.bokch.android.BookActivity;
-import tv.bokch.android.ReviewDialog;
-import tv.bokch.android.UserActivity;
-import tv.bokch.android.UserListActivity;
-import tv.bokch.data.Book;
-import tv.bokch.data.History;
-import tv.bokch.data.MyBook;
-import tv.bokch.data.User;
-import tv.bokch.util.ApiRequest;
+
 import tv.bokch.util.Display;
 import tv.bokch.util.ViewUtils;
 
