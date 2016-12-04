@@ -1,63 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:background="@drawable/bg_dialog"
     >
+
     <RelativeLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/bg_dialog"
+        android:layout_height="wrap_content"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
         >
 
-        <!--<tv.bokch.widget.NetworkImageView-->
-        <!--android:id="@+id/jacket"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:scaleType="centerInside"-->
-        <!--android:layout_alignParentTop="true"-->
-        <!--android:layout_alignParentLeft="true"-->
-        <!--android:layout_alignParentRight="true"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:alpha="0.4"-->
-        <!--/>-->
-
-        <!--<TextView-->
-        <!--android:id="@+id/book_title"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginLeft="12dp"-->
-        <!--android:layout_marginRight="12dp"-->
-        <!--android:layout_marginTop="12dp"-->
-        <!--android:padding="8dp"-->
-        <!--android:textSize="16sp"-->
-        <!--android:textColor="@color/title_plate_text"-->
-        <!--android:gravity="left"-->
-        <!--android:background="@drawable/bg_title_plate"-->
-        <!--android:layout_alignTop="@id/jacket"-->
-        <!--android:layout_alignParentLeft="true"-->
-        <!--android:layout_alignParentRight="true"-->
-        <!--android:visibility="gone"-->
-        <!--/>-->
+        <TextView
+            android:id="@+id/title_review_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="@string/title_review_edit"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:visibility="gone"
+            />
 
         <info.hoang8f.widget.FButton
             android:id="@+id/submit_btn"
-            android:layout_width="224dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:layout_marginRight="18dp"
-            android:layout_marginLeft="18dp"
             android:textSize="16sp"
+            android:layout_margin="4dp"
             android:textColor="#ddfafafa"
             app:buttonColor="#ff225B1E"
             android:text="@string/submit"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
             android:alpha="0.98"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true"
             />
 
+        <TextView
+            android:id="@+id/label_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/rating"
+            android:layout_below="@id/submit_btn"
+            android:layout_alignParentLeft="true"
+            />
+
+        <RatingBar
+            android:id="@+id/rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:max="5"
+            android:stepSize="1"
+            android:isIndicator="false"
+            android:layout_below="@id/label_rating"
+            android:layout_centerHorizontal="true"
+            />
 
         <!--<ImageView-->
         <!--android:id="@+id/back_btn"-->
@@ -73,36 +80,26 @@
         <!--android:layout_toLeftOf="@id/submit_btn"-->
         <!--/>-->
 
-
-        <RatingBar
-            android:id="@+id/rating"
+        <TextView
+            android:id="@+id/label_comment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
-            android:layout_marginTop="12dp"
-            android:max="5"
-            android:stepSize="1"
-            android:isIndicator="false"
-            android:layout_below="@id/submit_btn"
+            android:text="@string/comment"
+            android:layout_below="@id/rating"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-
             />
 
         <EditText
             android:id="@+id/review_editor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
-            android:layout_marginBottom="12dp"
             android:textColor="#ff555555"
             android:textSize="12sp"
+            android:minLines="3"
             android:gravity="left|top"
-            android:layout_below="@id/rating"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
+            android:layout_below="@id/label_comment"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
             />
     </RelativeLayout>
 </ScrollView>
