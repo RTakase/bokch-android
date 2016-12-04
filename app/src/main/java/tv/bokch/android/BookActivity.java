@@ -36,6 +36,7 @@ public class BookActivity extends TabActivity {
 
 	private Book mBook;
 	private Review mReview;
+	private Review mEditingReview;
 	private History mHistory;
 	
 	private Button mNewReviewButton;
@@ -57,6 +58,16 @@ public class BookActivity extends TabActivity {
 		mReview = intent.getParcelableExtra("review");
 		mHistory = intent.getParcelableExtra("history");
 
+		boolean withReviewEdit = intent.getBooleanExtra("with_review_edit", false);
+		if (withReviewEdit) {
+			editReview();
+		} else {
+			boolean withMyReview = intent.getBooleanExtra("with_my_review", false);
+			if (withMyReview) {
+
+			}
+		}
+
 		initialize();
 	}
 
@@ -67,9 +78,6 @@ public class BookActivity extends TabActivity {
 
 		//情報取得中なのでビューを変える
 		book.setEmpty(TextUtils.isEmpty(mBook.title));
-
-//		NetworkImageView jacket = (NetworkImageView)findViewById(R.id.jacket);
-//		jacket.setImageUrl(mBook.largeImageUrl);
 
 		mNewReviewButton = (Button)findViewById(R.id.new_review_btn);
 		assert mNewReviewButton != null;
@@ -180,7 +188,12 @@ public class BookActivity extends TabActivity {
 		case REQUEST_REVIEW_EDIT:
 			if (resultCode == RESULT_OK) {
 				Review review = data.getParcelableExtra("review");
-				mReview = review;
+				boolean saved = data.getBooleanExtra("saved", false);
+				if (saved) {
+					mReview = review;
+				} else {
+					mEditingReview = review;
+				}
 				setReviewButtonVisibility();
 				//この後 TabActivityのonResumeが呼ばれるのでフラグをセットするだけ
 				mLoaded[INDEX_REVIEW] = false;
@@ -217,7 +230,8 @@ public class BookActivity extends TabActivity {
 
 	private void editReview() {
 		App app = (App)getApplication();
-		ReviewEditDialog dialog = ReviewEditDialog.newInstance(mBook, app.getMyUser(), mReview, mHistory);
+		Review review = mEditingReview != null ? mEditingReview : mReview;
+		ReviewEditDialog dialog = ReviewEditDialog.newInstance(mBook, app.getMyUser(), review, mHistory);
 		dialog.setTargetFragment(null, REQUEST_REVIEW_EDIT);
 		dialog.show(getFragmentManager(), "REVIEW_EDIT_DIALOG");
 	}

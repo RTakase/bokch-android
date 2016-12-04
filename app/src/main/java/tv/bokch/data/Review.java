@@ -7,13 +7,22 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Review extends Data implements Parcelable {
-	public Long id;
+	public long id;
 	public Book book;
 	public User user;
 	public String comment;
 	public int rating;
 	public long created;
-	
+
+	public Review () {
+		id = 0L;
+		book = null;
+		user = null;
+		comment = "";
+		rating = -1;
+		created = -1L;
+	}
+
 	public Review(JSONObject obj) throws JSONException {
 		id = obj.optLong("id");
 		comment = obj.optString("comment");

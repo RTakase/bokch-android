@@ -31,6 +31,7 @@ public class UserActivity extends TabActivity {
 	private User mUser;
 	private UserView mUserView;
 	private boolean mFollowed;
+	private String mBookIdToOpen;
 	
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,6 +47,10 @@ public class UserActivity extends TabActivity {
 			return;
 		}
 
+		String bookId = intent.getStringExtra("book_id");
+		if (!TextUtils.isEmpty(bookId)) {
+			mBookIdToOpen = bookId;
+		}
 		mMyUser = ((App)getApplicationContext()).getMyUser();
 
 		mFollowed = intent.getBooleanExtra("follow", false);
@@ -130,6 +135,11 @@ public class UserActivity extends TabActivity {
 					if (history.review != null && !TextUtils.isEmpty(history.book.title)) {
 						history.user = mUser;
 						histories.add(history);
+
+						if (TextUtils.equals(history.book.bookId,mBookIdToOpen)) {
+							startReviewActivity(history);
+							mBookIdToOpen = null;
+						}
 					}
 				}
 			}

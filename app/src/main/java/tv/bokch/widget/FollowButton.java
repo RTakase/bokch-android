@@ -35,7 +35,7 @@ public class FollowButton extends StatableFButton {
 		case AFTER:
 			return getContext().getString(R.string.after_follow);
 		default:
-			return "";
+			return super.getLabel(state);
 		}
 	}
 

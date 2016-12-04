@@ -40,7 +40,7 @@
             android:textSize="16sp"
             android:textColor="#ddfafafa"
             app:buttonColor="#ff225B1E"
-            android:text="@string/label_submit_review"
+            android:text="@string/label_post_review"
             />
 
 

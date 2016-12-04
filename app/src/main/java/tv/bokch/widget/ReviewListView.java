@@ -1,19 +1,12 @@
 package tv.bokch.widget;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.RatingBar;
-import android.widget.TextView;
 
-import timber.log.Timber;
 import tv.bokch.R;
-import tv.bokch.data.BookViewHolder;
 import tv.bokch.data.History;
-import tv.bokch.data.Review;
 import tv.bokch.data.ReviewViewHolder;
-import tv.bokch.data.UserViewHolder;
 
 public abstract class ReviewListView extends BaseListView<History> {
 	

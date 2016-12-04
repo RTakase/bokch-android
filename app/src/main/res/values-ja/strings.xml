@@ -25,13 +25,13 @@
     <string name="loging_in">ログインしています</string>
     <string name="failed_login">ログインできませんでした...</string>
     <string name="successed_login">ログインに成功しました！</string>
-    <string name="label_submit_review">レビューを書く</string>
+    <string name="label_post_review">レビューを書く！</string>
     <string name="label_edit_review">レビューを修正する</string>
     <string name="action_amazon">アマゾンで開く</string>
     <string name="title_reviews">最近のレビュー</string>
     <string name="failed_load_isbn">ISBNコードを読み取れませんでした</string>
     <string name="label_review">レビュー</string>
-    <string name="prompt_review">レビューを書こう！</string>
+    <string name="prompt_review">どんな人におすすめ？</string>
     <string name="submit">送信</string>
     <string name="confirmation">確認</string>
     <string name="confirm_editing">レビューを編集中です。破棄して戻りますか？</string>
@@ -60,6 +60,9 @@
     <string name="rating">５段階評価</string>
     <string name="comment">コメント</string>
     <string name="empty_comment">コメントはありません</string>
-    <string name="label_reviews_more">レビューをもっと見る</string>
+    <string name="label_reviews_more">他のレビューを見る</string>
     <string name="title_review_edit">レビュー編集画面タイトル</string>
+    <string name="label_confirm_review">自分のレビューを\n確認する</string>
+    <string name="label_update_review">自分のレビューです</string>
+    <string name="loading_review">レビュー状態を確認しています</string>
 </resources>

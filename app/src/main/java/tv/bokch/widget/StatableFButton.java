@@ -2,18 +2,17 @@ package tv.bokch.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.View;
 
 import info.hoang8f.widget.FButton;
-import timber.log.Timber;
-import tv.bokch.util.Display;
+import tv.bokch.R;
 
-public abstract class StatableFButton extends FButton {
+public class StatableFButton extends FButton {
 
 	public enum State {
 		BEFORE,
-		AFTER
+		AFTER,
+		LOADING
 	}
 	public StatableFButton(Context context) {
 		super(context);
@@ -33,7 +32,14 @@ public abstract class StatableFButton extends FButton {
 	private void initialize(Context context) {
 	}
 
-	protected abstract String getLabel(State state);
+	protected String getLabel(State state) {
+		switch (state) {
+		case LOADING:
+			return getContext().getString(R.string.loading);
+		default:
+			return "";
+		}
+	}
 
 	protected int getLabelColor(State state) {
 		return 0xddfafafa;
@@ -45,6 +51,8 @@ public abstract class StatableFButton extends FButton {
 			return 0xff225b1e;
 		case AFTER:
 			return 0xffa18320;
+		case LOADING:
+			return 0xff444444;
 		default:
 			return 0x00000000;
 		}
@@ -64,5 +72,11 @@ public abstract class StatableFButton extends FButton {
 				onButtonClick(state);
 			}
 		});
+
+		if (state == State.LOADING) {
+			setEnabled(false);
+		} else {
+			setEnabled(true);
+		}
 	}
 }

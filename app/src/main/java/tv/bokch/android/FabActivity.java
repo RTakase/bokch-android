@@ -45,7 +45,7 @@ public class FabActivity extends BaseActivity {
 				if (TextUtils.isEmpty(isbn)) {
 					Toast.makeText(FabActivity.this, getString(R.string.failed_load_isbn), Toast.LENGTH_SHORT).show();
 				} else {
-					startBookActivity(isbn);
+					startBookActivity(isbn, true);
 				}
 			}
 		}

@@ -84,11 +84,19 @@ public class ReviewEditDialog extends BaseDialog {
 
 	@Override
 	public void onDismiss(DialogInterface dialog) {
-		if (mSavedReview) {
-			Intent intent = new Intent();
-			intent.putExtra("review", mReview);
-			sendActivityResultCallback(intent);
+		Timber.d("tks, on dismiss.");
+
+		if (!mSavedReview) {
+			if (mReview == null) {
+				mReview = new Review();
+			}
+			mReview.rating = (int)mRatingBar.getRating();
+			mReview.comment = mEditor.getText().toString();
 		}
+		Intent intent = new Intent();
+		intent.putExtra("review", mReview);
+		intent.putExtra("saved", mSavedReview);
+		sendActivityResultCallback(intent);
 		super.onDismiss(dialog);
 	}
 

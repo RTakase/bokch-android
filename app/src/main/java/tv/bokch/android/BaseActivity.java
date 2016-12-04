@@ -1,5 +1,6 @@
 package tv.bokch.android;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +20,7 @@ import timber.log.Timber;
 import tv.bokch.App;
 import tv.bokch.R;
 import tv.bokch.data.Book;
+import tv.bokch.data.History;
 import tv.bokch.data.MyBook;
 import tv.bokch.data.User;
 import tv.bokch.util.ApiRequest;
@@ -127,24 +129,21 @@ public class BaseActivity extends AppCompatActivity {
 	}
 
 	protected void startBookActivity(Book book) {
-		startBookActivity(book.bookId);
+		startBookActivity(book.bookId, false);
 	}
-
-	protected void startBookActivity(String bookId) {
-		App app = (App)getApplicationContext();
-		ApiRequest request = new ApiRequest();
+	
+	/**
+	 * 本画面への遷移（ユーザステータスを取得してから）
+	 */	
+	protected void startBookActivity(String bookId, final boolean withReviewEdit) {
 		showSpinner();
-		request.book(bookId, app.getMyUser().userId, new ApiRequest.ApiListener<JSONObject>() {
+		getMyBookStatus(bookId, new ApiRequest.ApiListener<JSONObject>() {
 			@Override
 			public void onSuccess(JSONObject response) {
 				dismissSpinner();
 				try {
-					MyBook book = new MyBook(response);
-					Intent intent = new Intent(BaseActivity.this, BookActivity.class);
-					intent.putExtra("data", book);
-					intent.putExtra("review", book.review);
-					intent.putExtra("history", book.history);
-					startActivity(intent);
+					MyBook myBook = new MyBook(response);
+					startBookActivity(myBook, withReviewEdit);
 				} catch (JSONException e) {
 					Toast.makeText(BaseActivity.this, getString(R.string.failed_data_set), Toast.LENGTH_SHORT).show();
 					Timber.w(e, null);
@@ -153,9 +152,25 @@ public class BaseActivity extends AppCompatActivity {
 			@Override
 			public void onError(ApiRequest.ApiError error) {
 				dismissSpinner();
-				Toast.makeText(BaseActivity.this, getString(R.string.failed_data_set), Toast.LENGTH_SHORT).show();
+				Toast.makeText(BaseActivity.this, getString(R.string.failed_load), Toast.LENGTH_SHORT).show();
 			}
 		});
+	}
+
+	protected void startBookActivity(MyBook myBook) {
+		startBookActivity(myBook, false);
+	}
+
+	/**
+	 * 本画面への遷移（ユーザステータスはもうある）
+	 */
+	public void startBookActivity(MyBook myBook, boolean withReviewEdit) {
+		Intent intent = new Intent(BaseActivity.this, BookActivity.class);
+		intent.putExtra("data", myBook);
+		intent.putExtra("review", myBook.review);
+		intent.putExtra("history", myBook.history);
+		intent.putExtra("with_review_edit", withReviewEdit);
+		startActivity(intent);
 	}
 
 	protected void startUserListActivity() {
@@ -169,6 +184,10 @@ public class BaseActivity extends AppCompatActivity {
 	}
 
 	protected void startUserActivity(User user) {
+		startUserActivity(user, null);
+	}
+
+	protected void startUserActivity(User user, final String bookId) {
 		App app = (App)getApplicationContext();
 		ApiRequest request = new ApiRequest();
 		showSpinner();
@@ -182,6 +201,7 @@ public class BaseActivity extends AppCompatActivity {
 					Intent intent = new Intent(BaseActivity.this, UserActivity.class);
 					intent.putExtra("follow", isFollow);
 					intent.putExtra("data", user);
+					intent.putExtra("book_id", bookId);
 					startActivity(intent);
 				} catch (JSONException e) {
 					Toast.makeText(BaseActivity.this, getString(R.string.failed_data_set), Toast.LENGTH_SHORT).show();
@@ -195,6 +215,16 @@ public class BaseActivity extends AppCompatActivity {
 				Toast.makeText(BaseActivity.this, getString(R.string.failed_load), Toast.LENGTH_SHORT).show();
 			}
 		});
+	}
+	protected void startReviewActivity(History history) {
+		ReviewDialog dialog = ReviewDialog.newInstance(history);
+		dialog.show(getFragmentManager(), "ReviewDialog");
+	}
+
+	public void getMyBookStatus(String bookId, ApiRequest.ApiListener<JSONObject> listener) {
+		App app = (App)getApplicationContext();
+		ApiRequest request = new ApiRequest();
+		request.book(bookId, app.getMyUser().userId, listener);
 	}
 
 	protected void showSpinner() {
