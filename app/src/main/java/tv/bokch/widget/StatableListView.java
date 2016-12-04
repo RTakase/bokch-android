@@ -111,7 +111,7 @@ public class StatableListView<Data> extends FrameLayout {
 		}
 	}
 	
-	public boolean  onData(ArrayList<Data> data) {
+	public boolean onData(ArrayList<Data> data) {
 		if (data == null || data.size() == 0) {
 			setState(StatableListView.State.Failed);
 			setState(StatableListView.State.Failed);

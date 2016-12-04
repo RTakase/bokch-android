@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="114dp"
+    android:layout_height="114dp"
+    android:layout_marginTop="12dp"
+    android:clipToPadding="false"
+    android:clipChildren="false"
+    >
+
+    <RelativeLayout
+        android:id="@+id/jacket_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        >
+        <tv.bokch.widget.NetworkImageView
+            android:id="@+id/jacket"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerInside"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
+            />
+    </RelativeLayout>
+
+    <tv.bokch.widget.FilteredTextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:textColor="#B0ffffff"
+        android:textSize="10sp"
+        android:maxLines="2"
+        android:lines="2"
+        android:gravity="top|left"
+        android:background="@drawable/bg_title_plate"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        />
+
+</RelativeLayout>

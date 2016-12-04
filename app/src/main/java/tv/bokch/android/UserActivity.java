@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -69,7 +68,7 @@ public class UserActivity extends TabActivity {
 		case INDEX_REVIEW:
 			return BookReviewFragment.newInstance();
 		case INDEX_STACK:
-			return BookFragment.newInstance();
+			return BookGridFragment.newInstance();
 		default:
 			return null;
 		}

@@ -19,9 +19,7 @@ import java.util.ArrayList;
 import timber.log.Timber;
 import tv.bokch.App;
 import tv.bokch.R;
-import tv.bokch.android.BaseActivity;
 import tv.bokch.android.BookActivity;
-import tv.bokch.android.ReviewActivity;
 import tv.bokch.android.ReviewDialog;
 import tv.bokch.android.UserActivity;
 import tv.bokch.android.UserListActivity;
@@ -47,8 +45,8 @@ public abstract class BaseListView<Data> extends android.support.v7.widget.Recyc
 	protected LayoutInflater mInflater;
 	protected Display mDisplay;
 	protected ArrayList<Data> mDataSet;
-	private LinearLayoutManager mManager;
 	protected ProgressDialog mSpinner;
+	protected LayoutManager mManager;
 	
 	public BaseListView(Context context) {
 		super(context);
@@ -69,28 +67,42 @@ public abstract class BaseListView<Data> extends android.support.v7.widget.Recyc
 		mDisplay = new Display(context);
 		setAdapter(mAdapter);
 
-		mManager = new LinearLayoutManager(context);
+		mManager = createLayoutManager(context);
 		setLayoutManager(mManager);
 	}
 
 	public void setOrientation(Orientation orientation) {
+		if (!(mManager instanceof LinearLayoutManager)) {
+			return;
+		}
+		LinearLayoutManager manager = (LinearLayoutManager)mManager;
 		switch (orientation) {
 		case Horizontal:
-			mManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+			manager.setOrientation(LinearLayoutManager.HORIZONTAL);
 			break;
 		case Vertical:
-			mManager.setOrientation(LinearLayoutManager.VERTICAL);
+			manager.setOrientation(LinearLayoutManager.VERTICAL);
 			break;
 		}
 	}
 
 	public void setData(ArrayList<Data> data) {
+		setData(data, true, true);
+	}
+
+	public void setData(ArrayList<Data> data, boolean withHeader, boolean withFooter) {
 		mDataSet.clear();
 		if (data.size() == 0) {
 		} else {
 			mDataSet.addAll(data);
-			mDataSet.add(0, null); //ヘッダーを認識するためのダミーデータ
-			mDataSet.add(null); //フッターを認識するためのダミーデータ
+			if (withHeader) {
+				//ヘッダーを認識するためのダミーデータ
+				mDataSet.add(0, null);
+			}
+			if (withFooter) {
+				//フッターを認識するためのダミーデータ
+				mDataSet.add(null);
+			}
 			mAdapter.notifyDataSetChanged();
 		}
 	}
@@ -125,16 +137,19 @@ public abstract class BaseListView<Data> extends android.support.v7.widget.Recyc
 	protected abstract int getLayoutResId();
 	protected abstract Cell createCell(View view);
 	protected void onCellClick(Data data) {
-
+	}
+	
+	protected LayoutManager createLayoutManager(Context context) {
+		return new LinearLayoutManager(context);
 	}
 
 	protected BaseListView.Adapter<Cell> mAdapter = new BaseListView.Adapter<Cell>() {
 
 		@Override
 		public int getItemViewType(int position) {
-			if (position == 0) {
+			if (position == 0 && mDataSet.get(position) == null) {
 				return VIEW_TYPE_HEADER;
-			} else if (position == mDataSet.size() - 1) {
+			} else if (position == mDataSet.size() - 1 && mDataSet.get(position) == null) {
 				return VIEW_TYPE_FOOTER;
 			} else {
 				return VIEW_TYPE_CONTENT;
@@ -154,11 +169,12 @@ public abstract class BaseListView<Data> extends android.support.v7.widget.Recyc
 		}
 		@Override
 		public void onBindViewHolder(Cell holder, int position) {
-			if (position == 0) {
-				//no implement
-			} else if (position == mDataSet.size() - 1) {
+			switch (getItemViewType(position)) {
+			case VIEW_TYPE_FOOTER:
 				//do nothing
-			} else {
+			case VIEW_TYPE_HEADER:
+				// do nothing
+			default:
 				holder.bindView(mDataSet.get(position), position);
 			}
 		}
@@ -202,9 +218,9 @@ public abstract class BaseListView<Data> extends android.support.v7.widget.Recyc
 	}
 
 	protected void startReviewActivity(History history) {
-//		Intent intent = new Intent(getContext(), ReviewActivity.class);
-//		intent.putExtra("data", history);
-//		getContext().startActivity(intent);
+		//		Intent intent = new Intent(getContext(), ReviewActivity.class);
+		//		intent.putExtra("data", history);
+		//		getContext().startActivity(intent);
 		ReviewDialog dialog = ReviewDialog.newInstance(history);
 		dialog.show(((Activity)getContext()).getFragmentManager(), "ReviewDialog");
 	}

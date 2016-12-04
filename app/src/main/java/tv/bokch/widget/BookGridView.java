@@ -2,50 +2,52 @@ package tv.bokch.widget;
 
 import android.content.Context;
 
+import android.support.v7.widget.GridLayoutManager;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
+
+import java.util.ArrayList;
 
 import tv.bokch.R;
 import tv.bokch.data.Book;
 import tv.bokch.data.BookViewHolder;
+import tv.bokch.util.Display;
 
-public class BookListView extends BaseListView<Book> {
+public class BookGridView extends BaseListView<Book> {
 	
-	public BookListView(Context context) {
+	public BookGridView(Context context) {
 		super(context);
 		initialize(context);
 	}
-	public BookListView(Context context, AttributeSet attrs) {
+	public BookGridView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		initialize(context);
 	}
-	public BookListView(Context context, AttributeSet attrs, int defStyleAttr) {
+	public BookGridView(Context context, AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
 		initialize(context);
 	}
 	
 	private void initialize(Context context) {
+		setClipChildren(false);
+		setClipToPadding(false);
 	}
 	
 	
 	@Override
 	protected int getLayoutResId() {
-		return R.layout.cell_book;
+		return R.layout.cell_book_grid;
 	}
 	
 	@Override
 	protected Cell createCell(View view) {
 		return new BookCell(view);
 	}
-	
-	@Override
-	protected int getFooterResId() {
-		return R.layout.cell_footer;
-	}
 
 	@Override
-	protected int getHeaderResId() {
-		return R.layout.cell_header;
+	protected LayoutManager createLayoutManager(Context context) {
+		return new GridLayoutManager(context, 3);
 	}
 
 	@Override
@@ -53,9 +55,13 @@ public class BookListView extends BaseListView<Book> {
 		startBookActivity(book);
 	}
 
+	public void setData(ArrayList<Book> data) {
+		super.setData(data, false, false);
+	}
+	
 	protected class BookCell extends Cell {
 		private BookViewHolder mBook;
-
+		
 		public BookCell(View view) {
 			super(view);
 			mBook = new BookViewHolder(view);
