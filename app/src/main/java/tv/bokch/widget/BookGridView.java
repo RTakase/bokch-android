@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 import tv.bokch.R;
+import tv.bokch.android.BaseActivity;
 import tv.bokch.data.Book;
 import tv.bokch.data.BookViewHolder;
 import tv.bokch.util.Display;
@@ -52,7 +53,7 @@ public class BookGridView extends BaseListView<Book> {
 
 	@Override
 	protected void onCellClick(Book book) {
-		startBookActivity(book);
+		((BaseActivity)getContext()).startBookActivity(book);
 	}
 
 	public void setData(ArrayList<Book> data) {
@@ -73,7 +74,7 @@ public class BookGridView extends BaseListView<Book> {
 			mBook.setOnJacketClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					startBookActivity(book);
+					((BaseActivity)getContext()).startBookActivity(book);
 				}
 			});
 		}

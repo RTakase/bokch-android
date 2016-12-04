@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import tv.bokch.R;
+import tv.bokch.android.BaseActivity;
 import tv.bokch.data.UserViewHolder;
 import tv.bokch.data.History;
 
@@ -50,7 +51,7 @@ public class UserReviewListView extends ReviewListView {
 			mUser.setOnIconClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					startUserActivity(history.user);
+					((BaseActivity)getContext()).startUserActivity(history.user);
 				}
 			});
 		}

@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import tv.bokch.R;
+import tv.bokch.android.BaseActivity;
 import tv.bokch.data.Book;
 import tv.bokch.data.User;
 
@@ -33,9 +34,9 @@ public abstract class RankingListView<Data> extends BaseListView<Data> {
 	protected void onCellClick(Data data) {
 		if (data instanceof Book) {
 			//startUserListActivity((Book)data);
-			startBookActivity((Book)data);
+			((BaseActivity)getContext()).startBookActivity((Book)data);
 		} else if (data instanceof User) {
-			startUserActivity((User)data);
+			((BaseActivity)getContext()).startUserActivity((User)data);
 		} else {
 			super.onCellClick(data);
 		}

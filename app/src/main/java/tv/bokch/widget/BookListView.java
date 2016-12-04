@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import tv.bokch.R;
+import tv.bokch.android.BaseActivity;
 import tv.bokch.data.Book;
 import tv.bokch.data.BookViewHolder;
 
@@ -50,7 +51,7 @@ public class BookListView extends BaseListView<Book> {
 
 	@Override
 	protected void onCellClick(Book book) {
-		startBookActivity(book);
+		((BaseActivity)getContext()).startBookActivity(book);
 	}
 
 	protected class BookCell extends Cell {
@@ -67,7 +68,7 @@ public class BookListView extends BaseListView<Book> {
 			mBook.setOnJacketClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					startBookActivity(book);
+					((BaseActivity)getContext()).startBookActivity(book);
 				}
 			});
 		}

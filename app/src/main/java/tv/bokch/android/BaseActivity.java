@@ -128,7 +128,7 @@ public class BaseActivity extends AppCompatActivity {
 		startActivityForResult(intent, REQUEST_LOGIN);
 	}
 
-	protected void startBookActivity(Book book) {
+	public void startBookActivity(Book book) {
 		startBookActivity(book.bookId, false);
 	}
 	
@@ -183,7 +183,7 @@ public class BaseActivity extends AppCompatActivity {
 		startActivity(intent);
 	}
 
-	protected void startUserActivity(User user) {
+	public void startUserActivity(User user) {
 		startUserActivity(user, null);
 	}
 
@@ -216,7 +216,7 @@ public class BaseActivity extends AppCompatActivity {
 			}
 		});
 	}
-	protected void startReviewActivity(History history) {
+	public void startReviewActivity(History history) {
 		ReviewDialog dialog = ReviewDialog.newInstance(history);
 		dialog.show(getFragmentManager(), "ReviewDialog");
 	}

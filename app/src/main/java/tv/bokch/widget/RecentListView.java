@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import tv.bokch.R;
+import tv.bokch.android.BaseActivity;
 import tv.bokch.data.BookViewHolder;
 import tv.bokch.data.History;
 import tv.bokch.data.ReviewViewHolder;
@@ -32,7 +33,7 @@ public abstract class RecentListView extends BaseListView<History> {
 
 	@Override
 	protected void onCellClick(History history) {
-		startReviewActivity(history);
+		((BaseActivity)getContext()).startReviewActivity(history);
 	}
 
 	protected class RecentCell extends Cell {
@@ -59,7 +60,7 @@ public abstract class RecentListView extends BaseListView<History> {
 				mBook.setOnJacketClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						startBookActivity(history.book);
+						((BaseActivity)getContext()).startBookActivity(history.book);
 					}
 				});
 			}
@@ -68,7 +69,7 @@ public abstract class RecentListView extends BaseListView<History> {
 				mUser.setOnIconClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						startUserActivity(history.user);
+						((BaseActivity)getContext()).startUserActivity(history.user);
 					}
 				});
 			}

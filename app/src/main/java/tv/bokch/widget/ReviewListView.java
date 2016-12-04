@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import tv.bokch.R;
+import tv.bokch.android.BaseActivity;
 import tv.bokch.data.History;
 import tv.bokch.data.ReviewViewHolder;
 
@@ -38,7 +39,7 @@ public abstract class ReviewListView extends BaseListView<History> {
 
 	@Override
 	protected void onCellClick(History history) {
-		startReviewActivity(history);
+		((BaseActivity)getContext()).startReviewActivity(history);
 	}
 
 	protected class ReviewCell extends Cell {

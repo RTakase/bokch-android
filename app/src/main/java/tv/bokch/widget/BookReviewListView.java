@@ -8,6 +8,7 @@ import android.view.View;
 
 import timber.log.Timber;
 import tv.bokch.R;
+import tv.bokch.android.BaseActivity;
 import tv.bokch.data.BookViewHolder;
 import tv.bokch.data.History;
 
@@ -53,7 +54,7 @@ public class BookReviewListView extends ReviewListView {
 			mBook.setOnJacketClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					startBookActivity(history.book);
+					((BaseActivity)getContext()).startBookActivity(history.book);
 				}
 			});
 		}

@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import tv.bokch.R;
+import tv.bokch.android.BaseActivity;
 import tv.bokch.data.History;
 import tv.bokch.data.User;
 import tv.bokch.data.UserViewHolder;
@@ -50,7 +51,7 @@ public class UserListView extends BaseListView<User> {
 
 	@Override
 	protected void onCellClick(User user) {
-		startUserActivity(user);
+		((BaseActivity)getContext()).startUserActivity(user);
 	}
 
 	protected class UserCell extends Cell {
