@@ -66,7 +66,7 @@ public class ReviewDialog extends BaseDialog {
 		if (history.review != null && TextUtils.isEmpty(history.review.comment)) {
 			if (review.comment != null) {
 				review.comment.setText(getString(R.string.empty_comment));
-				review.comment.setTextColor(0x60ffffff);
+				review.comment.setTextColor(0x60000000);
 			}
 		}
 

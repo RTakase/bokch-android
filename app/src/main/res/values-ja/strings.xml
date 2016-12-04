@@ -59,6 +59,6 @@
     <string name="label_find_from_list">一覧から探す</string>
     <string name="review">評価</string>
     <string name="comment">コメント</string>
-    <string name="empty_comment">コメントがありません</string>
+    <string name="empty_comment">コメントはありません</string>
     <string name="label_reviews_more">レビューをもっと見る</string>
 </resources>
