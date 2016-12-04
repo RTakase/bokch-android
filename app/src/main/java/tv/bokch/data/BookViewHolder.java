@@ -58,7 +58,7 @@ public class BookViewHolder {
 		}
 
 		if (ratingAverage != null && book.ratingAverage > 0) {
-			ratingAverage.setRating(book.ratingAverage * 100);
+			ratingAverage.setRating(book.ratingAverage);
 		}
 
 		if (tag != null && !TextUtils.isEmpty(book.tag)) {

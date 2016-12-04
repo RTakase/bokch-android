@@ -27,7 +27,6 @@ import tv.bokch.data.Review;
 import tv.bokch.data.User;
 import tv.bokch.util.ApiRequest;
 import tv.bokch.widget.BookView;
-import tv.bokch.widget.NetworkImageView;
 
 public class BookActivity extends TabActivity {
 
