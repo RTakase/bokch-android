@@ -20,7 +20,25 @@ public abstract class BaseFragment<Data extends Parcelable> extends Fragment {
 		StatableListView<Data> content = createStatableListView(getContext());
 		BaseListView<Data> listview = createListView(getContext());
 		content.addListView(listview);
+
+		if (savedInstanceState != null) {
+			ArrayList<Data> data = savedInstanceState.getParcelableArrayList("data");
+			if (data != null) {
+				Timber.d("tks, data are =%d", data.size());
+				content.onData(data);
+			}
+		}
 		return content;
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		StatableListView content = (StatableListView)getView();
+		if (content != null) {
+			Timber.d("tks, save list data in fragment...");
+			outState.putParcelableArrayList("data", content.getData());
+		}
+		super.onSaveInstanceState(outState);
 	}
 
 	protected abstract BaseListView<Data> createListView(Context context);
