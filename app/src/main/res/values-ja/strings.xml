@@ -11,8 +11,6 @@
     <string name="ranking_book_weekly_title">社内で読まれた本ランキング</string>
     <string name="failed_data_set">予期せぬデータが見つかりました</string>
     <string name="failed_load">通信エラーが発生しました</string>
-    <string name="user_list_with_book">この本を読んだ人</string>
-    <string name="book_list_with_user">この人の読んでいる本</string>
     <string name="acitivity_title_recent">最近社内で読まれた本</string>
     <string name="acitivity_title_book_list">本一覧</string>
     <string name="acitivity_title_user_ranking">本を読んでる人ランキング</string>
@@ -41,8 +39,6 @@
     <string name="error">エラー</string>
     <string name="loading">通信中</string>
     <string name="empty_review">評価とコメントのどちらかは記入してください</string>
-    <string name="title_book_history">読んだ本一覧</string>
-    <string name="title_user_history">読んだ人一覧</string>
     <string name="title_stack">積み上げてる本一覧</string>
     <string name="title_users_with_this_book">読んだ人一覧</string>
     <string name="title_books_with_this_user">読んだ本一覧</string>
@@ -60,7 +56,7 @@
     <string name="rating">５段階評価</string>
     <string name="comment">コメント</string>
     <string name="empty_comment">コメントはありません</string>
-    <string name="label_reviews_more">他のレビューを見る</string>
+    <string name="label_reviews_more">レビューをもっと見る</string>
     <string name="title_review_edit">レビュー編集画面タイトル</string>
     <string name="label_confirm_review">自分のレビューを\n確認する</string>
     <string name="label_update_review">自分のレビューです</string>
@@ -72,4 +68,6 @@
     <string name="desc_url_1">Amazonで本を検索してURLをコピーする</string>
     <string name="desc_url_2">コピーしたURLを読み込ませる</string>
     <string name="desc_url_3">本のページが自動的に開きます</string>
+    <string name="activity_book">本のページ</string>
+    <string name="activity_user">ユーザのページ</string>
 </resources>

@@ -204,7 +204,7 @@ public class ApiRequest {
 
 	public void book(String bookId, String userId, ApiListener<JSONObject> listener) {
 		HttpUrl.Builder url = getUrlBuilder(String.format(API_BOOK, bookId));
-		url.addQueryParameter("user_id", userId);
+		url.addQueryParameter("my_user_id", userId);
 		getJsonObject(url.build(), listener);
 	}
 

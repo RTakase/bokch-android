@@ -142,6 +142,7 @@ public class ReviewDialog extends BaseDialog {
 			public void onSuccess(JSONObject response) {
 				try {
 					mMyBook = new MyBook(response);
+					Timber.d("tks, %s", response.toString());
 					if (mMyBook.review == null) {
 						//まだレビューを書いていない
 						mReviewButton.setState(ReviewButton.State.POST);

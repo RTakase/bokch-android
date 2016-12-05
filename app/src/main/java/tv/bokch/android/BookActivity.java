@@ -46,7 +46,7 @@ public class BookActivity extends TabActivity {
 		setContentView(R.layout.activity_book);
 		super.onCreate(savedInstanceState);
 
-		setActionBarTitle(getString(R.string.title_users_with_this_book));
+		setActionBarTitle(getString(R.string.activity_book));
 
 		Intent intent = getIntent();
 		mBook = intent.getParcelableExtra("data");

@@ -40,7 +40,7 @@ public class UserActivity extends TabActivity {
 		setContentView(R.layout.activity_user);
 		super.onCreate(savedInstanceState);
 
-		setActionBarTitle(getString(R.string.title_books_with_this_user));
+		setActionBarTitle(getString(R.string.activity_user));
 		
 		Intent intent = getIntent();
 		mUser = intent.getParcelableExtra("data");
