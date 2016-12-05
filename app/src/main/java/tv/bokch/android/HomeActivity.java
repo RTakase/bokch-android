@@ -38,6 +38,9 @@ public class HomeActivity extends TabActivity {
 
 		super.onCreate(savedInstanceState);
 
+		setActionBarTitle(getString(R.string.app_name));
+		setActionBarImage(R.drawable.logo_white);
+
 		SharedPreferences pref = this.getSharedPreferences("bokch", MODE_PRIVATE);
 
 		String myUserId = pref.getString("user_id", null);
@@ -54,7 +57,6 @@ public class HomeActivity extends TabActivity {
 			ApiRequest request = new ApiRequest();
 			request.login(myUserId, null, mLoginApiListener);
 		}
-		setActionBarTitle(getString(R.string.app_name));
 	}
 
 	@Override

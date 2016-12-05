@@ -366,7 +366,6 @@ public class ApiRequest {
 		}
 
 		private void deliverError(Call call, Response response, Exception ex) {
-			Timber.d("tks, %s", response.toString());
 			if (mListener != null) {
 				final ApiError error = new ApiError(call, response, ex);
 				ApiDeliverHandler.getHandler().post(new Runnable() {
