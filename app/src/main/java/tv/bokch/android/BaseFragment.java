@@ -46,14 +46,9 @@ public abstract class BaseFragment<Data extends Parcelable> extends Fragment {
 	protected StatableListView<Data> createStatableListView(Context context) {
 		return new StatableListView<>(context);
 	}
-
-	protected ArrayList<Data> filterData(ArrayList<Data> data) {
-		return data;
-	}
 	
 	public boolean onData(ArrayList<Data> data) {
 		StatableListView content = (StatableListView)getView();
-		data = filterData(data);
 		boolean res = false;
 		if (content != null) {
 			res = content.onData(data);

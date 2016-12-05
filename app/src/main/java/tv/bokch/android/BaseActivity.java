@@ -35,8 +35,6 @@ public class BaseActivity extends AppCompatActivity {
 
 	protected User mMyUser;
 
-	protected Display mDisplay;
-
 	protected ProgressDialog mProgressDialog;
 
 	protected ProgressDialog mSpinner;
@@ -45,7 +43,6 @@ public class BaseActivity extends AppCompatActivity {
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		ViewServer.get(this).addWindow(this);
-		mDisplay = new Display(this);
 	}
 
 

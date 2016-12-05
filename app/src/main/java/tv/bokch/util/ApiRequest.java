@@ -1,7 +1,6 @@
 package tv.bokch.util;
 
 import android.net.Uri;
-import android.text.TextUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -99,7 +98,6 @@ public class ApiRequest {
 	}
 
 	private void startDeliver(OkHttpClient client, Request request, Callback callback) {
-		Timber.d("tks, %s", request.url().toString());
 		Call call = client.newCall(request);
 		call.enqueue(callback);
 	}

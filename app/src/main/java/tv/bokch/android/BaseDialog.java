@@ -107,36 +107,6 @@ public class BaseDialog extends DialogFragment {
 		dismiss();
 	}
 
-	protected void showConfirmDialog(CharSequence message, DialogInterface.OnClickListener okClick) {
-		showConfirmDialog(message, okClick, null);
-	}
-
-	protected void showConfirmDialog(CharSequence message, DialogInterface.OnClickListener okClick, DialogInterface.OnClickListener cancelClick) {
-		showConfirmDialog(message, okClick, cancelClick, null);
-	}
-
-	protected void showConfirmDialog(CharSequence message, DialogInterface.OnClickListener okClick, DialogInterface.OnClickListener cancelClick, DialogInterface.OnCancelListener cancel) {
-		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-		builder.setTitle(getString(R.string.confirmation));
-		builder.setMessage(message);
-		builder.setPositiveButton("OK", okClick);
-		builder.setNegativeButton(R.string.cancel, cancelClick);
-		builder.setOnCancelListener(cancel);
-		builder.show();
-	}
-
-	protected void showAlertDialog(CharSequence title, CharSequence message) {
-		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-		if (title != null) {
-			builder.setTitle(title);
-		}
-		if (message != null) {
-			builder.setMessage(message);
-		}
-		builder.setPositiveButton("OK", null);
-		builder.show();
-	}
-
 	protected void showSpinner() {
 		mSpinner = ViewUtils.showSpinner(getActivity(), getString(R.string.loading));
 	}
