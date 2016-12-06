@@ -106,8 +106,14 @@ public class LoginActivity extends BaseActivity {
 				REDIRECT_URL,
 				CLIENT_ID_WEB
 			);
-			intent.setData(Uri.parse(url));
-			startActivity(intent);
+			try {
+				intent.setClassName("com.android.chrome", "com.google.android.apps.chrome.Main");
+				intent.setData(Uri.parse(url));
+				startActivity(intent);
+			} catch (ActivityNotFoundException e) {
+				Timber.w(e, null);
+				ViewUtils.showErrorToast(LoginActivity.this, getString(R.string.failed_find_chrome));
+			}
 		}
 	};
 
