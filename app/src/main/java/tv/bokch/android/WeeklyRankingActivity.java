@@ -22,9 +22,9 @@ public class WeeklyRankingActivity extends TabActivity {
 	
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
-		setContentView(R.layout.activity_ranking);
 		super.onCreate(savedInstanceState);
-		setActionBarTitle(R.string.ranking_weekly);
+		setContentView(R.layout.activity_ranking);
+		setActionBarTitle(R.string.ranking_total);
 	}
 	
 	@Override
@@ -56,10 +56,10 @@ public class WeeklyRankingActivity extends TabActivity {
 		ApiRequest request = new ApiRequest();
 		switch (index) {
 		case INDEX_BOOK:
-			request.ranking_book_weekly(listener);
+			request.ranking_book_total(listener);
 			return true;
 		case INDEX_USER:
-			request.ranking_user_weekly(listener);
+			request.ranking_user_total(listener);
 			return true;
 		default:
 			return false;
