@@ -4,9 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import timber.log.Timber;
 import tv.bokch.R;
 import tv.bokch.data.Book;
 import tv.bokch.data.BookViewHolder;
@@ -52,6 +50,12 @@ public class BookView extends RelativeLayout {
 	public void bindView(Book book) {
 		if (mHolder != null) {
 			mHolder.bindView(book);
+		}
+	}
+
+	public void setRatingAverageSuffix(String str) {
+		if (mHolder != null) {
+			mHolder.setRatingAverageSuffix(str);
 		}
 	}
 }

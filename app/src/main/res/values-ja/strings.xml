@@ -38,7 +38,7 @@
     <string name="succeed_put_review">レビューを更新しました！</string>
     <string name="error">エラー</string>
     <string name="loading">通信中</string>
-    <string name="empty_review">評価とコメントのどちらかは記入してください</string>
+    <string name="empty_review">５段階評価は必須項目です</string>
     <string name="title_stack">積み上げてる本一覧</string>
     <string name="title_users_with_this_book">読んだ人一覧</string>
     <string name="title_books_with_this_user">読んだ本一覧</string>
@@ -53,8 +53,8 @@
     <string name="prompt_follow">あの人の読んでる本をチェックしよう！</string>
     <string name="label_find_from_ranking">ランキングから探す</string>
     <string name="label_find_from_list">一覧から探す</string>
-    <string name="rating">５段階評価</string>
-    <string name="comment">コメント</string>
+    <string name="rating">５段階評価(必須)</string>
+    <string name="comment">コメント(任意)</string>
     <string name="empty_comment">コメントはありません</string>
     <string name="label_reviews_more">レビューをもっと見る</string>
     <string name="title_review_edit">レビュー編集画面タイトル</string>
@@ -71,4 +71,11 @@
     <string name="activity_book">本のページ</string>
     <string name="activity_user">ユーザのページ</string>
     <string name="failed_find_chrome">ログインにはChromeブラウザが必要です</string>
+    <string name="label_share_before">社内にシェア</string>
+    <string name="label_share_after">レビューを編集</string>
+    <string name="label_wish_before">ウィッシュリストに追加</string>
+    <string name="label_wish_after">ウィッシュリストに追加済</string>
+    <string name="message_posted_wish">ウィッシュリストに追加しました！</string>
+    <string name="message_deleted_wish">ウィッシュリストから削除しました</string>
+    <string name="suffix_rating_average">%d件の評価</string>
 </resources>

@@ -11,6 +11,7 @@ public class MyBook extends Book {
 	public User user;
 	public Review review;
 	public History history;
+	public Stack stack;
 	
 	public MyBook(JSONObject obj) throws JSONException {
 		super(obj);
@@ -36,5 +37,8 @@ public class MyBook extends Book {
 		
 		JSONObject _review = status.optJSONObject("review");
 		this.review = _review == null ? null : new Review(_review);
+		
+		JSONObject _stack = status.optJSONObject("stack");
+		this.stack = _stack == null ? null : new Stack(_stack);
 	}
 }

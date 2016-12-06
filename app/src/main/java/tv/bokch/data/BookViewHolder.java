@@ -15,6 +15,7 @@ public class BookViewHolder {
 	public TextView author;
 	public TextView publisher;
 	public RatingBar ratingAverage;
+	public TextView suffixRatingAverage;
 	public TextView tag;
 	public int jacketWidth = -1;
 	public int jacketHeight = -1;
@@ -26,9 +27,10 @@ public class BookViewHolder {
 			title = (TextView)view.findViewById(R.id.book_title);
 		}
 		author = (TextView)view.findViewById(R.id.author);
-		publisher = (TextView)view.findViewById(R.id.publisher);
+		//publisher = (TextView)view.findViewById(R.id.publisher);
 		ratingAverage = (RatingBar)view.findViewById(R.id.rating_average);
 		tag = (TextView)view.findViewById(R.id.tag);
+		suffixRatingAverage = (TextView)view.findViewById(R.id.suffix_rating);
 	}
 
 	public void bindView(Book book) {
@@ -69,6 +71,11 @@ public class BookViewHolder {
 	public void setOnJacketClickListener(View.OnClickListener listener) {
 		if (jacket != null) {
 			jacket.setOnClickListener(listener);
+		}
+	}
+	public void setRatingAverageSuffix(String str) {
+		if (suffixRatingAverage != null) {
+			suffixRatingAverage.setText(str);
 		}
 	}
 }

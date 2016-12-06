@@ -17,7 +17,6 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
-import timber.log.Timber;
 
 public class ApiRequest {
 
@@ -26,6 +25,8 @@ public class ApiRequest {
 	public static String API_HOME = "http://52.198.155.49/";
 	
 	public static String API_RECENT = "histories";
+	public static String API_STACKS = "stacks";
+	public static String API_STACK = "stacks/%s";
 	public static String API_REVIEW = "reviews";
 	public static String API_BOOKS = "books";
 	public static String API_BOOK = "books/%s";
@@ -163,8 +164,33 @@ public class ApiRequest {
 		
 
 		RequestBody body = RequestBody.create(JSON, json.toString());
-		postJsonObject(url, body, new PostApiListener(listener));
+		postJsonObject(url, body, listener);
 	}
+	
+	public void post_stack(String bookId, String userId, ApiListener<JSONObject> listener) throws JSONException {
+		HttpUrl url = getUrl(API_STACKS);
+		
+		JSONObject review = new JSONObject();
+		review.put("book_id", bookId);
+		review.put("user_id", userId);
+		
+		JSONObject stack = new JSONObject();
+		stack.put("user_id", userId);
+		stack.put("book_id", bookId);
+		
+		JSONObject json = new JSONObject();
+		json.put("stack", stack);
+
+		RequestBody body = RequestBody.create(JSON, json.toString());
+		postJsonObject(url, body, listener);
+	}
+
+	public void delete_stack(long stackId, ApiListener<JSONObject> listener) {
+		HttpUrl url = getUrl(String.format(API_STACK, String.valueOf(stackId)));
+		deleteJsonObject(url, null, listener);
+	}
+
+
 	
 	public void put_review(long reviewId, int rating, String comment, ApiListener<JSONObject> listener) throws JSONException {
 		HttpUrl url = getUrl(String.format(API_PUT_REVIEW, reviewId));

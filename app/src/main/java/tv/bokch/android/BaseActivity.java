@@ -196,6 +196,7 @@ public class BaseActivity extends AppCompatActivity {
 		intent.putExtra("data", myBook);
 		intent.putExtra("review", myBook.review);
 		intent.putExtra("history", myBook.history);
+		intent.putExtra("stack", myBook.stack);
 		intent.putExtra("with_review_edit", withReviewEdit);
 		startActivity(intent);
 	}

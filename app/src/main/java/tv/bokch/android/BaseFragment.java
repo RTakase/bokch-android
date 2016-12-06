@@ -25,16 +25,13 @@ public abstract class BaseFragment<Data extends Parcelable> extends Fragment {
 		BaseListView<Data> listview = createListView(getContext());
 		content.addListView(listview);
 
-		Timber.d("tks, on createView.");
 		synchronized (this) {
 			if (mReservedState != null) {
-				Timber.d("tks, state reserved. set...");
 				content.setState(mReservedState);
 				mReservedState = null;
 			}
 
 			if (mReservedData != null) {
-				Timber.d("tks, data reserved. set...");
 				content.setData(mReservedData);
 				mReservedData = null;
 			} else {
@@ -66,7 +63,6 @@ public abstract class BaseFragment<Data extends Parcelable> extends Fragment {
 	
 	public boolean onData(ArrayList<Data> data) {
 		StatableListView content = (StatableListView)getView();
-		Timber.d("tks, on data, content == null? %b", content == null);
 		boolean res = false;
 		if (content != null) {
 			res = content.onData(data);
@@ -80,7 +76,6 @@ public abstract class BaseFragment<Data extends Parcelable> extends Fragment {
 
 	public void setState(StatableListView.State state) {
 		StatableListView content = (StatableListView)getView();
-		Timber.d("tks, on setState, content == null? %b", content == null);
 		if (content != null) {
 			content.setState(state);
 		} else {
