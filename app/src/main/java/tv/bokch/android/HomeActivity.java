@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -33,18 +34,17 @@ public class HomeActivity extends TabActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-
 		setContentView(R.layout.activity_home);
 
 		super.onCreate(savedInstanceState);
-
-		setActionBarTitle(getString(R.string.app_name));
-		setActionBarImage(R.drawable.logo_white);
 
 		SharedPreferences pref = this.getSharedPreferences("bokch", MODE_PRIVATE);
 
 		String myUserId = pref.getString("user_id", null);
 		Timber.d("tks, userId = %s", myUserId);
+
+		mToolbar.setNavigationIcon(null);
+		setActionBarImage(R.drawable.logo_white7);
 
 		mDisableLoad = true;
 

@@ -70,4 +70,5 @@
     <string name="desc_url_3">本のページが自動的に開きます</string>
     <string name="activity_book">本のページ</string>
     <string name="activity_user">ユーザのページ</string>
+    <string name="failed_find_chrome">ログインにはChromeブラウザが必要です</string>
 </resources>

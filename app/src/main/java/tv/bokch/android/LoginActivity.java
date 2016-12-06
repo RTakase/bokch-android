@@ -1,5 +1,6 @@
 package tv.bokch.android;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 
 import android.content.SharedPreferences;
@@ -21,6 +22,7 @@ import tv.bokch.App;
 import tv.bokch.R;
 import tv.bokch.data.User;
 import tv.bokch.util.ApiRequest;
+import tv.bokch.util.ViewUtils;
 
 public class LoginActivity extends BaseActivity {
 	public static final String CLIENT_ID_WEB = "780402054902-o75kj622d9e3qu9qdnerk8gkd0d59heu.apps.googleusercontent.com";
@@ -38,6 +40,8 @@ public class LoginActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_login);
+
+		mToolbar.setNavigationIcon(null);
 
 		setActionBarTitle(getString(R.string.welcome));
 

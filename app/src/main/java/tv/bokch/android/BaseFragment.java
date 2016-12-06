@@ -15,17 +15,35 @@ import tv.bokch.widget.BaseListView;
 import tv.bokch.widget.StatableListView;
 
 public abstract class BaseFragment<Data extends Parcelable> extends Fragment {
+	private ArrayList<Data> mReservedData;
+	private StatableListView.State mReservedState;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
 		StatableListView<Data> content = createStatableListView(getContext());
 		BaseListView<Data> listview = createListView(getContext());
 		content.addListView(listview);
 
-		if (savedInstanceState != null) {
-			ArrayList<Data> data = savedInstanceState.getParcelableArrayList("data");
-			if (data != null) {
-				Timber.d("tks, data are =%d", data.size());
-				content.onData(data);
+		Timber.d("tks, on createView.");
+		synchronized (this) {
+			if (mReservedState != null) {
+				Timber.d("tks, state reserved. set...");
+				content.setState(mReservedState);
+				mReservedState = null;
+			}
+
+			if (mReservedData != null) {
+				Timber.d("tks, data reserved. set...");
+				content.setData(mReservedData);
+				mReservedData = null;
+			} else {
+				if (savedInstanceState != null) {
+					ArrayList<Data> data = savedInstanceState.getParcelableArrayList("data");
+					if (data != null) {
+						content.onData(data);
+					}
+				}
 			}
 		}
 		return content;
@@ -35,7 +53,6 @@ public abstract class BaseFragment<Data extends Parcelable> extends Fragment {
 	public void onSaveInstanceState(Bundle outState) {
 		StatableListView content = (StatableListView)getView();
 		if (content != null) {
-			Timber.d("tks, save list data in fragment...");
 			outState.putParcelableArrayList("data", content.getData());
 		}
 		super.onSaveInstanceState(outState);
@@ -44,22 +61,32 @@ public abstract class BaseFragment<Data extends Parcelable> extends Fragment {
 	protected abstract BaseListView<Data> createListView(Context context);
 
 	protected StatableListView<Data> createStatableListView(Context context) {
-		return new StatableListView<>(context);
+		return new StatableListView<Data>(context);
 	}
 	
 	public boolean onData(ArrayList<Data> data) {
 		StatableListView content = (StatableListView)getView();
+		Timber.d("tks, on data, content == null? %b", content == null);
 		boolean res = false;
 		if (content != null) {
 			res = content.onData(data);
+		} else {
+			synchronized (this) {
+				mReservedData = data;
+			}
 		}
 		return res;
 	}
 
 	public void setState(StatableListView.State state) {
 		StatableListView content = (StatableListView)getView();
+		Timber.d("tks, on setState, content == null? %b", content == null);
 		if (content != null) {
 			content.setState(state);
+		} else {
+			synchronized (this) {
+				mReservedState = state;
+			}
 		}
 	}
 }

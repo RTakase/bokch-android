@@ -61,13 +61,7 @@ public class BookActivity extends TabActivity {
 		boolean withReviewEdit = intent.getBooleanExtra("with_review_edit", false);
 		if (withReviewEdit) {
 			editReview();
-		} else {
-			boolean withMyReview = intent.getBooleanExtra("with_my_review", false);
-			if (withMyReview) {
-
-			}
 		}
-
 		initialize();
 	}
 

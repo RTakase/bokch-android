@@ -9,8 +9,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -34,10 +36,9 @@ public class BaseActivity extends AppCompatActivity {
 	public static final int REQUEST_LOGIN = 1;
 
 	protected User mMyUser;
-
 	protected ProgressDialog mProgressDialog;
-
 	protected ProgressDialog mSpinner;
+	protected Toolbar mToolbar;
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,6 +46,23 @@ public class BaseActivity extends AppCompatActivity {
 		ViewServer.get(this).addWindow(this);
 	}
 
+	@Override
+	public void setContentView(@LayoutRes int layoutResID) {
+		super.setContentView(layoutResID);
+		getWindow().setStatusBarColor(getColor(R.color.colorPrimary));
+		mToolbar = (Toolbar)findViewById(R.id.toolbar);
+		if (mToolbar != null) {
+			//mToolbar.setNavigationIcon(R.drawable.back4);
+			mToolbar.setTitleTextColor(0xffffffff);
+//			mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//				@Override
+//				public void onClick(View v) {
+//					finish();
+//				}
+//			});
+			setSupportActionBar(mToolbar);
+		}
+	}
 
 	@Override
 	protected void onResume() {
@@ -137,7 +155,7 @@ public class BaseActivity extends AppCompatActivity {
 
 	protected void startLoginActivity(Context context) {
 		Intent intent = new Intent(context, LoginActivity.class);
-		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		intent.addFlags(intent.FLAG_ACTIVITY_CLEAR_TASK);
 		startActivityForResult(intent, REQUEST_LOGIN);
 	}
 
@@ -152,7 +170,6 @@ public class BaseActivity extends AppCompatActivity {
 		startBookActivity(isbn,  false);
 	}
 	protected void startBookActivity(String bookId, final boolean withReviewEdit) {
-		showSpinner();
 		getMyBookStatus(bookId, new ApiRequest.ApiListener<JSONObject>() {
 			@Override
 			public void onSuccess(JSONObject response) {
@@ -195,6 +212,7 @@ public class BaseActivity extends AppCompatActivity {
 			@Override
 			public void onSuccess(JSONObject response) {
 				try {
+					dismissSpinner();
 					JSONObject obj = response.optJSONObject("book");
 					Book book = new Book(obj);
 					startBookActivity(book);
@@ -274,7 +292,9 @@ public class BaseActivity extends AppCompatActivity {
 	}
 
 	protected void showSpinner() {
-		mSpinner = ViewUtils.showSpinner(this, getString(R.string.loading));
+		if (mSpinner == null) {
+			mSpinner = ViewUtils.showSpinner(this, getString(R.string.loading));
+		}
 	}
 	protected void dismissSpinner() {
 		ViewUtils.dismissSpinner(mSpinner);
