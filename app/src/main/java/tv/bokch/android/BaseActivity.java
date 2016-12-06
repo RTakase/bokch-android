@@ -1,18 +1,18 @@
 package tv.bokch.android;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -27,7 +27,6 @@ import tv.bokch.data.MyBook;
 import tv.bokch.data.MyUser;
 import tv.bokch.data.User;
 import tv.bokch.util.ApiRequest;
-import tv.bokch.util.Display;
 import tv.bokch.util.ViewServer;
 import tv.bokch.util.ViewUtils;
 
@@ -49,17 +48,12 @@ public class BaseActivity extends AppCompatActivity {
 	@Override
 	public void setContentView(@LayoutRes int layoutResID) {
 		super.setContentView(layoutResID);
-		getWindow().setStatusBarColor(getColor(R.color.colorPrimary));
 		mToolbar = (Toolbar)findViewById(R.id.toolbar);
+		if (Build.VERSION.SDK_INT >= 21) {
+			getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimary));
+		}
 		if (mToolbar != null) {
-			//mToolbar.setNavigationIcon(R.drawable.back4);
 			mToolbar.setTitleTextColor(0xffffffff);
-//			mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-//				@Override
-//				public void onClick(View v) {
-//					finish();
-//				}
-//			});
 			setSupportActionBar(mToolbar);
 		}
 	}
