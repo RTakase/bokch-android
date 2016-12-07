@@ -39,9 +39,9 @@
     <string name="error">エラー</string>
     <string name="loading">通信中</string>
     <string name="empty_review">５段階評価は必須項目です</string>
-    <string name="title_stack">積み上げてる本一覧</string>
     <string name="title_users_with_this_book">読んだ人一覧</string>
-    <string name="title_books_with_this_user">読んだ本一覧</string>
+    <string name="title_histories">シェアした本</string>
+    <string name="title_stacks">ウィッシュリスト</string>
     <string name="empty_book">情報の取得に時間がかかっています。\nしばらくしてからご確認ください</string>
     <string name="prompt_new">本を検索してレビューを書こう！</string>
     <string name="title_all_users">登録されているユーザ一覧</string>

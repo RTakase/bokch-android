@@ -20,6 +20,7 @@ import tv.bokch.R;
 import tv.bokch.data.Book;
 import tv.bokch.data.History;
 import tv.bokch.data.MyUser;
+import tv.bokch.data.Stack;
 import tv.bokch.data.User;
 import tv.bokch.util.ApiRequest;
 import tv.bokch.util.ViewUtils;
@@ -27,7 +28,7 @@ import tv.bokch.widget.FollowButton;
 import tv.bokch.widget.UserView;
 
 public class UserActivity extends TabActivity {
-	public static final int INDEX_REVIEW = 0;
+	public static final int INDEX_HISTORY = 0;
 	public static final int INDEX_STACK = 1;
 	
 	private User mUser;
@@ -73,7 +74,7 @@ public class UserActivity extends TabActivity {
 	@Override
 	protected BaseFragment createFragment(int index) {
 		switch (index) {
-		case INDEX_REVIEW:
+		case INDEX_HISTORY:
 			return BookRecentFragment.newInstance();
 		case INDEX_STACK:
 			return BookGridFragment.newInstance();
@@ -90,10 +91,10 @@ public class UserActivity extends TabActivity {
 	@Override
 	protected String getTabTitle(int index) {
 		switch (index) {
-		case INDEX_REVIEW:
-			return getString(R.string.title_reviews);
+		case INDEX_HISTORY:
+			return getString(R.string.title_histories);
 		case INDEX_STACK:
-			return getString(R.string.title_books_with_this_user);
+			return getString(R.string.title_stacks);
 		default:
 			return null;
 		}
@@ -103,11 +104,11 @@ public class UserActivity extends TabActivity {
 	protected boolean requestData(int index, TabApiListener listener) {
 		ApiRequest request = new ApiRequest();
 		switch (index) {
-		case INDEX_REVIEW:
+		case INDEX_HISTORY:
 			request.recent(null, mUser.userId, null, listener);
 			return true;
 		case INDEX_STACK:
-			request.recent(null, mUser.userId, null, listener);
+			request.stack(null, mUser.userId, null, listener);
 			return true;
 		default:
 			return false;
@@ -117,10 +118,10 @@ public class UserActivity extends TabActivity {
 	@Override
 	protected String getKey(int index) {
 		switch (index) {
-		case INDEX_REVIEW:
+		case INDEX_HISTORY:
 			return "histories";
 		case INDEX_STACK:
-			return "histories";
+			return "stacks";
 		default:
 			return null;
 		}
@@ -129,7 +130,7 @@ public class UserActivity extends TabActivity {
 	@Override
 	protected ArrayList<?> getData(int index, JSONArray array) throws JSONException {
 		switch (index) {
-		case INDEX_REVIEW:
+		case INDEX_HISTORY:
 			ArrayList<History> histories = new ArrayList<>();
 			for (int i = 0; i < array.length(); i++) {
 				JSONObject obj = array.optJSONObject(i);
@@ -139,6 +140,7 @@ public class UserActivity extends TabActivity {
 						history.user = mUser;
 						histories.add(history);
 
+						//指定されていたレビューを開く
 						if (TextUtils.equals(history.book.bookId, mBookIdToOpen)) {
 							startReviewActivity(history);
 							mBookIdToOpen = null;
@@ -153,10 +155,8 @@ public class UserActivity extends TabActivity {
 			for (int i = 0; i < array.length(); i++) {
 				JSONObject obj = array.optJSONObject(i);
 				if (obj != null) {
-					History history = new History(obj);
-					if (history.review != null && !TextUtils.isEmpty(history.book.title)) {
-						books.add(history.book);
-					}
+					Stack stack = new Stack(obj);
+					books.add(stack.book);
 				}
 			}
 			return books;
