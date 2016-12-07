@@ -27,13 +27,13 @@ public class Book extends Data implements Parcelable {
 		}
 		bookId = obj.optString("book_id");
 		title = optString(obj, "title");
-		author = obj.optString("author");
+		author = optString(obj, "author");
 		detailPageUrl = obj.optString("detail_page_url");
 		largeImageUrl = obj.optString("large_image_url");
 		largeImageWidth = obj.optInt("large_image_width");
 		largeImageHeight = obj.optInt("large_image_height");
 		numberOfPages = obj.optInt("number_of_pages");
-		publisher = obj.optString("publisher");
+		publisher = optString(obj, "publisher");
 		inOffice  = obj.optBoolean("in_office");
 		tag = optString(obj, "tag");
 		ratingAverage = (float)obj.optDouble("rating_average");

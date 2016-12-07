@@ -95,7 +95,7 @@ public class BookActivity extends TabActivity {
 	protected BaseFragment createFragment(int index) {
 		switch (index) {
 		case INDEX_REVIEW:
-			return UserReviewFragment.newInstance();
+			return UserRecentFragment.newInstance();
 		case INDEX_USERS:
 			return UserFragment.newInstance();
 		default:

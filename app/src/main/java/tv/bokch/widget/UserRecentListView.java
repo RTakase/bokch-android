@@ -2,9 +2,9 @@ package tv.bokch.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.View;
 
 import tv.bokch.R;
+import tv.bokch.android.BaseActivity;
 import tv.bokch.data.History;
 
 public class UserRecentListView extends RecentListView {
@@ -25,17 +25,24 @@ public class UserRecentListView extends RecentListView {
 	private void initialize(Context context) {
 		setOrientation(Orientation.Vertical);
 	}
-	
+
+	@Override
+	protected int getLayoutResId(int viewType) {
+		switch (viewType) {
+		case VIEW_TYPE_RATING:
+			return R.layout.cell_recent_user_rating;
+		case VIEW_TYPE_COMMENT:
+			return R.layout.cell_recent_user_comment;
+		default:
+			return super.getLayoutResId(viewType);
+		}
+	}
+
 	@Override
 	protected int getLayoutResId() {
-		return R.layout.cell_full_ranking_user;
+		return 0;
 	}
-	
-	@Override
-	protected Cell createCell(View view) {
-		return new UserRecentCell(view);
-	}
-	
+
 	@Override
 	protected int getFooterResId() {
 		return R.layout.cell_footer;
@@ -45,15 +52,19 @@ public class UserRecentListView extends RecentListView {
 	protected int getHeaderResId() {
 		return R.layout.cell_header;
 	}
-	
-	protected class UserRecentCell extends RecentCell {
 
-		public UserRecentCell(View view) {
-			super(view);
-		}
-		
-		public void bindView(final History history, int position) {
-			super.bindView(history, position);
+	@Override
+	protected void onCellClick(int viewType, History history) {
+		switch(viewType) {
+		case VIEW_TYPE_RATING:
+			((BaseActivity)getContext()).startUserActivity(history.user);
+			break;
+		case VIEW_TYPE_COMMENT:
+			((BaseActivity)getContext()).startReviewActivity(history);
+			break;
+		default:
+			super.onCellClick(viewType, history);
+			break;
 		}
 	}
 }

@@ -7,6 +7,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
 
+import timber.log.Timber;
 import tv.bokch.R;
 import tv.bokch.android.BaseActivity;
 import tv.bokch.data.BookViewHolder;
@@ -41,13 +42,29 @@ public abstract class RecentListView extends BaseListView<History> {
 	}
 
 	@Override
-	protected abstract int getLayoutResId();
+	protected Cell createCell(View view) {
+		return new RecentCell(view);
+	}
+
+	@Override
+	protected int getViewType(History history) {
+		if (history.review == null) {
+			return VIEW_TYPE_CONTENT;
+		} else {
+			if (!TextUtils.isEmpty(history.review.comment)) {
+				return VIEW_TYPE_COMMENT;
+			} else if (history.review.rating > 0) {
+				return VIEW_TYPE_RATING;
+			} else {
+				return VIEW_TYPE_CONTENT;
+			}
+		}
+	}
 
 	protected class RecentCell extends Cell {
 		protected BookViewHolder mBook;
 		protected UserViewHolder mUser;
 		protected ReviewViewHolder mReview;
-		protected TextView mCreated;
 		
 		private boolean mDisableBookClick;
 		private boolean mDisableUserClick;
@@ -57,7 +74,6 @@ public abstract class RecentListView extends BaseListView<History> {
 			mBook = new BookViewHolder(view);
 			mUser = new UserViewHolder(view);
 			mReview = new ReviewViewHolder(view);
-			mCreated = (TextView)view.findViewById(R.id.created);
 		}
 
 		public void bindView(final History history, int position) {
@@ -82,9 +98,6 @@ public abstract class RecentListView extends BaseListView<History> {
 			}
 			
 			mReview.bindView(history.review);
-			if (mCreated != null) {
-				mCreated.setText(DateFormat.format("yyyy/MM/dd", history.created * 1000));
-			}
 		}
 		
 		public void disableBookClick() {
