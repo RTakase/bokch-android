@@ -127,45 +127,39 @@
                 />
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/btn_container"
+        <info.hoang8f.widget.FButton
+            android:id="@+id/more_btn"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="42dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="4dp"
-            android:layout_marginLeft="4dp"
-            android:layout_marginRight="4dp"
-            android:orientation="horizontal"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp"
+            app:buttonColor="#ffa18320"
+            android:textColor="#ddfafafa"
+            android:textSize="13sp"
+            android:text="@string/label_reviews_more"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            >
+            />
 
-            <info.hoang8f.widget.FButton
-                android:id="@+id/more_btn"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="3"
-                android:layout_marginRight="4dp"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                app:buttonColor="#ffa18320"
-                android:textColor="#ffffff"
-                android:textSize="13sp"
-                android:text="@string/label_reviews_more"
-                />
-
-            <tv.bokch.widget.ReviewButton
-                android:id="@+id/review_btn"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="5"
-                android:layout_marginLeft="4dp"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                android:textColor="#ffffff"
-                android:textSize="13sp"
-                />
-        </LinearLayout>
+        <info.hoang8f.widget.FButton
+            android:id="@+id/review_btn"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            app:buttonColor="#ff225b1e"
+            android:textColor="#ddfafafa"
+            android:textSize="13sp"
+            android:text="@string/prompt_review"
+            android:layout_above="@id/more_btn"
+            android:layout_centerHorizontal="true"
+            />
 
         <ScrollView
             android:layout_width="match_parent"
@@ -174,7 +168,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginTop="4dp"
             android:layout_below="@id/jacket_container"
-            android:layout_above="@id/btn_container"
+            android:layout_above="@id/review_btn"
             android:clipChildren="true"
             android:clipToPadding="true"
             >

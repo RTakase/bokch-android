@@ -24,6 +24,7 @@ import tv.bokch.data.History;
 import tv.bokch.data.Review;
 import tv.bokch.data.User;
 import tv.bokch.util.ApiRequest;
+import tv.bokch.util.JsonUtils;
 
 public class ReviewEditDialog extends BaseDialog {
 
@@ -63,7 +64,7 @@ public class ReviewEditDialog extends BaseDialog {
 		mBookHolder.bindView(mBook);
 
 		mEditor = (EditText)root.findViewById(R.id.review_editor);
-		mEditor.setHint(R.string.prompt_review);
+		mEditor.setHint(R.string.prompt_comment);
 
 		mRatingBar = (RatingBar)root.findViewById(R.id.rating);
 
@@ -199,6 +200,7 @@ public class ReviewEditDialog extends BaseDialog {
 		@Override
 		public void onSuccess(JSONObject response) {
 			dismissSpinner();
+			JsonUtils.dump(response);
 			mReview.rating = (int)mRatingBar.getRating();
 			mReview.comment = mEditor.getText().toString();
 			mSavedReview = true;
