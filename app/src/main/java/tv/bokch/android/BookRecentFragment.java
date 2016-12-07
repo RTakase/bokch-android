@@ -5,15 +5,15 @@ import android.os.Bundle;
 
 import tv.bokch.data.History;
 import tv.bokch.widget.BaseListView;
-import tv.bokch.widget.BookReviewListView;
+import tv.bokch.widget.BookRecentListView;
 
-public class BookReviewFragment extends BaseFragment<History> {
+public class BookRecentFragment extends BaseFragment<History> {
 	@Override
 	protected BaseListView<History> createListView(Context context) {
-		return new BookReviewListView(context);
+		return new BookRecentListView(context);
 	}
-	public static BookReviewFragment newInstance() {
-		BookReviewFragment fragment = new BookReviewFragment();
+	public static BookRecentFragment newInstance() {
+		BookRecentFragment fragment = new BookRecentFragment();
 		Bundle args = new Bundle();
 		fragment.setArguments(args);
 		return fragment;
