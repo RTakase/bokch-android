@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
+import timber.log.Timber;
 import tv.bokch.R;
 
 import tv.bokch.util.Display;
@@ -119,8 +120,23 @@ public abstract class BaseListView<Data> extends android.support.v7.widget.Recyc
 	}
 
 	protected abstract int getLayoutResId();
+	protected int getLayoutResId(int viewType) {
+		return getLayoutResId();
+	}
+
 	protected abstract Cell createCell(View view);
+	protected Cell createCell(int viewType, View view) {
+		return createCell(view);
+	}
+
 	protected void onCellClick(Data data) {
+	}
+	protected void onCellClick(int viewType, Data data) {
+		onCellClick(data);
+	}
+
+	protected int getViewType(Data data) {
+		return VIEW_TYPE_CONTENT;
 	}
 	
 	protected LayoutManager createLayoutManager(Context context) {
@@ -131,12 +147,13 @@ public abstract class BaseListView<Data> extends android.support.v7.widget.Recyc
 
 		@Override
 		public int getItemViewType(int position) {
-			if (position == 0 && mDataSet.get(position) == null) {
+			Data data = mDataSet.get(position);
+			if (position == 0 && data == null) {
 				return VIEW_TYPE_HEADER;
-			} else if (position == mDataSet.size() - 1 && mDataSet.get(position) == null) {
+			} else if (position == mDataSet.size() - 1 && data == null) {
 				return VIEW_TYPE_FOOTER;
 			} else {
-				return VIEW_TYPE_CONTENT;
+				return getViewType(data);
 			}
 		}
 
@@ -148,7 +165,7 @@ public abstract class BaseListView<Data> extends android.support.v7.widget.Recyc
 			case VIEW_TYPE_HEADER:
 				return createHeader(mInflater.inflate(getHeaderResId(), parent, false));
 			default:
-				return createCell(mInflater.inflate(getLayoutResId(), parent, false));
+				return createCell(viewType, mInflater.inflate(getLayoutResId(viewType), parent, false));
 			}
 		}
 		@Override
@@ -156,10 +173,14 @@ public abstract class BaseListView<Data> extends android.support.v7.widget.Recyc
 			switch (getItemViewType(position)) {
 			case VIEW_TYPE_FOOTER:
 				//do nothing
+				break;
 			case VIEW_TYPE_HEADER:
 				// do nothing
+				break;
 			default:
+				holder.setViewType(getViewType(mDataSet.get(position)));
 				holder.bindView(mDataSet.get(position), position);
+				break;
 			}
 		}
 		@Override
@@ -170,17 +191,22 @@ public abstract class BaseListView<Data> extends android.support.v7.widget.Recyc
 
 	protected class Cell extends BaseListView.ViewHolder {
 		protected View root;
+		protected int viewType;
 
 		public Cell(View view) {
 			super(view);
 			this.root = view;
 		}
 
+		protected void setViewType(int viewType) {
+			this.viewType = viewType;
+		}
+
 		protected void bindView(final Data data, int position) {
 			root.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					onCellClick(data);
+					onCellClick(viewType, data);
 				}
 			});
 		}

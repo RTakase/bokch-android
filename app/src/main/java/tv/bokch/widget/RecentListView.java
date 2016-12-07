@@ -1,6 +1,7 @@
 package tv.bokch.widget;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.AttributeSet;
 import android.view.View;
@@ -14,6 +15,9 @@ import tv.bokch.data.ReviewViewHolder;
 import tv.bokch.data.UserViewHolder;
 
 public abstract class RecentListView extends BaseListView<History> {
+
+	public static final int VIEW_TYPE_COMMENT = 10;
+	public static final int VIEW_TYPE_RATING = 11;
 
 	public RecentListView(Context context) {
 		super(context);
@@ -33,8 +37,11 @@ public abstract class RecentListView extends BaseListView<History> {
 
 	@Override
 	protected void onCellClick(History history) {
-		((BaseActivity)getContext()).startReviewActivity(history);
+		//((BaseActivity)getContext()).startBookActivity(history.book);
 	}
+
+	@Override
+	protected abstract int getLayoutResId();
 
 	protected class RecentCell extends Cell {
 		protected BookViewHolder mBook;

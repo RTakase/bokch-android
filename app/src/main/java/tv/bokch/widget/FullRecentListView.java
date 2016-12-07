@@ -1,10 +1,14 @@
 package tv.bokch.widget;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 
+import timber.log.Timber;
 import tv.bokch.R;
+import tv.bokch.android.BaseActivity;
+import tv.bokch.data.History;
 
 public class FullRecentListView extends RecentListView {
 
@@ -26,16 +30,6 @@ public class FullRecentListView extends RecentListView {
 	}
 
 	@Override
-	protected int getLayoutResId() {
-		return R.layout.cell_full_recent;
-	}
-
-	@Override
-	protected Cell createCell(View view) {
-		return new RecentCell(view);
-	}
-
-	@Override
 	protected int getFooterResId() {
 		return R.layout.cell_footer;
 	}
@@ -43,5 +37,70 @@ public class FullRecentListView extends RecentListView {
 	@Override
 	protected int getHeaderResId() {
 		return R.layout.cell_header;
+	}
+
+	@Override
+	protected int getLayoutResId(int viewType) {
+		switch (viewType) {
+		case VIEW_TYPE_RATING:
+			Timber.d("tks, rating res id selected.");
+			return R.layout.cell_recent_rating;
+		case VIEW_TYPE_COMMENT:
+			Timber.d("tks, comment res id selected.");
+			return R.layout.cell_recent_comment;
+		default:
+			return super.getLayoutResId(viewType);
+		}
+	}
+
+	@Override
+	protected Cell createCell(int viewType, View view) {
+		switch(viewType) {
+		case VIEW_TYPE_RATING:
+		case VIEW_TYPE_COMMENT:
+			return new RecentCell(view);
+		default:
+			return super.createCell(viewType, view);
+		}
+	}
+
+	@Override
+	protected int getViewType(History history) {
+		if (history.review == null) {
+			return VIEW_TYPE_CONTENT;
+		} else {
+			if (!TextUtils.isEmpty(history.review.comment)) {
+				return VIEW_TYPE_COMMENT;
+			} else if (history.review.rating > 0) {
+				return VIEW_TYPE_RATING;
+			} else {
+				return VIEW_TYPE_CONTENT;
+			}
+		}
+	}
+
+	@Override
+	protected void onCellClick(int viewType, History history) {
+		switch(viewType) {
+		case VIEW_TYPE_RATING:
+			((BaseActivity)getContext()).startBookActivity(history.book);
+			break;
+		case VIEW_TYPE_COMMENT:
+			((BaseActivity)getContext()).startReviewActivity(history);
+			break;
+		default:
+			super.onCellClick(viewType, history);
+			break;
+		}
+	}
+
+	@Override
+	protected int getLayoutResId() {
+		return 0;
+	}
+
+	@Override
+	protected Cell createCell(View view) {
+		return null;
 	}
 }

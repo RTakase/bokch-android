@@ -139,11 +139,15 @@ public class HomeActivity extends TabActivity {
 				JSONObject obj = array.optJSONObject(i);
 				if (obj != null) {
 					History history = new History(obj);
-					histories.add(history);
-
-					boolean myFollowee = obj.optBoolean("my_followee");
-					if (myFollowee) {
-						followeeHistories.add(history);
+					if (history.review != null) {
+						//コメントか評価のどちらかがあれば追加する
+						if (!TextUtils.isEmpty(history.review.comment) || history.review.rating > 0) {
+							histories.add(history);
+							boolean myFollowee = obj.optBoolean("my_followee");
+							if (myFollowee) {
+								followeeHistories.add(history);
+							}
+						}
 					}
 				}
 			}
