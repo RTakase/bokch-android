@@ -82,8 +82,6 @@ public class ReviewEditDialog extends BaseDialog {
 
 	@Override
 	public void onDismiss(DialogInterface dialog) {
-		Timber.d("tks, on dismiss.");
-
 		if (!mSavedReview) {
 			if (mReview == null) {
 				mReview = new Review();

@@ -10,7 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="12dp"
-        android:paddingLeft="12dp"
         android:paddingRight="12dp"
         android:paddingBottom="12dp"
         android:layout_marginTop="6dp"
@@ -21,8 +20,8 @@
         >
         <RelativeLayout
             android:id="@+id/jacket_container"
-            android:layout_width="72dp"
-            android:layout_height="72dp"
+            android:layout_width="84dp"
+            android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             >
@@ -41,8 +40,7 @@
             android:id="@+id/book_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="4dp"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:textColor="#ff555555"
             android:gravity="left|center_vertical"
             android:maxLines="2"
@@ -57,11 +55,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="left|center_vertical"
-            android:textSize="10sp"
+            android:textSize="14sp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:layout_alignLeft="@id/book_title"
-            android:visibility="gone"
+            android:layout_toRightOf="@id/jacket_container"
+            android:layout_below="@id/book_title"
             />
 
         <TextView

@@ -28,7 +28,7 @@
     <string name="action_amazon">アマゾンで開く</string>
     <string name="title_reviews">最近のレビュー</string>
     <string name="failed_load_isbn">ISBNコードを読み取れませんでした</string>
-    <string name="label_review">レビュー</string>
+    <string name="label_review">レビューを見る</string>
     <string name="prompt_review">どんな人におすすめ？</string>
     <string name="submit">送信</string>
     <string name="confirmation">確認</string>
@@ -72,7 +72,7 @@
     <string name="activity_user">ユーザのページ</string>
     <string name="failed_find_chrome">ログインにはChromeブラウザが必要です</string>
     <string name="label_share_before">社内にシェア</string>
-    <string name="label_share_after">レビューを編集</string>
+    <string name="label_share_after">シェア済</string>
     <string name="label_wish_before">ウィッシュリストに追加</string>
     <string name="label_wish_after">ウィッシュリストに追加済</string>
     <string name="message_posted_wish">ウィッシュリストに追加しました！</string>
