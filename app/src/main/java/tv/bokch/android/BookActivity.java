@@ -20,7 +20,6 @@ import timber.log.Timber;
 import tv.bokch.App;
 import tv.bokch.R;
 import tv.bokch.data.Book;
-import tv.bokch.data.BookViewHolder;
 import tv.bokch.data.History;
 import tv.bokch.data.Review;
 import tv.bokch.data.Stack;
@@ -45,6 +44,7 @@ public class BookActivity extends TabActivity {
 
 	private WishButton mWishButton;
 	private BookView mBookView;
+	private ShareButton mShareButton;
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -81,7 +81,7 @@ public class BookActivity extends TabActivity {
 		//情報取得中なのでビューを変える
 		mBookView.setEmpty(TextUtils.isEmpty(mBook.title));
 		
-		ShareButton mShareButton = (ShareButton)findViewById(R.id.share_btn);
+		mShareButton = (ShareButton)findViewById(R.id.share_btn);
 		mShareButton.setClickListener(mShareClickListener);
 		mShareButton.setState(mHistory == null ? ShareButton.State.BEFORE : ShareButton.State.AFTER);
 		
@@ -197,11 +197,14 @@ public class BookActivity extends TabActivity {
 				boolean saved = data.getBooleanExtra("saved", false);
 				if (saved) {
 					mReview = review;
+					if (mShareButton != null) {
+						mShareButton.setState(ShareButton.State.AFTER);
+					}
+					//この後 TabActivityのonResumeが呼ばれるのでフラグをセットするだけ
+					mLoaded[INDEX_REVIEW] = false;
 				} else {
 					mEditingReview = review;
 				}
-				//この後 TabActivityのonResumeが呼ばれるのでフラグをセットするだけ
-				mLoaded[INDEX_REVIEW] = false;
 			} else {
 				Toast.makeText(BookActivity.this, getString(R.string.failed_load), Toast.LENGTH_SHORT).show();
 			}
