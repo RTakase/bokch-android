@@ -47,7 +47,7 @@ public class FabActivity extends BaseActivity {
 				if (TextUtils.isEmpty(isbn) && !TextUtils.isEmpty(amazon)) {
 					startBookActivityWithUrl(amazon);
 				} else if (!TextUtils.isEmpty(isbn) && TextUtils.isEmpty(amazon)) {
-					startBookActivity(isbn);
+					startBookActivity(isbn, true);
 				} else {
 					Toast.makeText(FabActivity.this, getString(R.string.failed_data_set), Toast.LENGTH_SHORT).show();
 				}

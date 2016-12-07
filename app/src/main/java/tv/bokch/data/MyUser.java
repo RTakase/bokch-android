@@ -24,8 +24,6 @@ public class MyUser extends User {
 	}
 
 	private void setStatus(JSONObject obj) throws JSONException {
-		Timber.d("tks, %s", obj.toString());
 		isFollow = obj.optBoolean("my_followee");
-		Timber.d("tks, is follow = %b", isFollow);
 	}
 }

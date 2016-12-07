@@ -38,12 +38,12 @@
     <string name="succeed_put_review">レビューを更新しました！</string>
     <string name="error">エラー</string>
     <string name="loading">通信中</string>
-    <string name="empty_review">５段階評価は必須項目です</string>
+    <string name="empty_review">５段階評価は必須です</string>
     <string name="title_users_with_this_book">読んだ人一覧</string>
     <string name="title_histories">シェアした本</string>
     <string name="title_stacks">ウィッシュリスト</string>
     <string name="empty_book">情報の取得に時間がかかっています。\nしばらくしてからご確認ください</string>
-    <string name="prompt_new">おすすめの本をみんなに教えてあげよう！</string>
+    <string name="prompt_new">おすすめの本を\nみんなに教えてあげよう！</string>
     <string name="title_all_users">登録されているユーザ一覧</string>
     <string name="title_follower">フォロワー</string>
     <string name="label_follow">フォローする</string>
@@ -64,7 +64,7 @@
     <string name="loading_follow">確認中</string>
     <string name="failed_read_clipboard">クリップボードの内容を読み取れませんでした</string>
     <string name="label_open_amazon">Amazonに行く</string>
-    <string name="label_read_clipboard">クリップボードのURLを読み込む</string>
+    <string name="label_read_clipboard">クリップボードのURLを\n読み込む</string>
     <string name="desc_url_1">Amazonで本を検索してURLをコピーする</string>
     <string name="desc_url_2">コピーしたURLを読み込ませる</string>
     <string name="desc_url_3">本のページが自動的に開きます</string>

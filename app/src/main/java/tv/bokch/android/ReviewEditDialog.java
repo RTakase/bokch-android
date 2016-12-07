@@ -35,17 +35,19 @@ public class ReviewEditDialog extends BaseDialog {
 	private RatingBar mRatingBar;
 	private Book mBook;
 	private User mUser;
-	private Review mReview;
+	private Review mPostedReview;
+	private Review mPostingReview;
 	private History mHistory;
 
-	private boolean mSavedReview;
+	private boolean mSaved;
 
-	public static ReviewEditDialog newInstance(Book book, User user, Review review, History history) {
+	public static ReviewEditDialog newInstance(Book book, User user, Review posted, Review posting, History history) {
 		ReviewEditDialog dialog = new ReviewEditDialog();
 		Bundle args = new Bundle();
 		args.putParcelable("users", user);
 		args.putParcelable("book", book);
-		args.putParcelable("review", review);
+		args.putParcelable("posted_review", posted);
+		args.putParcelable("posting_review", posting);
 		args.putParcelable("history", history);
 		dialog.setArguments(args);
 		return dialog;
@@ -55,7 +57,8 @@ public class ReviewEditDialog extends BaseDialog {
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		mUser = getArguments().getParcelable("users");
 		mBook = getArguments().getParcelable("book");
-		mReview = getArguments().getParcelable("review");
+		mPostedReview = getArguments().getParcelable("posted_review");
+		mPostingReview = getArguments().getParcelable("posting_review");
 		mHistory = getArguments().getParcelable("history");
 
 		View root = mParentActivity.getLayoutInflater().inflate(R.layout.dialog_review_edit, null);
@@ -68,9 +71,9 @@ public class ReviewEditDialog extends BaseDialog {
 
 		mRatingBar = (RatingBar)root.findViewById(R.id.rating);
 
-		if (mReview != null) {
-			mEditor.setText(mReview.comment);
-			mRatingBar.setRating(mReview.rating);
+		if (mPostingReview != null) {
+			mEditor.setText(mPostingReview.comment);
+			mRatingBar.setRating(mPostingReview.rating);
 		}
 
 		View submit = root.findViewById(R.id.submit_btn);
@@ -83,16 +86,18 @@ public class ReviewEditDialog extends BaseDialog {
 
 	@Override
 	public void onDismiss(DialogInterface dialog) {
-		if (!mSavedReview) {
-			if (mReview == null) {
-				mReview = new Review();
-			}
-			mReview.rating = (int)mRatingBar.getRating();
-			mReview.comment = mEditor.getText().toString();
-		}
 		Intent intent = new Intent();
-		intent.putExtra("review", mReview);
-		intent.putExtra("saved", mSavedReview);
+
+		if (!mSaved) {
+			if (mPostingReview == null) {
+				mPostingReview = new Review();
+			}
+			mPostingReview.rating = (int)mRatingBar.getRating();
+			mPostingReview.comment = mEditor.getText().toString();
+			intent.putExtra("posting_review", mPostingReview);
+		} else {
+			intent.putExtra("posted_review", mPostedReview);
+		}
 		sendActivityResultCallback(intent);
 		super.onDismiss(dialog);
 	}
@@ -104,12 +109,12 @@ public class ReviewEditDialog extends BaseDialog {
 			final int rating = (int)mRatingBar.getRating();
 			final String comment = mEditor.getText().toString();
 
-			if (rating == 0 && TextUtils.isEmpty(comment)) {
+			if (rating == 0) {
 				Toast.makeText(getActivity(), getString(R.string.empty_review), Toast.LENGTH_SHORT).show();
 				return;
 			}
 
-			if (mReview == null) {
+			if (mPostedReview == null) {
 				showSpinner();
 				final ApiRequest request = new ApiRequest();
 				mExecutor.submit(new Runnable() {
@@ -133,7 +138,7 @@ public class ReviewEditDialog extends BaseDialog {
 					public void run() {
 						try {
 							dismissSpinner();
-							request.put_review(mReview.id, rating, comment, mReviewApiListener);
+							request.put_review(mPostedReview.id, rating, comment, mReviewApiListener);
 						} catch (JSONException e) {
 							Timber.w(e, null);
 							dismissSpinner();
@@ -151,12 +156,12 @@ public class ReviewEditDialog extends BaseDialog {
 			try {
 				dismissSpinner();
 				JSONObject obj = response.optJSONObject("review");
-				mReview = new Review(obj);
+				mPostedReview = new Review(obj);
 				Toast.makeText(getActivity(), getString(R.string.succeed_post_review), Toast.LENGTH_SHORT).show();
 			} catch (JSONException e) {
 				Timber.w(e, null);
 			}
-			mSavedReview = true;
+			mSaved = true;
 			dismiss();
 		}
 
@@ -201,9 +206,9 @@ public class ReviewEditDialog extends BaseDialog {
 		public void onSuccess(JSONObject response) {
 			dismissSpinner();
 			JsonUtils.dump(response);
-			mReview.rating = (int)mRatingBar.getRating();
-			mReview.comment = mEditor.getText().toString();
-			mSavedReview = true;
+			mPostedReview.rating = (int)mRatingBar.getRating();
+			mPostedReview.comment = mEditor.getText().toString();
+			mSaved = true;
 			Toast.makeText(getActivity(), getString(R.string.succeed_put_review), Toast.LENGTH_SHORT).show();
 			dismiss();
 		}

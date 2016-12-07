@@ -25,16 +25,18 @@ public class FollowButton extends FButton {
 		
 		//コンストラクタ
 		State(int id) {
-			labelColor = 0xddfafafa;
 			switch (id) {
 			case 1:
 				buttonColor = 0xff225b1e;
+				labelColor = 0xddfafafa;
 				break;
 			case 2:
 				buttonColor = 0xffa18320;
+				labelColor = 0xddfafafa;
 				break;
 			case 3:
 				buttonColor = 0xff444444;
+				labelColor = 0xa0fafafa;
 				break;
 			}
 		}
@@ -58,7 +60,7 @@ public class FollowButton extends FButton {
 	private void initialize(Context context) {
 		State.FOLLOW.label = context.getString(R.string.label_follow);
 		State.UNFOLLOW.label = context.getString(R.string.label_unfollow);
-		State.LOADING.label = context.getString(R.string.loading_follow);
+		State.LOADING.label = context.getString(R.string.loading_button);
 		setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {

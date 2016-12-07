@@ -15,7 +15,7 @@ import tv.bokch.data.Book;
 import tv.bokch.data.User;
 import tv.bokch.util.ApiRequest;
 
-public class WeeklyRankingActivity extends TabActivity {
+public class RankingActivity extends TabActivity {
 	
 	public static final int INDEX_BOOK = 0;
 	public static final int INDEX_USER = 1;

@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import info.hoang8f.widget.FButton;
+import timber.log.Timber;
 import tv.bokch.R;
 
 public class ReviewButton extends FButton {
@@ -14,7 +15,7 @@ public class ReviewButton extends FButton {
 	}
 
 	public enum State {
-		POST(1), UPDATE(2), CONFIRM(3), LOADING(4);
+		BEFORE(1), AFTER(2), LOADING(3);
 
 		public int buttonColor;
 		public int labelColor;
@@ -22,20 +23,18 @@ public class ReviewButton extends FButton {
 
 		//コンストラクタ
 		State(int id) {
-			labelColor = 0xddfafafa;
 			switch (id) {
 			case 1:
 				buttonColor = 0xff225b1e;
+				labelColor = 0xddfafafa;
 				break;
 			case 2:
-				//とりあえず
-				buttonColor = 0xff444444;
+				buttonColor = 0xffa18320;
+				labelColor = 0xddfafafa;
 				break;
 			case 3:
-				buttonColor = 0xffa18320;
-				break;
-			case 4:
 				buttonColor = 0xff444444;
+				labelColor = 0xa0fafafa;
 				break;
 			}
 		}
@@ -60,10 +59,9 @@ public class ReviewButton extends FButton {
 	}
 
 	private void initialize(Context context) {
-		State.POST.label = context.getString(R.string.label_post_review);
-		State.UPDATE.label = context.getString(R.string.label_update_review);
-		State.CONFIRM.label = context.getString(R.string.label_confirm_review);
-		State.LOADING.label = context.getString(R.string.loading_review);
+		State.BEFORE.label = context.getString(R.string.prompt_review);
+		State.AFTER.label = context.getString(R.string.label_reviews_more);
+		State.LOADING.label = context.getString(R.string.loading_button);
 		setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -79,19 +77,13 @@ public class ReviewButton extends FButton {
 	}
 
 	public void setState(State state) {
+		Timber.d("tks, set state to %s", state.toString());
 		mCurrentState = state;
 		setButtonColor(state.buttonColor);
 		setText(state.label);
 		setTextColor(state.labelColor);
 
 		if (state == State.LOADING) {
-			setEnabled(false);
-		} else {
-			setEnabled(true);
-		}
-
-		//とりあえず
-		if (state == State.UPDATE) {
 			setEnabled(false);
 		} else {
 			setEnabled(true);

@@ -37,8 +37,8 @@ public class BookActivity extends TabActivity {
 	public static final int INDEX_USERS = 1;
 
 	private Book mBook;
-	private Review mReview;
-	private Review mEditingReview;
+	private Review mPostedReview;
+	private Review mPostingReview;
 	private History mHistory;
 	private Stack mStack;
 
@@ -62,7 +62,7 @@ public class BookActivity extends TabActivity {
 			return;
 		}
 		
-		mReview = intent.getParcelableExtra("review");
+		mPostedReview = intent.getParcelableExtra("review");
 		mHistory = intent.getParcelableExtra("history");
 		mStack = intent.getParcelableExtra("stack");
 
@@ -158,7 +158,9 @@ public class BookActivity extends TabActivity {
 					History history = new History(obj);
 					if (history.review != null) {
 						history.book = mBook;
-						histories.add(history);
+						for (int j = 0; j < 20; j++) {
+							histories.add(history);
+						}
 						if (history.review.rating > 0) {
 							ratingCount++;
 						}
@@ -193,17 +195,17 @@ public class BookActivity extends TabActivity {
 		switch(requestCode) {
 		case REQUEST_REVIEW_EDIT:
 			if (resultCode == RESULT_OK) {
-				Review review = data.getParcelableExtra("review");
-				boolean saved = data.getBooleanExtra("saved", false);
-				if (saved) {
-					mReview = review;
+				Review posted = data.getParcelableExtra("posted_review");
+				Review posting = data.getParcelableExtra("posting_review");
+				if (posted != null) {
+					mPostedReview = posted;
 					if (mShareButton != null) {
 						mShareButton.setState(ShareButton.State.AFTER);
 					}
 					//この後 TabActivityのonResumeが呼ばれるのでフラグをセットするだけ
 					mLoaded[INDEX_REVIEW] = false;
-				} else {
-					mEditingReview = review;
+				} else if (posting != null) {
+					mPostingReview = posting;
 				}
 			} else {
 				Toast.makeText(BookActivity.this, getString(R.string.failed_load), Toast.LENGTH_SHORT).show();
@@ -231,8 +233,7 @@ public class BookActivity extends TabActivity {
 
 	private void editReview() {
 		App app = (App)getApplication();
-		Review review = mEditingReview != null ? mEditingReview : mReview;
-		ReviewEditDialog dialog = ReviewEditDialog.newInstance(mBook, app.getMyUser(), review, mHistory);
+		ReviewEditDialog dialog = ReviewEditDialog.newInstance(mBook, app.getMyUser(), mPostedReview, mPostingReview, mHistory);
 		dialog.setTargetFragment(null, REQUEST_REVIEW_EDIT);
 		dialog.show(getFragmentManager(), "REVIEW_EDIT_DIALOG");
 	}

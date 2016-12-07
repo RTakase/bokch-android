@@ -27,6 +27,7 @@ import tv.bokch.data.MyBook;
 import tv.bokch.data.MyUser;
 import tv.bokch.data.User;
 import tv.bokch.util.ApiRequest;
+import tv.bokch.util.JsonUtils;
 import tv.bokch.util.ViewServer;
 import tv.bokch.util.ViewUtils;
 
@@ -138,7 +139,7 @@ public class BaseActivity extends AppCompatActivity {
 	}
 
 	protected void startRankingActivity() {
-		Intent intent = new Intent(BaseActivity.this, WeeklyRankingActivity.class);
+		Intent intent = new Intent(BaseActivity.this, RankingActivity.class);
 		startActivity(intent);
 	}
 
@@ -167,6 +168,7 @@ public class BaseActivity extends AppCompatActivity {
 		getMyBookStatus(bookId, new ApiRequest.ApiListener<JSONObject>() {
 			@Override
 			public void onSuccess(JSONObject response) {
+				JsonUtils.dump(response);
 				dismissSpinner();
 				try {
 					MyBook myBook = new MyBook(response);
@@ -210,7 +212,7 @@ public class BaseActivity extends AppCompatActivity {
 					dismissSpinner();
 					JSONObject obj = response.optJSONObject("book");
 					Book book = new Book(obj);
-					startBookActivity(book);
+					startBookActivity(book.bookId, true);
 				} catch (JSONException e) {
 					Toast.makeText(BaseActivity.this, getString(R.string.failed_data_set), Toast.LENGTH_SHORT).show();
 					Timber.w(e, null);
@@ -228,7 +230,9 @@ public class BaseActivity extends AppCompatActivity {
 	 * ユーザ画面への遷移（ステータスを取得してから）
 	 */
 	public void startUserActivity(User user) {
-		startUserActivity(user, null);
+		Intent intent = new Intent(BaseActivity.this, UserActivity.class);
+		intent.putExtra("data", user);
+		startActivity(intent);
 	}
 	protected void startUserActivity(User user, final String bookId) {
 		showSpinner();

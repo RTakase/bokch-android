@@ -68,7 +68,6 @@ public class UserActivity extends TabActivity {
 		mUserView.setFollowClickListener(mFollowClickListener);
 		setFollowButtonState();
 		mUserView.setFollowState(FollowButton.State.LOADING);
-
 	}
 	
 	@Override

@@ -209,8 +209,8 @@ public class HomeActivity extends TabActivity {
 		}
 		@Override
 		public void onError(ApiRequest.ApiError error) {
+			dismissSpinner();
 			Toast.makeText(HomeActivity.this, getString(R.string.failed_load), Toast.LENGTH_SHORT).show();
-			Timber.d("tks, api error, %s", error.getLocalizedMessage());
 			Timber.w(error, null);
 		}
 	};

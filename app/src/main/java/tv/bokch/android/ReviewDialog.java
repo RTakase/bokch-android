@@ -11,23 +11,21 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import timber.log.Timber;
-import tv.bokch.App;
 import tv.bokch.R;
 import tv.bokch.data.BookViewHolder;
 import tv.bokch.data.History;
 import tv.bokch.data.MyBook;
 import tv.bokch.data.ReviewViewHolder;
-import tv.bokch.data.User;
 import tv.bokch.data.UserViewHolder;
 import tv.bokch.util.ApiRequest;
 import tv.bokch.util.JsonUtils;
+import tv.bokch.widget.ReviewButton;
 
 public class ReviewDialog extends BaseDialog {
 
-	private View mReviewButton;
+	private ReviewButton mReviewButton;
 	private MyBook mMyBook;
 	private History mHistory;
-	private User mMyUser;
 
 	public static ReviewDialog newInstance(History history) {
 		Bundle args = new Bundle();
@@ -40,8 +38,6 @@ public class ReviewDialog extends BaseDialog {
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		mHistory = getArguments().getParcelable("history");
-
-		mMyUser = ((App)getActivity().getApplication()).getMyUser();
 
 		View root = getActivity().getLayoutInflater().inflate(R.layout.dialog_review, null);
 
@@ -93,31 +89,10 @@ public class ReviewDialog extends BaseDialog {
 			}
 		}
 
-		//もっと見るボタン
-		View view = root.findViewById(R.id.more_btn);
-		view.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (mMyBook == null) {
-					((BaseActivity)getActivity()).startBookActivity(mHistory.book);
-				} else {
-					((BaseActivity)getActivity()).startBookActivity(mMyBook);
-				}
-				dismiss();
-			}
-		});
-
 		//レビューボタン
-		mReviewButton = root.findViewById(R.id.review_btn);
-		mReviewButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (mMyBook != null) {
-					((BaseActivity)getActivity()).startBookActivity(mMyBook, true);
-				}
-			}
-		});
-
+		mReviewButton = (ReviewButton)root.findViewById(R.id.review_btn);
+		mReviewButton.setClickListener(mReviewClickListener);
+		mReviewButton.setState(ReviewButton.State.LOADING);
 		//レビュー状態を確認する
 		setReviewButtonState(mHistory);
 
@@ -146,10 +121,10 @@ public class ReviewDialog extends BaseDialog {
 					mMyBook = new MyBook(response);
 					if (mMyBook.review == null) {
 						//まだレビューを書いていない
-						mReviewButton.setVisibility(View.VISIBLE);
+						mReviewButton.setState(ReviewButton.State.BEFORE);
 					} else {
 						//もう書いている
-						mReviewButton.setVisibility(View.GONE);
+						mReviewButton.setState(ReviewButton.State.AFTER);
 					}
 				} catch (JSONException e) {
 					Toast.makeText(getActivity(), getString(R.string.failed_data_set), Toast.LENGTH_SHORT).show();
@@ -163,4 +138,25 @@ public class ReviewDialog extends BaseDialog {
 			}
 		});
 	}
+	private ReviewButton.ClickListener mReviewClickListener = new ReviewButton.ClickListener() {
+		@Override
+		public void onClick(ReviewButton.State state) {
+			switch (state) {
+			case BEFORE:
+				if (mMyBook != null) {
+					((BaseActivity)getActivity()).startBookActivity(mMyBook, true);
+				}
+				dismiss();
+				break;
+			case AFTER:
+				if (mMyBook == null) {
+					((BaseActivity)getActivity()).startBookActivity(mHistory.book);
+				} else {
+					((BaseActivity)getActivity()).startBookActivity(mMyBook);
+				}
+				dismiss();
+				break;
+			}
+		}
+	};
 }

@@ -75,23 +75,6 @@
                 />
         </RelativeLayout>
 
-        <!--<TextView-->
-        <!--android:id="@+id/book_title"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginTop="4dp"-->
-        <!--android:layout_marginBottom="-4dp"-->
-        <!--android:padding="4dp"-->
-        <!--android:maxLines="1"-->
-        <!--android:ellipsize="end"-->
-        <!--android:textSize="12sp"-->
-        <!--android:textColor="#a0ffffff"-->
-        <!--android:gravity="center_vertical|left"-->
-        <!--android:layout_alignLeft="@id/jacket_container"-->
-        <!--android:layout_alignBottom="@id/jacket_container"-->
-        <!--android:background="@drawable/bg_title_plate"-->
-        <!--/>-->
-
         <TextView
             android:id="@+id/book_title"
             android:layout_width="wrap_content"
@@ -127,37 +110,17 @@
                 />
         </LinearLayout>
 
-        <info.hoang8f.widget.FButton
-            android:id="@+id/more_btn"
-            android:layout_width="match_parent"
-            android:layout_height="42dp"
-            android:layout_marginLeft="24dp"
-            android:layout_marginRight="24dp"
-            android:layout_marginTop="8dp"
-            android:paddingLeft="24dp"
-            android:paddingRight="24dp"
-            app:buttonColor="#ffa18320"
-            android:textColor="#ddfafafa"
-            android:textSize="13sp"
-            android:text="@string/label_reviews_more"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            />
-
-        <info.hoang8f.widget.FButton
+        <tv.bokch.widget.ReviewButton
             android:id="@+id/review_btn"
             android:layout_width="match_parent"
-            android:layout_height="54dp"
-            android:layout_marginRight="8dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            app:buttonColor="#ff225b1e"
-            android:textColor="#ddfafafa"
-            android:textSize="13sp"
-            android:text="@string/prompt_review"
-            android:layout_above="@id/more_btn"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             />
 
@@ -166,7 +129,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
             android:layout_below="@id/jacket_container"
             android:layout_above="@id/review_btn"
             android:clipChildren="true"
