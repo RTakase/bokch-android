@@ -79,7 +79,7 @@ public class UserActivity extends TabActivity {
 		case INDEX_HISTORY:
 			return BookRecentFragment.newInstance();
 		case INDEX_STACK:
-			return BookGridFragment.newInstance();
+			return StackFragment.newInstance();
 		default:
 			return null;
 		}
@@ -153,15 +153,15 @@ public class UserActivity extends TabActivity {
 			Collections.reverse(histories);
 			return histories;
 		case INDEX_STACK:
-			ArrayList<Book> books = new ArrayList<>();
+			ArrayList<Stack> stacks = new ArrayList<>();
 			for (int i = 0; i < array.length(); i++) {
 				JSONObject obj = array.optJSONObject(i);
 				if (obj != null) {
 					Stack stack = new Stack(obj);
-					books.add(stack.book);
+					stacks.add(stack);
 				}
 			}
-			return books;
+			return stacks;
 		default:
 			return null;
 		}

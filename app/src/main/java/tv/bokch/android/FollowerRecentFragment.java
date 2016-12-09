@@ -6,7 +6,7 @@ import android.os.Bundle;
 import tv.bokch.data.History;
 import tv.bokch.widget.*;
 
-public class FollowerRecentFragment extends tv.bokch.widget.RecentFragment {
+public class FollowerRecentFragment extends RecentFragment {
 
 	public static FollowerRecentFragment newInstance() {
 		FollowerRecentFragment fragment = new FollowerRecentFragment();

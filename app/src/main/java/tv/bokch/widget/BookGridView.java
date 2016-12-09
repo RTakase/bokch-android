@@ -13,7 +13,6 @@ import tv.bokch.R;
 import tv.bokch.android.BaseActivity;
 import tv.bokch.data.Book;
 import tv.bokch.data.BookViewHolder;
-import tv.bokch.util.Display;
 
 public class BookGridView extends BaseListView<Book> {
 	
