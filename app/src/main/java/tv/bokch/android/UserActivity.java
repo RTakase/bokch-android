@@ -33,8 +33,8 @@ public class UserActivity extends TabActivity {
 	
 	private User mUser;
 	private UserView mUserView;
-	private boolean mFollowed;
 	private String mBookIdToOpen;
+	private Long mFollowId;
 	
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,7 +56,10 @@ public class UserActivity extends TabActivity {
 		}
 		mMyUser = ((App)getApplicationContext()).getMyUser();
 
-		mFollowed = intent.getBooleanExtra("follow", false);
+		String _followId = intent.getStringExtra("follow_id");
+		if (_followId != null) {
+			mFollowId = Long.parseLong(_followId);
+		}
 		
 		initialize();
 	}
@@ -165,89 +168,96 @@ public class UserActivity extends TabActivity {
 	}
 
 	private void setFollowButtonState() {
-		getMyUserStatus(mUser.userId, new ApiRequest.ApiListener<JSONObject>() {
+		if (mFollowId == null) {
+			getMyUserStatus(mUser.userId, new ApiRequest.ApiListener<JSONObject>() {
+				@Override
+				public void onSuccess(JSONObject response) {
+					try {
+						MyUser myUser = new MyUser(response);
+						mFollowId = myUser.followId;
+						if (mFollowId > 0) {
+							//フォロー中なのでボタンはフォロー解除状態
+							mUserView.setFollowState(FollowButton.State.UNFOLLOW);
+						} else {
+							//フォローしていないのでボタンはフォロー登録状態
+							mUserView.setFollowState(FollowButton.State.FOLLOW);
+						}
+					} catch (JSONException e) {
+						Timber.w(e, null);
+					}
+				}
+
+					@Override
+					public void onError(ApiRequest.ApiError error) {
+						Toast.makeText(UserActivity.this, getString(R.string.failed_load), Toast.LENGTH_SHORT).show();
+						Timber.w(error, null);
+					}
+				});
+			} else {
+				if (mFollowId > 0) {
+					mUserView.setFollowState(FollowButton.State.UNFOLLOW);
+				} else {
+					mUserView.setFollowState(FollowButton.State.FOLLOW);
+				}
+			}
+		}
+
+		private FollowButton.ClickListener mFollowClickListener = new FollowButton.ClickListener() {
 			@Override
-			public void onSuccess(JSONObject response) {
+			public void onClick(FollowButton.State state) {
 				try {
-					MyUser myUser = new MyUser(response);
-					if (myUser.isFollow) {
-						//フォロー中なのでボタンはフォロー解除状態
-						mUserView.setFollowState(FollowButton.State.UNFOLLOW);
-					} else {
-						//フォローしていないのでボタンはフォロー登録状態
-						mUserView.setFollowState(FollowButton.State.FOLLOW);
+					ApiRequest request;
+					switch (state) {
+					case UNFOLLOW:
+						//フォロー解除状態のボタンが押された
+						request = new ApiRequest();
+						showSpinner();
+						request.unfollow(mUser.userId, mMyUser.userId, mUnfollowApiListener);
+						break;
+					case FOLLOW:
+						//フォロー登録状態のボタンが押された
+						request = new ApiRequest();
+						showSpinner();
+						request.follow(mUser.userId, mMyUser.userId, mFollowApiListener);
+						break;
 					}
 				} catch (JSONException e) {
 					Timber.w(e, null);
-					Toast.makeText(UserActivity.this, getString(R.string.failed_data_set), Toast.LENGTH_SHORT).show();
-					Timber.w(e, null);
 				}
+			}
+		};
+
+		private ApiRequest.ApiListener<JSONObject> mFollowApiListener = new ApiRequest.ApiListener<JSONObject>() {
+			@Override
+			public void onSuccess(JSONObject response) {
+				dismissSpinner();
+				//フォロー登録に成功したのでボタンはフォロー解除状態にする
+				mUserView.setFollowState(FollowButton.State.UNFOLLOW);
+				ViewUtils.showSuccessToast(UserActivity.this, R.string.succeed_follow);
 			}
 
 			@Override
 			public void onError(ApiRequest.ApiError error) {
-				Toast.makeText(UserActivity.this, getString(R.string.failed_load), Toast.LENGTH_SHORT).show();
+				dismissSpinner();
 				Timber.w(error, null);
+				ViewUtils.showErrorToast(UserActivity.this, R.string.failed_load);
 			}
-		});
+		};
+
+		private ApiRequest.ApiListener<JSONObject> mUnfollowApiListener = new ApiRequest.ApiListener<JSONObject>() {
+			@Override
+			public void onSuccess(JSONObject response) {
+				dismissSpinner();
+				//フォロー解除に成功したのでボタンはフォロー登録状態にする
+				mUserView.setFollowState(FollowButton.State.FOLLOW);
+				ViewUtils.showSuccessToast(UserActivity.this, R.string.succeed_unfollow);
+			}
+
+			@Override
+			public void onError(ApiRequest.ApiError error) {
+				dismissSpinner();
+				Timber.w(error, null);
+				ViewUtils.showErrorToast(UserActivity.this, R.string.failed_load);
+			}
+		};
 	}
-
-	private FollowButton.ClickListener mFollowClickListener = new FollowButton.ClickListener() {
-		@Override
-		public void onClick(FollowButton.State state) {
-			try {
-				ApiRequest request;
-				switch (state) {
-				case UNFOLLOW:
-					//フォロー解除状態のボタンが押された
-					request = new ApiRequest();
-					showSpinner();
-					request.unfollow(mUser.userId, mMyUser.userId, mUnfollowApiListener);
-					break;
-				case FOLLOW:
-					//フォロー登録状態のボタンが押された
-					request = new ApiRequest();
-					showSpinner();
-					request.follow(mUser.userId, mMyUser.userId, mFollowApiListener);
-					break;
-				}
-			} catch (JSONException e) {
-				Timber.w(e, null);
-			}
-		}
-	};
-
-	private ApiRequest.ApiListener<JSONObject> mFollowApiListener = new ApiRequest.ApiListener<JSONObject>() {
-		@Override
-		public void onSuccess(JSONObject response) {
-			dismissSpinner();
-			//フォロー登録に成功したのでボタンはフォロー解除状態にする
-			mUserView.setFollowState(FollowButton.State.UNFOLLOW);
-			ViewUtils.showSuccessToast(UserActivity.this, R.string.succeed_follow);
-		}
-
-		@Override
-		public void onError(ApiRequest.ApiError error) {
-			dismissSpinner();
-			Timber.w(error, null);
-			ViewUtils.showErrorToast(UserActivity.this, R.string.failed_load);
-		}
-	};
-	
-	private ApiRequest.ApiListener<JSONObject> mUnfollowApiListener = new ApiRequest.ApiListener<JSONObject>() {
-		@Override
-		public void onSuccess(JSONObject response) {
-			dismissSpinner();
-			//フォロー解除に成功したのでボタンはフォロー登録状態にする
-			mUserView.setFollowState(FollowButton.State.FOLLOW);
-			ViewUtils.showSuccessToast(UserActivity.this, R.string.succeed_unfollow);
-		}
-
-		@Override
-		public void onError(ApiRequest.ApiError error) {
-			dismissSpinner();
-			Timber.w(error, null);
-			ViewUtils.showErrorToast(UserActivity.this, R.string.failed_load);
-		}
-	};
-}

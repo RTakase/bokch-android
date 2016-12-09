@@ -263,7 +263,7 @@ public class BaseActivity extends AppCompatActivity {
 	public void startUserActivity(MyUser myUser, String bookId) {
 		Intent intent = new Intent(BaseActivity.this, UserActivity.class);
 		intent.putExtra("data", myUser);
-		intent.putExtra("follow", myUser.isFollow);
+		intent.putExtra("follow_id", myUser.followId);
 		intent.putExtra("with_my_review", bookId);
 		startActivity(intent);
 	}

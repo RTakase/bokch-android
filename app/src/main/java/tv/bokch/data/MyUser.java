@@ -5,10 +5,8 @@ import android.os.Parcel;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import timber.log.Timber;
-
 public class MyUser extends User {
-	public boolean isFollow;
+	public long followId;
 
 	public MyUser(JSONObject obj) throws JSONException {
 		super(obj);
@@ -24,6 +22,6 @@ public class MyUser extends User {
 	}
 
 	private void setStatus(JSONObject obj) throws JSONException {
-		isFollow = obj.optBoolean("my_followee");
+		followId = obj.optLong("my_followee");
 	}
 }
