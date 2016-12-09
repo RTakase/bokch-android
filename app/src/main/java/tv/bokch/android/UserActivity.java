@@ -17,7 +17,6 @@ import java.util.Collections;
 import timber.log.Timber;
 import tv.bokch.App;
 import tv.bokch.R;
-import tv.bokch.data.Book;
 import tv.bokch.data.History;
 import tv.bokch.data.MyUser;
 import tv.bokch.data.Stack;
@@ -35,6 +34,7 @@ public class UserActivity extends TabActivity {
 	private UserView mUserView;
 	private String mBookIdToOpen;
 	private Long mFollowId;
+	private User mLoginUser;
 	
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,7 +54,7 @@ public class UserActivity extends TabActivity {
 		if (!TextUtils.isEmpty(bookId)) {
 			mBookIdToOpen = bookId;
 		}
-		mMyUser = ((App)getApplicationContext()).getMyUser();
+		mLoginUser = ((App)getApplicationContext()).getMyUser();
 
 		String _followId = intent.getStringExtra("follow_id");
 		if (_followId != null) {
@@ -70,7 +70,6 @@ public class UserActivity extends TabActivity {
 		mUserView.bindView(mUser);
 		mUserView.setFollowClickListener(mFollowClickListener);
 		setFollowButtonState();
-		mUserView.setFollowState(FollowButton.State.LOADING);
 	}
 	
 	@Override
@@ -168,7 +167,12 @@ public class UserActivity extends TabActivity {
 	}
 
 	private void setFollowButtonState() {
-		if (mFollowId == null) {
+		if (TextUtils.equals(mLoginUser.userId, mUser.userId)) {
+			//自分のページ
+			mUserView.setFollowState(FollowButton.State.MINE);
+		} else if (mFollowId == null) {
+			mUserView.setFollowState(FollowButton.State.LOADING);
+			//フォロー状態を確認する
 			getMyUserStatus(mUser.userId, new ApiRequest.ApiListener<JSONObject>() {
 				@Override
 				public void onSuccess(JSONObject response) {
@@ -195,8 +199,10 @@ public class UserActivity extends TabActivity {
 				});
 			} else {
 				if (mFollowId > 0) {
+					//フォロー中
 					mUserView.setFollowState(FollowButton.State.UNFOLLOW);
 				} else {
+					//未フォロー
 					mUserView.setFollowState(FollowButton.State.FOLLOW);
 				}
 			}
@@ -212,13 +218,13 @@ public class UserActivity extends TabActivity {
 						//フォロー解除状態のボタンが押された
 						request = new ApiRequest();
 						showSpinner();
-						request.unfollow(mUser.userId, mMyUser.userId, mUnfollowApiListener);
+						request.unfollow(mUser.userId, mLoginUser.userId, mUnfollowApiListener);
 						break;
 					case FOLLOW:
 						//フォロー登録状態のボタンが押された
 						request = new ApiRequest();
 						showSpinner();
-						request.follow(mUser.userId, mMyUser.userId, mFollowApiListener);
+						request.follow(mUser.userId, mLoginUser.userId, mFollowApiListener);
 						break;
 					}
 				} catch (JSONException e) {

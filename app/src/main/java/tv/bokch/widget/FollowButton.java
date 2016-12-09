@@ -17,7 +17,7 @@ public class FollowButton extends FButton {
 	}
 	
 	public enum State {
-		FOLLOW(1), UNFOLLOW(2), LOADING(3);
+		FOLLOW(1), UNFOLLOW(2), LOADING(3), MINE(4);
 		
 		public int buttonColor;
 		public int labelColor;
@@ -38,6 +38,9 @@ public class FollowButton extends FButton {
 				buttonColor = 0xff444444;
 				labelColor = 0xa0fafafa;
 				break;
+			case 4:
+				buttonColor = 0xff444444;
+				labelColor = 0xa0fafafa;
 			}
 		}
 	}
@@ -61,6 +64,7 @@ public class FollowButton extends FButton {
 		State.FOLLOW.label = context.getString(R.string.label_follow);
 		State.UNFOLLOW.label = context.getString(R.string.label_unfollow);
 		State.LOADING.label = context.getString(R.string.loading_button);
+		State.MINE.label = context.getString(R.string.label_mine);
 		setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -81,7 +85,7 @@ public class FollowButton extends FButton {
 		setText(state.label);
 		setTextColor(state.labelColor);
 
-		if (state == State.LOADING) {
+		if (state == State.LOADING || state == State.MINE) {
 			setEnabled(false);
 		} else {
 			setEnabled(true);

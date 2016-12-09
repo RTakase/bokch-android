@@ -80,5 +80,6 @@
     <string name="suffix_rating_average">%d件の評価</string>
     <string name="loading_button">状態取得中</string>
     <string name="prompt_review">あなたもレビューを投稿しよう！</string>
+    <string name="label_mine">自分のページ</string>
 
 </resources>
