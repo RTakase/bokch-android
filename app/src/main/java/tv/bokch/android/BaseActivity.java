@@ -159,10 +159,10 @@ public class BaseActivity extends AppCompatActivity {
 	 */
 
 	public void startBookActivity(Book book) {
-		startBookActivity(book.bookId, false);
-	}
-	public void startBookActivity(String isbn) {
-		startBookActivity(isbn,  false);
+		//startBookActivity(book.bookId, false);
+		Intent intent = new Intent(BaseActivity.this, BookActivity.class);
+		intent.putExtra("data", book);
+		startActivity(intent);
 	}
 	protected void startBookActivity(String bookId, final boolean withReviewEdit) {
 		getMyBookStatus(bookId, new ApiRequest.ApiListener<JSONObject>() {
