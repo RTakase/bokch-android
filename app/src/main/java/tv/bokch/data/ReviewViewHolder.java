@@ -31,6 +31,11 @@ public class ReviewViewHolder {
 		if (created != null) {
 			created.setText(DateFormat.format("yyyy/MM/dd", review.created * 1000));
 		}
+	}
 
+	public void setCommentClickListener(View.OnClickListener listener) {
+		if (comment != null) {
+			comment.setOnClickListener(listener);
+		}
 	}
 }

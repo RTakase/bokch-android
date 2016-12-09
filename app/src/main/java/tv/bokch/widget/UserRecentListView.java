@@ -57,10 +57,8 @@ public class UserRecentListView extends RecentListView {
 	protected void onCellClick(int viewType, History history) {
 		switch(viewType) {
 		case VIEW_TYPE_RATING:
-			((BaseActivity)getContext()).startUserActivity(history.user);
-			break;
 		case VIEW_TYPE_COMMENT:
-			((BaseActivity)getContext()).startReviewActivity(history);
+			((BaseActivity)getContext()).startUserActivity(history.user);
 			break;
 		default:
 			super.onCellClick(viewType, history);

@@ -158,9 +158,10 @@ public class BookActivity extends TabActivity {
 					History history = new History(obj);
 					if (history.review != null) {
 						history.book = mBook;
-						for (int j = 0; j < 20; j++) {
-							histories.add(history);
-						}
+//						for (int j = 0; j < 20; j++) {
+//						histories.add(history);
+//						}
+						histories.add(history);
 						if (history.review.rating > 0) {
 							ratingCount++;
 						}

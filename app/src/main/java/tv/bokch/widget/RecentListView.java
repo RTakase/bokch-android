@@ -2,13 +2,9 @@ package tv.bokch.widget;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.text.format.DateFormat;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.TextView;
 
-import timber.log.Timber;
-import tv.bokch.R;
 import tv.bokch.android.BaseActivity;
 import tv.bokch.data.BookViewHolder;
 import tv.bokch.data.History;
@@ -98,6 +94,12 @@ public abstract class RecentListView extends BaseListView<History> {
 			}
 			
 			mReview.bindView(history.review);
+			mReview.setCommentClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					((BaseActivity)getContext()).startReviewActivity(history);
+				}
+			});
 		}
 		
 		public void disableBookClick() {

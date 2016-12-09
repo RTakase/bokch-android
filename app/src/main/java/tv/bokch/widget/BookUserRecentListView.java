@@ -1,26 +1,24 @@
 package tv.bokch.widget;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.view.View;
 
 import timber.log.Timber;
 import tv.bokch.R;
 import tv.bokch.android.BaseActivity;
 import tv.bokch.data.History;
 
-public class FullRecentListView extends RecentListView {
+public class BookUserRecentListView extends RecentListView {
 
-	public FullRecentListView(Context context) {
+	public BookUserRecentListView(Context context) {
 		super(context);
 		initialize(context);
 	}
-	public FullRecentListView(Context context, AttributeSet attrs) {
+	public BookUserRecentListView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		initialize(context);
 	}
-	public FullRecentListView(Context context, AttributeSet attrs, int defStyleAttr) {
+	public BookUserRecentListView(Context context, AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
 		initialize(context);
 	}
@@ -59,10 +57,8 @@ public class FullRecentListView extends RecentListView {
 	protected void onCellClick(int viewType, History history) {
 		switch(viewType) {
 		case VIEW_TYPE_RATING:
-			((BaseActivity)getContext()).startBookActivity(history.book);
-			break;
 		case VIEW_TYPE_COMMENT:
-			((BaseActivity)getContext()).startReviewActivity(history);
+			((BaseActivity)getContext()).startBookActivity(history.book);
 			break;
 		default:
 			super.onCellClick(viewType, history);

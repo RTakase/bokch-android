@@ -9,7 +9,7 @@ import tv.bokch.data.History;
 public class RecentFragment extends BaseFragment<History> {
 	@Override
 	protected BaseListView<History> createListView(Context context) {
-		return new FullRecentListView(context);
+		return new BookUserRecentListView(context);
 	}
 	public static RecentFragment newInstance() {
 		RecentFragment fragment = new RecentFragment();

@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import timber.log.Timber;
 import tv.bokch.R;
 import tv.bokch.widget.NetworkImageView;
 
@@ -51,8 +52,13 @@ public class BookViewHolder {
 			title.setText(book.title);
 		}
 
-		if (author != null && !TextUtils.isEmpty(book.author)) {
-			author.setText(book.author);
+		if (author != null) {
+			if (!TextUtils.isEmpty(book.author) && !book.author.matches("^[\\s　]+$")) {
+				author.setVisibility(View.VISIBLE);
+				author.setText(book.author);
+			} else {
+				author.setVisibility(View.INVISIBLE);
+			}
 		}
 
 		if (publisher != null && !TextUtils.isEmpty(book.publisher)) {

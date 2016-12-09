@@ -58,10 +58,8 @@ public class BookRecentListView extends RecentListView {
 	protected void onCellClick(int viewType, History history) {
 		switch(viewType) {
 		case VIEW_TYPE_RATING:
-			((BaseActivity)getContext()).startBookActivity(history.book);
-			break;
 		case VIEW_TYPE_COMMENT:
-			((BaseActivity)getContext()).startReviewActivity(history);
+			((BaseActivity)getContext()).startBookActivity(history.book);
 			break;
 		default:
 			super.onCellClick(viewType, history);
