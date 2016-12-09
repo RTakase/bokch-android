@@ -41,6 +41,7 @@ public class BookActivity extends TabActivity {
 	private Book mBook;
 	private Review mPostingReview;
 	private MyBook mMyBook;
+	private User mLoginUser;
 	
 	private WishButton mWishButton;
 	private BookView mBookView;
@@ -53,7 +54,7 @@ public class BookActivity extends TabActivity {
 		
 		setActionBarTitle(getString(R.string.activity_book));
 		
-		mMyUser = ((App)getApplication()).getMyUser();
+		mLoginUser = ((App)getApplication()).getMyUser();
 		
 		Intent intent = getIntent();
 		mBook = intent.getParcelableExtra("data");
@@ -269,7 +270,7 @@ public class BookActivity extends TabActivity {
 	private void addToWishList() {
 		ApiRequest request = new ApiRequest();
 		try {
-			request.post_stack(mBook.bookId, mMyUser.userId, new ApiRequest.ApiListener<JSONObject>() {
+			request.post_stack(mBook.bookId, mLoginUser.userId, new ApiRequest.ApiListener<JSONObject>() {
 				@Override
 				public void onSuccess(JSONObject response) {
 					try {

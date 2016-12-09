@@ -31,6 +31,7 @@ public class HomeActivity extends TabActivity {
 	protected static final int INDEX_FOLLOW = 1;
 
 	private boolean mDisableLoad;
+	private User mLoginUser;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +62,7 @@ public class HomeActivity extends TabActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.menu_home, menu);
 		addMenuItem(menu, MENU_ID_USERS, R.string.title_all_users, R.drawable.people, MenuItem.SHOW_AS_ACTION_ALWAYS);
 		addMenuItem(menu, MENU_ID_RANKING, R.string.action_ranking, R.drawable.ranking, MenuItem.SHOW_AS_ACTION_ALWAYS);
 		return super.onCreateOptionsMenu(menu);
@@ -120,7 +122,7 @@ public class HomeActivity extends TabActivity {
 		switch (index) {
 		case INDEX_HISTORY:
 			ApiRequest request = new ApiRequest();
-			request.recent(null, null, mMyUser.userId, listener);
+			request.recent(null, null, mLoginUser.userId, listener);
 			return true;
 		case INDEX_FOLLOW:
 			return false;
@@ -180,7 +182,7 @@ public class HomeActivity extends TabActivity {
 		case REQUEST_LOGIN:
 			if (resultCode == RESULT_OK) {
 				App app = (App)getApplication();
-				mMyUser = app.getMyUser();
+				mLoginUser = app.getMyUser();
 				mDisableLoad = false;
 				loadTabData();
 			}
@@ -198,8 +200,8 @@ public class HomeActivity extends TabActivity {
 				} else {
 					//ログイン成功なのでコンテンツのロードを開始する
 					App app = (App)getApplication();
-					mMyUser = new User(response.optJSONObject("user"));
-					app.setMyUser(mMyUser);
+					mLoginUser = new User(response.optJSONObject("user"));
+					app.setMyUser(mLoginUser);
 					mDisableLoad = false;
 					loadTabData();
 				}

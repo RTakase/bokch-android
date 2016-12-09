@@ -35,7 +35,6 @@ public class BaseActivity extends AppCompatActivity {
 	
 	public static final int REQUEST_LOGIN = 1;
 
-	protected User mMyUser;
 	protected ProgressDialog mProgressDialog;
 	protected ProgressDialog mSpinner;
 	protected Toolbar mToolbar;
@@ -72,13 +71,6 @@ public class BaseActivity extends AppCompatActivity {
 		mProgressDialog = null;
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.menu_home, menu);
-		return true;
-	}
-
 	protected MenuItem addMenuItem(Menu menu, int itemId, int titleRes, int iconRes, int actionEnum) {
 		MenuItem item = menu.add(Menu.NONE, itemId, Menu.NONE, titleRes);
 		if (iconRes != 0) {
@@ -110,7 +102,6 @@ public class BaseActivity extends AppCompatActivity {
 	protected void logout() {
 		SharedPreferences pref = getSharedPreferences("bokch", MODE_PRIVATE);
 		pref.edit().putString("user_id", "").apply();
-		mMyUser = null;
 		startLoginActivity(getBaseContext());
 	}
 
