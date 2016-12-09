@@ -35,16 +35,4 @@ public class UserView extends RelativeLayout {
 			mHolder.bindView(user);
 		}
 	}
-
-	public void setFollowState(FollowButton.State state) {
-		if (mHolder != null) {
-			mHolder.setFollowState(state);
-		}
-	}
-
-	public void setFollowClickListener(FollowButton.ClickListener listener) {
-		if (mHolder != null) {
-			mHolder.setFollowClickListener(listener);
-		}
-	}
 }

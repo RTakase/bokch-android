@@ -31,10 +31,10 @@ public class UserActivity extends TabActivity {
 	public static final int INDEX_STACK = 1;
 	
 	private User mUser;
-	private UserView mUserView;
 	private String mBookIdToOpen;
 	private Long mFollowId;
 	private User mLoginUser;
+	private FollowButton mFollowButton;
 	
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,10 +65,12 @@ public class UserActivity extends TabActivity {
 	}
 	
 	private void initialize() {
-		mUserView = (UserView)findViewById(R.id.user);
-		assert mUserView != null;
-		mUserView.bindView(mUser);
-		mUserView.setFollowClickListener(mFollowClickListener);
+		UserView userView = (UserView)findViewById(R.id.user);
+		userView.bindView(mUser);
+		
+		mFollowButton = (FollowButton)findViewById(R.id.follow_btn);
+		mFollowButton.setClickListener(mFollowClickListener);
+		
 		setFollowButtonState();
 	}
 	
@@ -169,9 +171,9 @@ public class UserActivity extends TabActivity {
 	private void setFollowButtonState() {
 		if (TextUtils.equals(mLoginUser.userId, mUser.userId)) {
 			//自分のページ
-			mUserView.setFollowState(FollowButton.State.MINE);
+			mFollowButton.setState(FollowButton.State.MINE);
 		} else if (mFollowId == null) {
-			mUserView.setFollowState(FollowButton.State.LOADING);
+			mFollowButton.setState(FollowButton.State.LOADING);
 			//フォロー状態を確認する
 			getMyUserStatus(mUser.userId, new ApiRequest.ApiListener<JSONObject>() {
 				@Override
@@ -181,10 +183,10 @@ public class UserActivity extends TabActivity {
 						mFollowId = myUser.followId;
 						if (mFollowId > 0) {
 							//フォロー中なのでボタンはフォロー解除状態
-							mUserView.setFollowState(FollowButton.State.UNFOLLOW);
+							mFollowButton.setState(FollowButton.State.UNFOLLOW);
 						} else {
 							//フォローしていないのでボタンはフォロー登録状態
-							mUserView.setFollowState(FollowButton.State.FOLLOW);
+							mFollowButton.setState(FollowButton.State.FOLLOW);
 						}
 					} catch (JSONException e) {
 						Timber.w(e, null);
@@ -200,10 +202,10 @@ public class UserActivity extends TabActivity {
 			} else {
 				if (mFollowId > 0) {
 					//フォロー中
-					mUserView.setFollowState(FollowButton.State.UNFOLLOW);
+					mFollowButton.setState(FollowButton.State.UNFOLLOW);
 				} else {
 					//未フォロー
-					mUserView.setFollowState(FollowButton.State.FOLLOW);
+					mFollowButton.setState(FollowButton.State.FOLLOW);
 				}
 			}
 		}
@@ -238,7 +240,7 @@ public class UserActivity extends TabActivity {
 			public void onSuccess(JSONObject response) {
 				dismissSpinner();
 				//フォロー登録に成功したのでボタンはフォロー解除状態にする
-				mUserView.setFollowState(FollowButton.State.UNFOLLOW);
+				mFollowButton.setState(FollowButton.State.UNFOLLOW);
 				ViewUtils.showSuccessToast(UserActivity.this, R.string.succeed_follow);
 			}
 
@@ -255,7 +257,7 @@ public class UserActivity extends TabActivity {
 			public void onSuccess(JSONObject response) {
 				dismissSpinner();
 				//フォロー解除に成功したのでボタンはフォロー登録状態にする
-				mUserView.setFollowState(FollowButton.State.FOLLOW);
+				mFollowButton.setState(FollowButton.State.FOLLOW);
 				ViewUtils.showSuccessToast(UserActivity.this, R.string.succeed_unfollow);
 			}
 

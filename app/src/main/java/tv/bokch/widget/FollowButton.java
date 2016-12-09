@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import info.hoang8f.widget.FButton;
+import timber.log.Timber;
 import tv.bokch.R;
 
 public class FollowButton extends FButton {
@@ -39,8 +40,9 @@ public class FollowButton extends FButton {
 				labelColor = 0xa0fafafa;
 				break;
 			case 4:
-				buttonColor = 0xff444444;
-				labelColor = 0xa0fafafa;
+				buttonColor = 0xffa18320;
+				labelColor = 0xddfafafa;
+				break;
 			}
 		}
 	}
