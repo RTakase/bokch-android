@@ -73,7 +73,7 @@ public class ReviewEditDialog extends BaseDialog {
 		if (mPostingReview != null) {
 			mEditor.setText(mPostingReview.comment);
 			mRatingBar.setRating(mPostingReview.rating);
-		} else {
+		} else if (mPostedReview != null) {
 			mEditor.setText(mPostedReview.comment);
 			mRatingBar.setRating(mPostedReview.rating);
 		}
