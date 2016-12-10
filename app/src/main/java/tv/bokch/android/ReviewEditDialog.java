@@ -159,7 +159,7 @@ public class ReviewEditDialog extends BaseDialog {
 				dismissSpinner();
 				JSONObject obj = response.optJSONObject("review");
 				mPostedReview = new Review(obj);
-				Toast.makeText(getActivity(), getString(R.string.succeed_post_review), Toast.LENGTH_SHORT).show();
+				Toast.makeText(getActivity(), getString(R.string.message_posted_review), Toast.LENGTH_SHORT).show();
 			} catch (JSONException e) {
 				Timber.w(e, null);
 			}
@@ -211,7 +211,7 @@ public class ReviewEditDialog extends BaseDialog {
 			mPostedReview.rating = (int)mRatingBar.getRating();
 			mPostedReview.comment = mEditor.getText().toString();
 			mSaved = true;
-			Toast.makeText(getActivity(), getString(R.string.succeed_put_review), Toast.LENGTH_SHORT).show();
+			Toast.makeText(getActivity(), getString(R.string.message_updated_review), Toast.LENGTH_SHORT).show();
 			dismiss();
 		}
 

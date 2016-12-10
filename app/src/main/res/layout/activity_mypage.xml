@@ -8,7 +8,6 @@
     >
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="?attr/actionBarSize"
@@ -49,8 +48,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        app:layout_anchor="@id/appbar"
-        android:layout_marginBottom="64dp"
         />
 
 </android.support.design.widget.CoordinatorLayout>

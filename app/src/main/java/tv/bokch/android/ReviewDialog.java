@@ -74,6 +74,7 @@ public class ReviewDialog extends BaseDialog {
 					((BaseActivity)getActivity()).startBookActivity(mHistory.book);
 				} else {
 					((BaseActivity)getActivity()).startBookActivity(mMyBook);
+					Timber.d("tks, 5");
 				}
 				dismiss();
 			}
@@ -145,6 +146,7 @@ public class ReviewDialog extends BaseDialog {
 			case BEFORE:
 				if (mMyBook != null) {
 					((BaseActivity)getActivity()).startBookActivity(mMyBook, true);
+					Timber.d("tks, 3");
 				}
 				dismiss();
 				break;
@@ -152,6 +154,8 @@ public class ReviewDialog extends BaseDialog {
 				if (mMyBook == null) {
 					((BaseActivity)getActivity()).startBookActivity(mHistory.book);
 				} else {
+					Timber.d("tks, 4");
+					Timber.d("tks, %s", mMyBook.getClass().toString());
 					((BaseActivity)getActivity()).startBookActivity(mMyBook);
 				}
 				dismiss();

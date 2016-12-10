@@ -22,6 +22,7 @@ import tv.bokch.R;
 import tv.bokch.data.Book;
 import tv.bokch.data.History;
 import tv.bokch.data.MyBook;
+import tv.bokch.data.Rental;
 import tv.bokch.data.Review;
 import tv.bokch.data.Stack;
 import tv.bokch.data.User;
@@ -29,6 +30,7 @@ import tv.bokch.util.ApiRequest;
 import tv.bokch.util.JsonUtils;
 import tv.bokch.util.ViewUtils;
 import tv.bokch.widget.BookView;
+import tv.bokch.widget.LendButton;
 import tv.bokch.widget.ShareButton;
 import tv.bokch.widget.WishButton;
 
@@ -37,35 +39,37 @@ public class BookActivity extends TabActivity {
 	public static final int REQUEST_REVIEW_EDIT = 1;
 	public static final int INDEX_REVIEW = 0;
 	public static final int INDEX_USERS = 1;
-	
-	private Book mBook;
+
 	private Review mPostingReview;
 	private MyBook mMyBook;
+	private Book mBook;
 	private User mLoginUser;
 	
-	private WishButton mWishButton;
 	private BookView mBookView;
+	private WishButton mWishButton;
 	private ShareButton mShareButton;
+	private LendButton mLendButton;
 	
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		setContentView(R.layout.activity_book);
 		super.onCreate(savedInstanceState);
-		
+
 		setActionBarTitle(getString(R.string.activity_book));
 		
 		mLoginUser = ((App)getApplication()).getMyUser();
 		
 		Intent intent = getIntent();
-		mBook = intent.getParcelableExtra("data");
-		if (mBook == null) {
-			finish();
-			return;
+		mMyBook = intent.getParcelableExtra("my_book");
+		if (mMyBook == null) {
+			mBook = intent.getParcelableExtra("book");
+			if (mBook == null) {
+				finish();
+				return;
+			}
+		} else {
+			mBook = mMyBook.book;
 		}
-		
-//		mPostedReview = intent.getParcelableExtra("review");
-//		mHistory = intent.getParcelableExtra("history");
-//		mStack = intent.getParcelableExtra("stack");
 
 		boolean withReviewEdit = intent.getBooleanExtra("with_review_edit", false);
 		if (withReviewEdit) {
@@ -84,9 +88,12 @@ public class BookActivity extends TabActivity {
 		
 		mShareButton = (ShareButton)findViewById(R.id.share_btn);
 		mShareButton.setClickListener(mShareClickListener);
-
+		
 		mWishButton = (WishButton)findViewById(R.id.wish_btn);
 		mWishButton.setClickListener(mWishClickListener);
+		
+		mLendButton = (LendButton)findViewById(R.id.lend_btn);
+		mLendButton.setClickListener(mLendClickListener);
 
 		setButtonState();
 	}
@@ -261,7 +268,21 @@ public class BookActivity extends TabActivity {
 				addToWishList();
 				break;
 			case AFTER:
-				deleteFromWishList();
+				removeFromWishList();
+				break;
+			}
+		}
+	};
+
+	private LendButton.ClickListener mLendClickListener = new LendButton.ClickListener() {
+		@Override
+		public void onClick(LendButton.State state) {
+			switch (state) {
+			case BEFORE:
+				addToLendList();
+				break;
+			case AFTER:
+				removeFromLendList();
 				break;
 			}
 		}
@@ -269,6 +290,7 @@ public class BookActivity extends TabActivity {
 	
 	private void addToWishList() {
 		ApiRequest request = new ApiRequest();
+		mWishButton.setState(WishButton.State.LOADING);
 		try {
 			request.post_stack(mBook.bookId, mLoginUser.userId, new ApiRequest.ApiListener<JSONObject>() {
 				@Override
@@ -281,9 +303,9 @@ public class BookActivity extends TabActivity {
 						Timber.w(e, null);
 					}
 				}
-				
 				@Override
 				public void onError(ApiRequest.ApiError error) {
+					mWishButton.setState(WishButton.State.BEFORE);
 					ViewUtils.showErrorToast(BookActivity.this, R.string.failed_load);
 					Timber.w(error, null);
 				}
@@ -293,8 +315,9 @@ public class BookActivity extends TabActivity {
 		}
 	}
 	
-	private void deleteFromWishList() {
+	private void removeFromWishList() {
 		ApiRequest request = new ApiRequest();
+		mWishButton.setState(WishButton.State.LOADING);
 		request.delete_stack(mMyBook.stack.id, new ApiRequest.ApiListener<JSONObject>() {
 			@Override
 			public void onSuccess(JSONObject response) {
@@ -305,6 +328,55 @@ public class BookActivity extends TabActivity {
 			
 			@Override
 			public void onError(ApiRequest.ApiError error) {
+				mWishButton.setState(WishButton.State.AFTER);
+				ViewUtils.showErrorToast(BookActivity.this, R.string.failed_load);
+				Timber.w(error, null);
+			}
+		});
+	}
+	
+	private void addToLendList() {
+		ApiRequest request = new ApiRequest();
+		mLendButton.setState(LendButton.State.LOADING);
+		try {
+			request.post_rental(mBook.bookId, mLoginUser.userId, new ApiRequest.ApiListener<JSONObject>() {
+				@Override
+				public void onSuccess(JSONObject response) {
+					try {
+						mMyBook.rental = new Rental(response);
+						mLendButton.setState(LendButton.State.AFTER);
+						ViewUtils.showSuccessToast(BookActivity.this, R.string.message_posted_rental);
+					} catch (JSONException e) {
+						Timber.w(e, null);
+					}
+				}
+
+				@Override
+				public void onError(ApiRequest.ApiError error) {
+					ViewUtils.showErrorToast(BookActivity.this, R.string.failed_load);
+					mLendButton.setState(LendButton.State.BEFORE);
+					Timber.w(error, null);
+				}
+			});
+		} catch (JSONException e) {
+			Timber.w(e, null);
+		}
+	}
+
+	private void removeFromLendList() {
+		ApiRequest request = new ApiRequest();
+		mLendButton.setState(LendButton.State.LOADING);
+		request.delete_rental(mMyBook.rental.id, new ApiRequest.ApiListener<JSONObject>() {
+			@Override
+			public void onSuccess(JSONObject response) {
+				mMyBook.rental = null;
+				mLendButton.setState(LendButton.State.BEFORE);
+				ViewUtils.showSuccessToast(BookActivity.this, R.string.message_deleted_rental);
+			}
+			
+			@Override
+			public void onError(ApiRequest.ApiError error) {
+				mLendButton.setState(LendButton.State.AFTER);
 				ViewUtils.showErrorToast(BookActivity.this, R.string.failed_load);
 				Timber.w(error, null);
 			}
@@ -312,29 +384,37 @@ public class BookActivity extends TabActivity {
 	}
 
 	private void setButtonState() {
-		mShareButton.setState(ShareButton.State.LOADING);
-		mWishButton.setState(WishButton.State.LOADING);
-		getMyBookStatus(mBook.bookId, new ApiRequest.ApiListener<JSONObject>() {
-			@Override
-			public void onSuccess(JSONObject response) {
-				JsonUtils.dump(response);
-				dismissSpinner();
-				try {
-					mMyBook = new MyBook(response);
-					mShareButton.setState(mMyBook.review == null ? ShareButton.State.BEFORE : ShareButton.State.AFTER);
-					mWishButton.setState(mMyBook.stack == null ? WishButton.State.BEFORE : WishButton.State.AFTER);
-				} catch (JSONException e) {
-					Toast.makeText(BookActivity.this, getString(R.string.failed_data_set), Toast.LENGTH_SHORT).show();
-					Timber.w(e, null);
+		if (mMyBook != null) {
+			mShareButton.setState(mMyBook.review == null ? ShareButton.State.BEFORE : ShareButton.State.AFTER);
+			mWishButton.setState(mMyBook.stack == null ? WishButton.State.BEFORE : WishButton.State.AFTER);
+			mLendButton.setState(mMyBook.rental == null ? LendButton.State.BEFORE : LendButton.State.AFTER);
+		} else {
+			mShareButton.setState(ShareButton.State.LOADING);
+			mWishButton.setState(WishButton.State.LOADING);
+			mLendButton.setState(LendButton.State.LOADING);
+			getMyBookStatus(mBook.bookId, new ApiRequest.ApiListener<JSONObject>() {
+				@Override
+				public void onSuccess(JSONObject response) {
+					JsonUtils.dump(response);
+					dismissSpinner();
+					try {
+						mMyBook = new MyBook(response);
+						mShareButton.setState(mMyBook.review == null ? ShareButton.State.BEFORE : ShareButton.State.AFTER);
+						mWishButton.setState(mMyBook.stack == null ? WishButton.State.BEFORE : WishButton.State.AFTER);
+						mLendButton.setState(mMyBook.rental == null ? LendButton.State.BEFORE : LendButton.State.AFTER);
+					} catch (JSONException e) {
+						Toast.makeText(BookActivity.this, getString(R.string.failed_data_set), Toast.LENGTH_SHORT).show();
+						Timber.w(e, null);
+					}
 				}
-			}
 
-			@Override
-			public void onError(ApiRequest.ApiError error) {
-				dismissSpinner();
-				Toast.makeText(BookActivity.this, getString(R.string.failed_load), Toast.LENGTH_SHORT).show();
-				Timber.w(error, null);
-			}
-		});
+				@Override
+				public void onError(ApiRequest.ApiError error) {
+					dismissSpinner();
+					Toast.makeText(BookActivity.this, getString(R.string.failed_load), Toast.LENGTH_SHORT).show();
+					Timber.w(error, null);
+				}
+			});
+		}
 	}
 }

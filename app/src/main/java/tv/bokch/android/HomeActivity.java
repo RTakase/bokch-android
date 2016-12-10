@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -26,6 +25,7 @@ import tv.bokch.util.ApiRequest;
 public class HomeActivity extends TabActivity {
 	protected static final int MENU_ID_USERS = Menu.FIRST + 1;
 	protected static final int MENU_ID_RANKING = Menu.FIRST + 2;
+	protected static final int MENU_ID_MYPAGE = Menu.FIRST + 3;
 
 	protected static final int INDEX_HISTORY = 0;
 	protected static final int INDEX_FOLLOW = 1;
@@ -63,6 +63,7 @@ public class HomeActivity extends TabActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.menu_home, menu);
+		addMenuItem(menu, MENU_ID_MYPAGE, R.string.action_mypage, R.drawable.mypage, MenuItem.SHOW_AS_ACTION_ALWAYS);
 		addMenuItem(menu, MENU_ID_USERS, R.string.title_all_users, R.drawable.people, MenuItem.SHOW_AS_ACTION_ALWAYS);
 		addMenuItem(menu, MENU_ID_RANKING, R.string.action_ranking, R.drawable.ranking, MenuItem.SHOW_AS_ACTION_ALWAYS);
 		return super.onCreateOptionsMenu(menu);
@@ -76,6 +77,10 @@ public class HomeActivity extends TabActivity {
 			return true;
 		case MENU_ID_RANKING:
 			startRankingActivity();
+			return true;
+		case MENU_ID_MYPAGE:
+			startMyPageActivity();
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -141,7 +146,8 @@ public class HomeActivity extends TabActivity {
 				JSONObject obj = array.optJSONObject(i);
 				if (obj != null) {
 					History history = new History(obj);
-					if (history.review != null) {
+					Timber.d("tks, %s", history.book.title);
+					if (!TextUtils.isEmpty(history.book.title) && history.review != null) {
 						//コメントか評価のどちらかがあれば追加する
 						if (!TextUtils.isEmpty(history.review.comment) || history.review.rating > 0) {
 							histories.add(history);

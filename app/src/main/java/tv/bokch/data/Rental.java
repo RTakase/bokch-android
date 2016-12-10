@@ -6,31 +6,24 @@ import android.os.Parcelable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class History extends Data implements Parcelable {
+public class Rental extends Data implements Parcelable {
 	public long id;
 	public long created;
 	public User user;
 	public Book book;
-	public Review review;
-	public boolean rental;
-
-	public History(JSONObject obj) throws JSONException {
+	
+	public Rental(JSONObject obj) throws JSONException {
 		id = obj.optLong("id");
 		user = new User(obj.optJSONObject("user"));
 		book = new Book(obj.optJSONObject("book"));
-		JSONObject _review = obj.optJSONObject("review");
-		review = _review == null ? null : new Review(_review);
 		created = obj.optLong("created");
-		rental = obj.optBoolean("rental");
 	}
 	
-	public History(Parcel in) {
+	public Rental(Parcel in) {
 		id = in.readLong();
 		created = in.readLong();
 		user = in.readParcelable(User.class.getClassLoader());
 		book = in.readParcelable(Book.class.getClassLoader());
-		review = in.readParcelable(Review.class.getClassLoader());
-		rental = in.readInt() == 1;
 	}
 	
 	@Override
@@ -39,8 +32,6 @@ public class History extends Data implements Parcelable {
 		dest.writeLong(created);
 		dest.writeParcelable(user, flags);
 		dest.writeParcelable(book, flags);
-		dest.writeParcelable(review, flags);
-		dest.writeInt(rental ? 1 : 0);
 	}
 	
 	@Override
@@ -48,12 +39,12 @@ public class History extends Data implements Parcelable {
 		return 0;
 	}
 	
-	public static final Parcelable.Creator<History> CREATOR = new Parcelable.Creator<History>() {
-		public History createFromParcel(Parcel in) {
-			return new History(in);
+	public static final Parcelable.Creator<Rental> CREATOR = new Parcelable.Creator<Rental>() {
+		public Rental createFromParcel(Parcel in) {
+			return new Rental(in);
 		}
-		public History[] newArray(int size) {
-			return new History[size];
+		public Rental[] newArray(int size) {
+			return new Rental[size];
 		}
 	};
 }

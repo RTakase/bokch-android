@@ -4,7 +4,9 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.TextView;
 
+import tv.bokch.R;
 import tv.bokch.android.BaseActivity;
 import tv.bokch.data.BookViewHolder;
 import tv.bokch.data.History;
@@ -61,6 +63,7 @@ public abstract class RecentListView extends BaseListView<History> {
 		protected BookViewHolder mBook;
 		protected UserViewHolder mUser;
 		protected ReviewViewHolder mReview;
+		protected TextView mLenderTag;
 		
 		private boolean mDisableBookClick;
 		private boolean mDisableUserClick;
@@ -70,6 +73,7 @@ public abstract class RecentListView extends BaseListView<History> {
 			mBook = new BookViewHolder(view);
 			mUser = new UserViewHolder(view);
 			mReview = new ReviewViewHolder(view);
+			mLenderTag = (TextView)view.findViewById(R.id.tag_lender);
 		}
 
 		public void bindView(final History history, int position) {
@@ -100,6 +104,14 @@ public abstract class RecentListView extends BaseListView<History> {
 					((BaseActivity)getContext()).startReviewActivity(history);
 				}
 			});
+
+			if (mLenderTag != null) {
+				if (history.rental) {
+					mLenderTag.setVisibility(View.VISIBLE);
+				} else {
+					mLenderTag.setVisibility(View.GONE);
+				}
+			}
 		}
 		
 		public void disableBookClick() {

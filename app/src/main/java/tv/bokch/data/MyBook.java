@@ -1,29 +1,30 @@
 package tv.bokch.data;
 
 import android.os.Parcel;
+import android.os.Parcelable;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import timber.log.Timber;
-
-public class MyBook extends Book {
-	public User user;
+public class MyBook implements Parcelable {
+	public Book book;
 	public Review review;
 	public History history;
 	public Stack stack;
+	public Rental rental;
 	
 	public MyBook(JSONObject obj) throws JSONException {
-		super(obj);
-		setStatus(obj);
-	}
-	
-	public MyBook(String bookId) {
-		super(bookId);
+		JSONObject _book = obj.optJSONObject("book");
+		book = new Book(_book);
+		setStatus(_book);
 	}
 	
 	public MyBook(Parcel in) {
-		super(in);
+		book = in.readParcelable(Book.class.getClassLoader());
+		history = in.readParcelable(History.class.getClassLoader());
+		review = in.readParcelable(Review.class.getClassLoader());
+		stack = in.readParcelable(Stack.class.getClassLoader());
+		rental = in.readParcelable(Rental.class.getClassLoader());		
 	}
 	
 	public void setStatus(JSONObject obj) throws JSONException {
@@ -40,5 +41,31 @@ public class MyBook extends Book {
 		
 		JSONObject _stack = status.optJSONObject("stack");
 		this.stack = _stack == null ? null : new Stack(_stack);
+		
+		JSONObject _rental = status.optJSONObject("rental");
+		this.rental = _rental == null ? null : new Rental(_rental);		
 	}
+	
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeParcelable(book, flags);
+		dest.writeParcelable(history, flags);
+		dest.writeParcelable(review, flags);
+		dest.writeParcelable(stack, flags);
+		dest.writeParcelable(rental, flags);
+	}
+	
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+	
+	public static final Parcelable.Creator<MyBook> CREATOR = new Parcelable.Creator<MyBook>() {
+		public MyBook createFromParcel(Parcel in) {
+			return new MyBook(in);
+		}
+		public MyBook[] newArray(int size) {
+			return new MyBook[size];
+		}
+	};
 }

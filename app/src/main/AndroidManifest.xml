@@ -32,6 +32,7 @@
         <activity android:name=".android.BookActivity" android:screenOrientation="portrait"/>
         <activity android:name=".android.UserActivity" android:screenOrientation="portrait"/>
         <activity android:name=".android.RankingActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".android.MyPageActivity" android:screenOrientation="portrait"/>
 
         <activity android:name=".android.LoginActivity" android:launchMode="singleTop" android:screenOrientation="portrait">
             <intent-filter>
@@ -39,6 +40,12 @@
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.BROWSABLE"/>
                 <data android:scheme="http" android:host="bokch.tv.com" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="bokch" />
             </intent-filter>
         </activity>
 

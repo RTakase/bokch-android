@@ -134,6 +134,11 @@ public class BaseActivity extends AppCompatActivity {
 		startActivity(intent);
 	}
 
+	protected void startMyPageActivity() {
+		Intent intent = new Intent(BaseActivity.this, MyPageActivity.class);
+		startActivity(intent);
+	}
+
 	public void startReviewActivity(History history) {
 		ReviewDialog dialog = ReviewDialog.newInstance(history);
 		dialog.show(getFragmentManager(), "ReviewDialog");
@@ -152,7 +157,7 @@ public class BaseActivity extends AppCompatActivity {
 	public void startBookActivity(Book book) {
 		//startBookActivity(book.bookId, false);
 		Intent intent = new Intent(BaseActivity.this, BookActivity.class);
-		intent.putExtra("data", book);
+		intent.putExtra("book", book);
 		startActivity(intent);
 	}
 	protected void startBookActivity(String bookId, final boolean withReviewEdit) {
@@ -163,6 +168,7 @@ public class BaseActivity extends AppCompatActivity {
 				dismissSpinner();
 				try {
 					MyBook myBook = new MyBook(response);
+					Timber.d("tks, 1");
 					startBookActivity(myBook, withReviewEdit);
 				} catch (JSONException e) {
 					Toast.makeText(BaseActivity.this, getString(R.string.failed_data_set), Toast.LENGTH_SHORT).show();
@@ -182,14 +188,14 @@ public class BaseActivity extends AppCompatActivity {
 	 * 本画面への遷移（ユーザステータスはもうある）
 	 */
 	protected void startBookActivity(MyBook myBook) {
+		Timber.d("tks, 2");
+		Timber.d("tks, %s", myBook.getClass().toString());
 		startBookActivity(myBook, false);
 	}
 	public void startBookActivity(MyBook myBook, boolean withReviewEdit) {
 		Intent intent = new Intent(BaseActivity.this, BookActivity.class);
-		intent.putExtra("data", myBook);
-		intent.putExtra("review", myBook.review);
-		intent.putExtra("history", myBook.history);
-		intent.putExtra("stack", myBook.stack);
+		Timber.d("tks, %s", myBook.getClass().toString());
+		intent.putExtra("my_book", myBook);
 		intent.putExtra("with_review_edit", withReviewEdit);
 		startActivity(intent);
 	}

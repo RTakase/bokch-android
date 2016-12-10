@@ -55,6 +55,26 @@ android:padding="8dp"
         android:layout_alignBottom="@id/user_icon"
         />
 
+
+    <TextView
+        android:id="@+id/tag_lender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:text="@string/label_lender"
+        android:textSize="12sp"
+        android:textColor="#c0303F9F"
+        android:gravity="center_vertical"
+        android:background="@drawable/bg_tag_lender"
+        android:layout_alignTop="@id/user_icon"
+        android:layout_alignBottom="@id/user_icon"
+        android:layout_toRightOf="@id/user_name"
+        />
+
     <TextView
         android:id="@+id/book_title"
         android:layout_width="wrap_content"

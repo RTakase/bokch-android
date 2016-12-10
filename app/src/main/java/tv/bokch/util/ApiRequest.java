@@ -27,6 +27,8 @@ public class ApiRequest {
 	public static String API_RECENT = "histories";
 	public static String API_STACKS = "stacks";
 	public static String API_STACK = "stacks/%s";
+	public static String API_RENTALS = "rentals";
+	public static String API_RENTAL = "rentals/%s";
 	public static String API_REVIEW = "reviews";
 	public static String API_BOOKS = "books";
 	public static String API_BOOK = "books/%s";
@@ -204,7 +206,24 @@ public class ApiRequest {
 		deleteJsonObject(url, null, listener);
 	}
 
+	public void post_rental(String bookId, String userId, ApiListener<JSONObject> listener)  throws JSONException {
+		HttpUrl url = getUrl(API_RENTALS);
+		
+		JSONObject rental = new JSONObject();
+		rental.put("book_id", bookId);
+		rental.put("user_id", userId);
 
+		JSONObject json = new JSONObject();
+		json.put("rental", rental);
+		
+		RequestBody body = RequestBody.create(JSON, json.toString());
+		postJsonObject(url, body, listener);
+	}
+	
+	public void delete_rental(long rentalId, ApiListener<JSONObject> listener) {
+		HttpUrl url = getUrl(String.format(API_RENTAL, String.valueOf(rentalId)));
+		deleteJsonObject(url, null, listener);
+	}
 	
 	public void put_review(long reviewId, int rating, String comment, ApiListener<JSONObject> listener) throws JSONException {
 		HttpUrl url = getUrl(String.format(API_PUT_REVIEW, reviewId));

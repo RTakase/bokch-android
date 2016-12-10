@@ -5,7 +5,6 @@ import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
@@ -33,7 +32,6 @@ public class BookGridView extends BaseListView<Book> {
 		setClipChildren(false);
 		setClipToPadding(false);
 	}
-	
 	
 	@Override
 	protected int getLayoutResId() {

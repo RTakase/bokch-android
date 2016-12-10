@@ -28,7 +28,7 @@ public class LoginActivity extends BaseActivity {
 	public static final String CLIENT_ID_WEB = "780402054902-o75kj622d9e3qu9qdnerk8gkd0d59heu.apps.googleusercontent.com";
 	public static final String LOGIN_URL = "https://accounts.google.com/o/oauth2/auth?scope=%s&redirect_uri=%s&response_type=code&client_id=%s&access_type=offline";
 	public static final String SCOPE_GOOGLE_API = "profile email";
-	public static final String REDIRECT_URL = "http://bokch.tv.com";
+	public static final String REDIRECT_URL = "http://bokch.dnuts.jp/login";
 
 	private TextView mMessageTextView;
 	private Button mLoginButton;
@@ -66,15 +66,17 @@ public class LoginActivity extends BaseActivity {
 		super.onNewIntent(intent);
 		if (Intent.ACTION_VIEW.equals(intent.getAction())) {
 			if (!mLogining) {
-				mLogining = true;
-				//ログイン後のコールバック
-				mMessageTextView.setText(getString(R.string.loging_in));
-				mLoginButton.setVisibility(View.GONE);
-				mProgressBar.setVisibility(View.VISIBLE);
-				String code = getResponseCode(intent.getDataString());
-				Timber.d("tks, code = %s", code);
-				ApiRequest request = new ApiRequest();
-				request.login(null, code, mLoginApiListener);
+				String userId = getUserId(intent.getDataString());
+				if (TextUtils.isEmpty(userId)) {
+					notifyError();
+				} else {
+					mLogining = true;
+					mMessageTextView.setText(getString(R.string.loging_in));
+					mLoginButton.setVisibility(View.GONE);
+					mProgressBar.setVisibility(View.VISIBLE);
+					ApiRequest request = new ApiRequest();
+					request.login(userId, null, mLoginApiListener);
+				}
 			}
 		}
 	}
@@ -99,6 +101,22 @@ public class LoginActivity extends BaseActivity {
 		} else {
 			return null;
 		}
+	}
+
+	private String getUserId(String response) {
+		Timber.d("tks, response = %s", response);
+		if (response == null) {
+			return null;
+		}
+		Uri uri = Uri.parse(response);
+		return uri.getHost();
+	}
+
+	private void notifyError() {
+		mLogining = false;
+		mMessageTextView.setText(getString(R.string.failed_login));
+		mProgressBar.setVisibility(View.GONE);
+		mLoginButton.setVisibility(View.VISIBLE);
 	}
 
 	private View.OnClickListener mLoginClickListener = new View.OnClickListener() {
@@ -133,6 +151,7 @@ public class LoginActivity extends BaseActivity {
 					mLoginButton.setVisibility(View.VISIBLE);
 				} else {
 					mMessageTextView.setText(getString(R.string.successed_login));
+					ViewUtils.showSuccessToast(LoginActivity.this, R.string.successed_login);
 					mProgressBar.setVisibility(View.GONE);
 					App app = (App)getApplication();
 					app.setMyUser(new User(response.optJSONObject("user")));
@@ -145,12 +164,8 @@ public class LoginActivity extends BaseActivity {
 		}
 		@Override
 		public void onError(ApiRequest.ApiError error) {
-			mLogining = false;
-			Timber.d("tks, api error, %s", error.getLocalizedMessage());
 			Timber.w(error, null);
-			mMessageTextView.setText(getString(R.string.failed_login));
-			mProgressBar.setVisibility(View.GONE);
-			mLoginButton.setVisibility(View.VISIBLE);
+			notifyError();
 		}
 	};
 }

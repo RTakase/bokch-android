@@ -34,8 +34,6 @@
     <string name="confirmation">確認</string>
     <string name="confirm_editing">レビューを編集中です。破棄して戻りますか？</string>
     <string name="cancel">キャンセル</string>
-    <string name="succeed_post_review">レビューを投稿しました！</string>
-    <string name="succeed_put_review">レビューを更新しました！</string>
     <string name="error">エラー</string>
     <string name="loading">通信中</string>
     <string name="empty_review">５段階評価は必須です</string>
@@ -71,15 +69,25 @@
     <string name="activity_book">本のページ</string>
     <string name="activity_user">ユーザのページ</string>
     <string name="failed_find_chrome">ログインにはChromeブラウザが必要です</string>
-    <string name="label_share_before">社内にシェア</string>
-    <string name="label_share_after">シェア済</string>
-    <string name="label_wish_before">ウィッシュリストに追加</string>
-    <string name="label_wish_after">ウィッシュリストに追加済</string>
-    <string name="message_posted_wish">ウィッシュリストに追加しました！</string>
-    <string name="message_deleted_wish">ウィッシュリストから削除しました</string>
     <string name="suffix_rating_average">%d件の評価</string>
     <string name="loading_button">状態取得中</string>
     <string name="prompt_review">あなたもレビューを投稿しよう！</string>
     <string name="label_mine">自分のページ</string>
+    <string name="activity_mypage">マイページ</string>
+    <string name="label_lender">貸せます</string>
 
+    <string name="label_share_before">みんなに\n教えてあげる</string>
+    <string name="label_share_after">レビュー\nを編集する</string>
+    <string name="message_posted_review">レビューを投稿しました！</string>
+    <string name="message_updated_review">レビューを更新しました！</string>
+
+    <string name="label_wish_before">読みたいリストに\nに追加する</string>
+    <string name="label_wish_after">読みたいリストに登録中</string>
+    <string name="message_posted_wish">ウィッシュリストに追加しました！</string>
+    <string name="message_deleted_wish">ウィッシュリストから削除しました</string>
+
+    <string name="label_lend_before">みんなに\n貸してあげる</string>
+    <string name="label_lend_after">貸出登録中</string>
+    <string name="message_posted_rental">貸出登録を行いました！</string>
+    <string name="message_deleted_rental">貸出登録を解除しました</string>
 </resources>
