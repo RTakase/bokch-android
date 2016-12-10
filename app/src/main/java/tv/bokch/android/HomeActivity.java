@@ -146,7 +146,6 @@ public class HomeActivity extends TabActivity {
 				JSONObject obj = array.optJSONObject(i);
 				if (obj != null) {
 					History history = new History(obj);
-					Timber.d("tks, %s", history.book.title);
 					if (!TextUtils.isEmpty(history.book.title) && history.review != null) {
 						//コメントか評価のどちらかがあれば追加する
 						if (!TextUtils.isEmpty(history.review.comment) || history.review.rating > 0) {
@@ -159,7 +158,6 @@ public class HomeActivity extends TabActivity {
 					}
 				}
 			}
-			Timber.d("tks, follower = %d", followeeHistories.size());
 			Collections.reverse(histories);
 			Collections.reverse(followeeHistories);
 			setData(INDEX_FOLLOW, followeeHistories);
@@ -191,6 +189,8 @@ public class HomeActivity extends TabActivity {
 				mLoginUser = app.getMyUser();
 				mDisableLoad = false;
 				loadTabData();
+			} else {
+				finish();
 			}
 		}
 	}
