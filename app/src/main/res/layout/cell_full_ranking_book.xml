@@ -2,21 +2,18 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="84dp"
     android:layout_marginBottom="@dimen/list_divider_height"
     android:layout_marginLeft="6dp"
     android:layout_marginRight="6dp"
-    android:paddingTop="4dp"
-    android:paddingBottom="4dp"
-    android:paddingLeft="8dp"
-    android:paddingRight="8dp"
+    android:padding="8dp"
     android:background="@drawable/bg_full_list_cell"
     >
 
     <RelativeLayout
-        android:id="@+id/icon_container"
-        android:layout_width="64dp"
-        android:layout_height="72dp"
+        android:id="@+id/jacket_container"
+        android:layout_width="84dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
@@ -27,24 +24,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scaleType="centerInside"
-            android:layout_marginRight="6dp"
-            android:layout_marginTop="6dp"
-            android:layout_marginBottom="4dp"
             android:layout_centerInParent="true"
-            />
-
-        <ImageView
-            android:id="@+id/medal"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:visibility="invisible"
             />
     </RelativeLayout>
 
+    <ImageView
+        android:id="@+id/medal"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:visibility="invisible"
+        android:layout_marginLeft="2dp"
+        android:layout_toRightOf="@id/jacket_container"
+        android:layout_alignParentTop="true"
+        />
+
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/book_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
@@ -52,20 +47,8 @@
         android:maxLines="1"
         android:ellipsize="end"
         android:gravity="center_vertical|left"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@id/icon_container"
-        />
-
-    <RatingBar
-        android:id="@+id/rating_average"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:maxLines="1"
-        android:isIndicator="true"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        style="@style/Base.Widget.AppCompat.RatingBar.Small"
+        android:layout_alignBottom="@id/medal"
+        android:layout_toRightOf="@id/medal"
         />
 
     <TextView
@@ -77,9 +60,7 @@
         android:maxLines="1"
         android:gravity="center_vertical|left"
         android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@id/rating_average"
-        android:visibility="gone"
+        android:layout_alignParentRight="true"
         />
-
 
 </RelativeLayout>

@@ -6,7 +6,7 @@
     <string name="welcome">ようこそ！</string>
 
     <string name="ranking_more">もっと見る</string>
-    <string name="title_recent">最近社内で読まれた本</string>
+    <string name="title_recent">最近読まれた本</string>
     <string name="ranking_user_weekly_title">本を読んでる人ランキング</string>
     <string name="ranking_book_weekly_title">社内で読まれた本ランキング</string>
     <string name="failed_data_set">予期せぬデータが見つかりました</string>
@@ -31,8 +31,6 @@
     <string name="label_review">レビューを見る</string>
     <string name="prompt_comment">どんな人におすすめ？</string>
     <string name="submit">送信</string>
-    <string name="confirmation">確認</string>
-    <string name="confirm_editing">レビューを編集中です。破棄して戻りますか？</string>
     <string name="cancel">キャンセル</string>
     <string name="error">エラー</string>
     <string name="loading">通信中</string>
@@ -90,4 +88,7 @@
     <string name="label_lend_after">貸出登録中</string>
     <string name="message_posted_rental">貸出登録を行いました！</string>
     <string name="message_deleted_rental">貸出登録を解除しました</string>
+
+    <string name="format_score_book">%d人に読まれました</string>
+    <string name="format_score_user">%d冊読みました</string>
 </resources>

@@ -1,6 +1,10 @@
 package tv.bokch.widget;
 
 import android.content.Context;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextUtils;
+import android.text.style.RelativeSizeSpan;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
@@ -63,7 +67,13 @@ public class FullBookRankingListView extends RankingListView<Book> {
 			mBook.bindView(book);
 
 			if (mScore != null && book.score > 0) {
-				mScore.setText(String.valueOf(book.score));
+				String str = String.format(getContext().getString(R.string.format_score_book), book.score);
+				RelativeSizeSpan span = new RelativeSizeSpan(3f);
+				SpannableString scoreSpannable = new SpannableString(str);
+				int start = 0;
+				int end = str.indexOf("人");
+				scoreSpannable.setSpan(span, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+				mScore.setText(scoreSpannable);
 			}
 		}
 	}
