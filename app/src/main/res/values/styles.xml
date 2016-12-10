@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:actionOverflowButtonStyle">@style/ActionBarOverFlow</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -21,5 +22,9 @@
         <item name="colorControlNormal">#ffffff</item>
         <item name="colorControlActivated">@color/colorAccent</item>
         <item name="colorControlHighlight">#ffffff</item>
+    </style>
+
+    <style name="ActionBarOverFlow" parent="@android:style/Widget.Holo.ActionButton.Overflow">
+        <item name="android:src">@drawable/ic_action_overflow</item>
     </style>
 </resources>

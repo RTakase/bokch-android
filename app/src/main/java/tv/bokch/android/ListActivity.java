@@ -28,7 +28,7 @@ public abstract class ListActivity<Data> extends BaseActivity {
 	}
 
 	protected abstract BaseListView<Data> createListView();
-	protected abstract void request(ApiRequest.ApiListener<JSONObject> listener);
+	protected abstract boolean request(ApiRequest.ApiListener<JSONObject> listener);
 	protected abstract String getKey();
 	protected abstract ArrayList<Data> getData(JSONArray array) throws JSONException;
 	
@@ -36,24 +36,26 @@ public abstract class ListActivity<Data> extends BaseActivity {
 	protected void onResume() {
 		super.onResume();
 		if (!mLoaded) {
-			showSpinner();
-			request(mApiListener);
+			if (request(mApiListener)) {
+				mContent.setState(StatableListView.State.Loading);
+			}
 		}
 	}
-	
+
+	protected void setData(ArrayList<Data> data) {
+		mLoaded = mContent.onData(data);
+	}
+
 	private ApiRequest.ApiListener<JSONObject> mApiListener = new ApiRequest.ApiListener<JSONObject>() {
 		@Override
 		public void onSuccess(JSONObject response) {
 			try {
-				dismissSpinner();
 				JSONArray array = response.optJSONArray(getKey());
 				if (array == null) {
 					return;
 				}
-				ArrayList<Data> results = getData(array);
-				mLoaded = mContent.onData(results);
+				setData(getData(array));
 			} catch (JSONException e) {
-				dismissSpinner();
 				mContent.setState(StatableListView.State.Failed);
 				Toast.makeText(ListActivity.this, getString(R.string.failed_data_set), Toast.LENGTH_SHORT).show();
 				Timber.w(e, null);
@@ -61,7 +63,6 @@ public abstract class ListActivity<Data> extends BaseActivity {
 		}
 		@Override
 		public void onError(ApiRequest.ApiError error) {
-			dismissSpinner();
 			mContent.setState(StatableListView.State.Failed);
 			Toast.makeText(ListActivity.this, getString(R.string.failed_load), Toast.LENGTH_SHORT).show();
 		}

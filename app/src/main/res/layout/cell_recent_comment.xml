@@ -89,7 +89,6 @@
         android:layout_alignParentRight="true"
         android:layout_below="@id/user_icon"
         android:layout_toRightOf="@id/jacket_container"
-        android:visibility="gone"
         />
 
     <TextView

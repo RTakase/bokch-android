@@ -18,6 +18,8 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 import timber.log.Timber;
 import tv.bokch.App;
 import tv.bokch.R;
@@ -125,7 +127,14 @@ public class BaseActivity extends AppCompatActivity {
 	}
 
 	protected void startUserListActivity() {
+		startUserListActivity(null);
+	}
+
+	protected void startUserListActivity(ArrayList<User> data) {
 		Intent intent = new Intent(BaseActivity.this, UserListActivity.class);
+		if (data != null) {
+			intent.putExtra("data", data);
+		}
 		startActivity(intent);
 	}
 

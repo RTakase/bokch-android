@@ -40,7 +40,7 @@
     <string name="title_stacks">ウィッシュリスト</string>
     <string name="empty_book">情報の取得に時間がかかっています。\nしばらくしてからご確認ください</string>
     <string name="prompt_new">おすすめの本を\nみんなに教えてあげよう！</string>
-    <string name="title_all_users">登録されているユーザ一覧</string>
+    <string name="title_all_users">登録ユーザ一覧</string>
     <string name="title_follower">フォロワー</string>
     <string name="label_follow">フォローする</string>
     <string name="label_unfollow">フォロー中</string>
@@ -91,4 +91,6 @@
 
     <string name="format_score_book">%d人に読まれました</string>
     <string name="format_score_user">%d冊読みました</string>
+    <string name="label_follower">フォロワー %d</string>
+    <string name="label_followee">フォロー %d</string>
 </resources>

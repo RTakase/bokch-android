@@ -290,6 +290,11 @@ public class ApiRequest {
 		}
 		getJsonObject(url.build(), listener);
 	}
+	
+	public void relation(String userId, ApiListener<JSONObject> listener) {
+		HttpUrl.Builder url = getUrlBuilder(String.format(API_FOLLOW, userId));
+		getJsonObject(url.build(), listener);
+	}
 
 	public void follow(String userId, String myUserId, ApiListener<JSONObject> listener) throws JSONException {
 		HttpUrl url = getUrl(API_FOLLOW);

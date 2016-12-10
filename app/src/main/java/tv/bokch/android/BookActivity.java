@@ -56,6 +56,8 @@ public class BookActivity extends TabActivity {
 		super.onCreate(savedInstanceState);
 
 		setActionBarTitle(getString(R.string.activity_book));
+
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		mLoginUser = ((App)getApplication()).getMyUser();
 		

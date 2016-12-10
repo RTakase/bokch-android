@@ -68,7 +68,7 @@ public class FullUserRankingListView extends RankingListView<User> {
 			if (mScore != null && user.score > 0) {
 				if (mScore != null && user.score > 0) {
 					String str = String.format(getContext().getString(R.string.format_score_user), user.score);
-					RelativeSizeSpan span = new RelativeSizeSpan(3f);
+					RelativeSizeSpan span = new RelativeSizeSpan(2f);
 					SpannableString scoreSpannable = new SpannableString(str);
 					int start = 0;
 					int end = str.indexOf("冊");

@@ -18,6 +18,7 @@ import tv.bokch.widget.UserListView;
 
 public class UserListActivity extends ListActivity<User> {
 
+	private ArrayList<User> mUsers;
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		
@@ -26,8 +27,10 @@ public class UserListActivity extends ListActivity<User> {
 		super.onCreate(savedInstanceState);
 		
 		setActionBarTitle(R.string.title_all_users);
-		
+
 		Intent intent = getIntent();
+
+		mUsers = intent.getParcelableArrayListExtra("data");
 	}
 
 	@Override
@@ -36,9 +39,15 @@ public class UserListActivity extends ListActivity<User> {
 	}
 
 	@Override
-	protected void request(ApiRequest.ApiListener<JSONObject> listener) {
+	protected boolean request(ApiRequest.ApiListener<JSONObject> listener) {
 		ApiRequest r = new ApiRequest();
-		r.users(listener);
+		if (mUsers == null) {
+			r.users(listener);
+			return true;
+		} else {
+			setData(mUsers);
+			return false;
+		}
 	}
 
 	@Override
