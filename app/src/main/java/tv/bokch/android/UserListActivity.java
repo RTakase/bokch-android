@@ -25,12 +25,12 @@ public class UserListActivity extends ListActivity<User> {
 		setContentView(R.layout.activity_list);
 		
 		super.onCreate(savedInstanceState);
-		
-		setActionBarTitle(R.string.title_all_users);
 
 		Intent intent = getIntent();
 
 		mUsers = intent.getParcelableArrayListExtra("data");
+		String title = intent.getStringExtra("title");
+		setActionBarTitle(title);
 	}
 
 	@Override

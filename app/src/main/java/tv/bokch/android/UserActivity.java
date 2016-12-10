@@ -292,10 +292,10 @@ public class UserActivity extends TabActivity {
 		public void onClick(RelationButton.State state) {
 			switch(state) {
 			case FOLLOWEES:
-				startUserListActivity(mFollowees);
+				startUserListActivity(mFollowees, getString(R.string.activity_followees));
 				break;
 			case FOLLOWERS:
-				startUserListActivity(mFollowers);
+				startUserListActivity(mFollowers, getString(R.string.activity_followers));
 				break;
 			}
 		}

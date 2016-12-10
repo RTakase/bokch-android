@@ -30,7 +30,7 @@ public class MyPageActivity extends TabActivity {
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_user);
+		setContentView(R.layout.activity_mypage);
 
 		setActionBarTitle(R.string.activity_mypage);
 

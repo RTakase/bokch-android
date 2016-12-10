@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import tv.bokch.R;
+import tv.bokch.android.BaseActivity;
 import tv.bokch.android.UserListActivity;
 import tv.bokch.android.UserRankingActivity;
 import tv.bokch.data.History;
@@ -31,16 +32,14 @@ public class FollowerStatableListView extends StatableListView<History> {
 		ranking.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(context, UserRankingActivity.class);
-				context.startActivity(intent);
+				((BaseActivity)getContext()).startRankingActivity();
 			}
 		});
 		View list = view.findViewById(R.id.find_from_list_btn);
 		list.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(context, UserListActivity.class);
-				context.startActivity(intent);
+				((BaseActivity)getContext()).startUserListActivity(getContext().getString(R.string.activity_all_users));
 			}
 		});		
 		return view;

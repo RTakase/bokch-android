@@ -45,6 +45,7 @@ public class BaseActivity extends AppCompatActivity {
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		ViewServer.get(this).addWindow(this);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	@Override
@@ -55,6 +56,7 @@ public class BaseActivity extends AppCompatActivity {
 			getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimary));
 		}
 		if (mToolbar != null) {
+			mToolbar.setNavigationIcon(R.drawable.ic_action_home);
 			mToolbar.setTitleTextColor(0xffffffff);
 			setSupportActionBar(mToolbar);
 		}
@@ -96,6 +98,9 @@ public class BaseActivity extends AppCompatActivity {
 		case R.id.action_settings:
 			logout();
 			return true;
+		case android.R.id.home:
+			finish();
+			return true;
 		}
 
 		return super.onOptionsItemSelected(item);
@@ -126,19 +131,20 @@ public class BaseActivity extends AppCompatActivity {
 		}
 	}
 
-	protected void startUserListActivity() {
-		startUserListActivity(null);
+	public void startUserListActivity(String title) {
+		startUserListActivity(null, title);
 	}
 
-	protected void startUserListActivity(ArrayList<User> data) {
+	public void startUserListActivity(ArrayList<User> data, String title) {
 		Intent intent = new Intent(BaseActivity.this, UserListActivity.class);
 		if (data != null) {
 			intent.putExtra("data", data);
 		}
+		intent.putExtra("title", title);
 		startActivity(intent);
 	}
 
-	protected void startRankingActivity() {
+	public void startRankingActivity() {
 		Intent intent = new Intent(BaseActivity.this, RankingActivity.class);
 		startActivity(intent);
 	}

@@ -64,7 +64,7 @@ public class HomeActivity extends TabActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.menu_home, menu);
 		addMenuItem(menu, MENU_ID_MYPAGE, R.string.action_mypage, R.drawable.ic_action_mypage, MenuItem.SHOW_AS_ACTION_ALWAYS);
-		addMenuItem(menu, MENU_ID_USERS, R.string.title_all_users, R.drawable.ic_action_member, MenuItem.SHOW_AS_ACTION_ALWAYS);
+		addMenuItem(menu, MENU_ID_USERS, R.string.activity_all_users, R.drawable.ic_action_member, MenuItem.SHOW_AS_ACTION_ALWAYS);
 		addMenuItem(menu, MENU_ID_RANKING, R.string.action_ranking, R.drawable.ranking, MenuItem.SHOW_AS_ACTION_ALWAYS);
 		return super.onCreateOptionsMenu(menu);
 	}
@@ -73,7 +73,7 @@ public class HomeActivity extends TabActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case MENU_ID_USERS:
-			startUserListActivity();
+			startUserListActivity(getString(R.string.activity_all_users));
 			return true;
 		case MENU_ID_RANKING:
 			startRankingActivity();
