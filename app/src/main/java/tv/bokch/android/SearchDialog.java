@@ -1,11 +1,14 @@
 package tv.bokch.android;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -17,10 +20,14 @@ import com.journeyapps.barcodescanner.CompoundBarcodeView;
 
 import java.util.List;
 
+import timber.log.Timber;
 import tv.bokch.R;
+
+import static android.app.Activity.RESULT_OK;
 
 public class SearchDialog extends BaseDialog {
 
+	public static final int REQUEST_PERMISSION = 1;
 	private CompoundBarcodeView mBarcodeView;
 	private View mCameraButton;
 	private View mUrlButton;
@@ -65,6 +72,7 @@ public class SearchDialog extends BaseDialog {
 
 		mBarcodeView = (CompoundBarcodeView)view.findViewById(R.id.camera);
 		mBarcodeView.decodeContinuous(mBarcodeCallback);
+		mBarcodeView.setStatusText(getString(R.string.barcode_status));
 
 		mAmazonButton = view.findViewById(R.id.amazon_top_btn);
 		mAmazonButton.setOnClickListener(new View.OnClickListener() {
@@ -112,8 +120,34 @@ public class SearchDialog extends BaseDialog {
 		}
 	}
 
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		switch (requestCode) {
+		case REQUEST_PERMISSION:
+			if (resultCode == RESULT_OK) {
+				if (mBarcodeView != null) {
+					mBarcodeView.resume();
+				}
+			}
+		}
+	}
+
+	private boolean checkCameraPermission() {
+		Timber.d("tks, check permission.");
+		if (Build.VERSION.SDK_INT < 23) {
+			return true;
+		}
+		if (getActivity().checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+			return true;
+		}
+		requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_PERMISSION);
+		return false;
+	}
+
 	private void setVisibilities(boolean myCamera) {
 		if (myCamera) {
+			checkCameraPermission();
 			mByUrlView.setVisibility(View.GONE);
 			mByCameraView.setVisibility(View.VISIBLE);
 		} else {

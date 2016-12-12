@@ -103,5 +103,6 @@
     <string name="confirm_unfollow">フォローを解除しますか？</string>
     <string name="confirmation">確認</string>
     <string name="title_histories">シェアした本</string>
+    <string name="barcode_status">バーコードの中心と赤線の中心を合わせてください</string>
 </resources>
 
