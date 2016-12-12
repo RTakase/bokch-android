@@ -38,7 +38,7 @@ public class BookActivity extends TabActivity {
 	
 	public static final int REQUEST_REVIEW_EDIT = 1;
 	public static final int INDEX_REVIEW = 0;
-	public static final int INDEX_USERS = 1;
+	public static final int INDEX_STACK = 1;
 
 	private Review mPostingReview;
 	private MyBook mMyBook;
@@ -104,7 +104,7 @@ public class BookActivity extends TabActivity {
 		switch (index) {
 		case INDEX_REVIEW:
 			return UserRecentFragment.newInstance();
-		case INDEX_USERS:
+		case INDEX_STACK:
 			return UserFragment.newInstance();
 		default:
 			return null;
@@ -121,8 +121,8 @@ public class BookActivity extends TabActivity {
 		switch (index) {
 		case INDEX_REVIEW:
 			return getString(R.string.title_reviews);
-		case INDEX_USERS:
-			return getString(R.string.title_users_with_this_book);
+		case INDEX_STACK:
+			return getString(R.string.title_stacks);
 		default:
 			return null;
 		}
@@ -135,8 +135,8 @@ public class BookActivity extends TabActivity {
 		case INDEX_REVIEW:
 			request.recent(mBook.bookId, null, null, listener);
 			return true;
-		case INDEX_USERS:
-			request.recent(mBook.bookId, null, null, listener);
+		case INDEX_STACK:
+			request.stack(mBook.bookId, null, null, listener);
 			return true;
 		default:
 			return false;
@@ -147,8 +147,9 @@ public class BookActivity extends TabActivity {
 	protected String getKey(int index) {
 		switch (index) {
 		case INDEX_REVIEW:
-		case INDEX_USERS:
 			return "histories";
+		case INDEX_STACK:
+			return "stacks";
 		default:
 			return null;
 		}
@@ -166,9 +167,6 @@ public class BookActivity extends TabActivity {
 					History history = new History(obj);
 					if (history.review != null) {
 						history.book = mBook;
-						//						for (int j = 0; j < 20; j++) {
-						//						histories.add(history);
-						//						}
 						histories.add(history);
 						if (history.review.rating > 0) {
 							ratingCount++;
@@ -182,7 +180,7 @@ public class BookActivity extends TabActivity {
 				mBookView.setRatingAverageSuffix(String.format(getString(R.string.suffix_rating_average), ratingCount));
 			}
 			return histories;
-		case INDEX_USERS:
+		case INDEX_STACK:
 			ArrayList<User> users = new ArrayList<>();
 			for (int i = 0; i < array.length(); i++) {
 				JSONObject obj = array.optJSONObject(i);

@@ -26,7 +26,6 @@
     <string name="label_post_review">レビューを書く！</string>
     <string name="label_edit_review">レビューを修正する</string>
     <string name="action_amazon">アマゾンで開く</string>
-    <string name="title_reviews">最近のレビュー</string>
     <string name="failed_load_isbn">ISBNコードを読み取れませんでした</string>
     <string name="label_review">レビューを見る</string>
     <string name="prompt_comment">どんな人におすすめ？</string>
@@ -38,8 +37,11 @@
     <string name="loading">通信中</string>
     <string name="empty_review">５段階評価は必須です</string>
     <string name="title_users_with_this_book">読んだ人一覧</string>
+    <string name="title_reviews">最近のレビュー</string>
     <string name="title_histories">シェアした本</string>
-    <string name="title_stacks">ウィッシュリスト</string>
+    <string name="title_stacks">読みたいリスト</string>
+    <string name="title_stacked_users">読みたい人</string>
+    <string name="title_reviewed_users">レビュー</string>
     <string name="empty_book">情報の取得に時間がかかっています。\nしばらくしてからご確認ください</string>
     <string name="prompt_new">おすすめの本を\nみんなに教えてあげよう！</string>
     <string name="activity_all_users">登録されているユーザ一覧</string>
@@ -81,13 +83,14 @@
     <string name="message_posted_review">レビューを投稿しました！</string>
     <string name="message_updated_review">レビューを更新しました！</string>
 
-    <string name="label_wish_before">読みたいリストに\nに追加する</string>
+    <string name="label_wish_before">気になる</string>
     <string name="label_wish_after">読みたいリストに登録中</string>
-    <string name="message_posted_wish">ウィッシュリストに追加しました！</string>
-    <string name="message_deleted_wish">ウィッシュリストから削除しました</string>
+    <string name="message_posted_wish">読みたいリストに追加しました！</string>
+    <string name="message_deleted_wish">読みたいリストから削除しました</string>
 
-    <string name="label_lend_before">みんなに\n貸してあげる</string>
+    <string name="label_lend_before">貸出OK</string>
     <string name="label_lend_after">貸出登録中</string>
+    <string name="label_lend_cancel">貸出登録を解除しますか？</string>
     <string name="message_posted_rental">貸出登録を行いました！</string>
     <string name="message_deleted_rental">貸出登録を解除しました</string>
 </resources>

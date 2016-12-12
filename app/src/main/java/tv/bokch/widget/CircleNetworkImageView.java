@@ -1,6 +1,7 @@
 package tv.bokch.widget;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -10,11 +11,14 @@ import android.util.AttributeSet;
 import com.squareup.picasso.RequestCreator;
 import com.squareup.picasso.Transformation;
 
+import timber.log.Timber;
+import tv.bokch.R;
 import tv.bokch.util.BitmapUtils;
 
 public class CircleNetworkImageView extends NetworkImageView {
 	private float mBorderSize;
 	private Paint mBorderPaint;
+	private float mRadius;
 
 	public CircleNetworkImageView(Context context) {
 		super(context);
@@ -22,6 +26,11 @@ public class CircleNetworkImageView extends NetworkImageView {
 
 	public CircleNetworkImageView(Context context, AttributeSet attrs) {
 		super(context, attrs);
+		TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.CircleNetworkImageView);
+		if (array != null) {
+			float dim = array.getDimension(0, 0);
+			mRadius = dim;
+		}
 	}
 
 	public CircleNetworkImageView(Context context, AttributeSet attrs, int defStyle) {
@@ -40,7 +49,7 @@ public class CircleNetworkImageView extends NetworkImageView {
 
 	private BitmapDrawable getBitmapDrawable(int resId) {
 		Bitmap bitmap = BitmapFactory.decodeResource(getResources(), resId);
-		Bitmap circle = BitmapUtils.circleBitmap(bitmap);
+		Bitmap circle = BitmapUtils.circleBitmap(bitmap, mRadius);
 		if (!circle.equals(bitmap)) {
 			bitmap.recycle();
 		}
@@ -74,7 +83,7 @@ public class CircleNetworkImageView extends NetworkImageView {
 		creator.transform(new Transformation() {
 			@Override
 			public Bitmap transform(Bitmap source) {
-				Bitmap trans = BitmapUtils.circleBitmap(source);
+				Bitmap trans = BitmapUtils.circleBitmap(source, mRadius);
 				if (!source.equals(trans)) {
 					source.recycle();
 				}

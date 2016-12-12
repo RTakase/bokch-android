@@ -84,7 +84,7 @@
     <string name="message_posted_wish">ウィッシュリストに追加しました！</string>
     <string name="message_deleted_wish">ウィッシュリストから削除しました</string>
 
-    <string name="label_lend_before">みんなに\n貸してあげる</string>
+    <string name="label_lend_before">貸出ＯＫ！</string>
     <string name="label_lend_after">貸出登録中</string>
     <string name="message_posted_rental">貸出登録を行いました！</string>
     <string name="message_deleted_rental">貸出登録を解除しました</string>

@@ -8,10 +8,11 @@ import android.widget.TextView;
 
 import timber.log.Timber;
 import tv.bokch.R;
+import tv.bokch.widget.CircleNetworkImageView;
 import tv.bokch.widget.NetworkImageView;
 
 public class BookViewHolder {
-	public NetworkImageView jacket;
+	public CircleNetworkImageView jacket;
 	public TextView title;
 	public TextView author;
 	public TextView publisher;
@@ -22,7 +23,7 @@ public class BookViewHolder {
 	public int jacketHeight = -1;
 
 	public BookViewHolder(View view) {
-		jacket = (NetworkImageView)view.findViewById(R.id.jacket);
+		jacket = (CircleNetworkImageView)view.findViewById(R.id.jacket);
 		title = (TextView)view.findViewById(R.id.title);
 		if (title == null) {
 			title = (TextView)view.findViewById(R.id.book_title);
@@ -83,5 +84,9 @@ public class BookViewHolder {
 		if (suffixRatingAverage != null) {
 			suffixRatingAverage.setText(str);
 		}
+	}
+
+	public void hideBookTitle() {
+		title.setVisibility(View.GONE);
 	}
 }

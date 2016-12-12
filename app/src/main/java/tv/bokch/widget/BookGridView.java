@@ -14,7 +14,7 @@ import tv.bokch.data.Book;
 import tv.bokch.data.BookViewHolder;
 
 public class BookGridView extends BaseListView<Book> {
-	
+	private boolean mHideBookTitle;
 	public BookGridView(Context context) {
 		super(context);
 		initialize(context);
@@ -32,6 +32,10 @@ public class BookGridView extends BaseListView<Book> {
 		setClipChildren(false);
 		setClipToPadding(false);
 	}
+
+	public void hideBookTitle() {
+		mHideBookTitle = true;
+	}
 	
 	@Override
 	protected int getLayoutResId() {
@@ -40,7 +44,11 @@ public class BookGridView extends BaseListView<Book> {
 	
 	@Override
 	protected Cell createCell(View view) {
-		return new BookCell(view);
+		BookCell cell = new BookCell(view);
+		if (mHideBookTitle) {
+			cell.hideBookTitle();
+		}
+		return cell;
 	}
 
 	@Override
@@ -74,6 +82,10 @@ public class BookGridView extends BaseListView<Book> {
 					((BaseActivity)getContext()).startBookActivity(book);
 				}
 			});
+		}
+
+		public void hideBookTitle() {
+			mBook.hideBookTitle();
 		}
 	}
 }

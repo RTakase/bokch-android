@@ -10,6 +10,8 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
+import timber.log.Timber;
+
 public class BitmapUtils {
 	static public Bitmap roundBitmap(Bitmap source, float radius) {
 		return roundBitmap(source, radius, false);
@@ -50,16 +52,20 @@ public class BitmapUtils {
 		return target;
 	}
 
-	static public Bitmap circleBitmap(Bitmap source) {
-		final int width = source.getWidth();
-		final int height = source.getHeight();
-		final int size = Math.min(width, height);
-		if (width != height) {
-			final int x = Math.max((width - height) / 2, 0);
-			final int y = Math.max((height - width) / 2, 0);
-			source = Bitmap.createBitmap(source, x, y, size, size);
+	static public Bitmap circleBitmap(Bitmap source, float radius) {
+		if (radius == 0) {
+			final int width = source.getWidth();
+			final int height = source.getHeight();
+			final int size = Math.min(width, height);
+			if (width != height) {
+				final int x = Math.max((width - height) / 2, 0);
+				final int y = Math.max((height - width) / 2, 0);
+				source = Bitmap.createBitmap(source, x, y, size, size);
+			}
+			radius = (size / 2.0f);
+			return roundBitmap(source, radius, true);
+		} else {
+			return roundBitmap(source, radius);
 		}
-		final float radius = (size / 2.0f);
-		return roundBitmap(source, radius, true);
 	}
 }

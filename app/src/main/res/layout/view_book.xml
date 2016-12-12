@@ -25,7 +25,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             >
-            <tv.bokch.widget.NetworkImageView
+            <tv.bokch.widget.CircleNetworkImageView
                 android:id="@+id/jacket"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -33,6 +33,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentBottom="true"
+                app:radius="4dp"
                 />
         </RelativeLayout>
 
