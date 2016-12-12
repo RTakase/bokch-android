@@ -1,5 +1,7 @@
 package tv.bokch.android;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 
 import android.os.Bundle;
@@ -114,7 +116,7 @@ public class UserActivity extends TabActivity {
 	protected String getTabTitle(int index) {
 		switch (index) {
 		case INDEX_HISTORY:
-			return getString(R.string.title_histories);
+			return getString(R.string.title_reviews);
 		case INDEX_STACK:
 			return getString(R.string.title_stacks);
 		default:
@@ -266,17 +268,29 @@ public class UserActivity extends TabActivity {
 		@Override
 		public void onClick(FollowButton.State state) {
 			try {
-				ApiRequest request;
+				final ApiRequest request = new ApiRequest();
 				switch (state) {
 				case UNFOLLOW:
-					//フォロー解除状態のボタンが押された
-					request = new ApiRequest();
-					showSpinner();
-					request.unfollow(mUser.userId, mLoginUser.userId, mUnfollowApiListener);
+					AlertDialog.Builder builder = new AlertDialog.Builder(UserActivity.this);
+					builder.setTitle(getString(R.string.confirmation));
+					builder.setMessage(getString(R.string.confirm_unfollow));
+					builder.setNegativeButton("キャンセル", null);
+					builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							//フォロー解除状態のボタンが押された
+							showSpinner();
+							try {
+								request.unfollow(mUser.userId, mLoginUser.userId, mUnfollowApiListener);
+							} catch (JSONException e) {
+								Timber.w(e, null);
+							}
+						}
+					});
+					builder.show();
 					break;
 				case FOLLOW:
 					//フォロー登録状態のボタンが押された
-					request = new ApiRequest();
 					showSpinner();
 					request.follow(mUser.userId, mLoginUser.userId, mFollowApiListener);
 					break;

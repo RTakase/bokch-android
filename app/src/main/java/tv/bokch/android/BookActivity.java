@@ -1,5 +1,7 @@
 package tv.bokch.android;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -122,7 +124,7 @@ public class BookActivity extends TabActivity {
 		case INDEX_REVIEW:
 			return getString(R.string.title_reviews);
 		case INDEX_STACK:
-			return getString(R.string.title_stacks);
+			return getString(R.string.title_stacked_users);
 		default:
 			return null;
 		}
@@ -266,7 +268,17 @@ public class BookActivity extends TabActivity {
 				addToWishList();
 				break;
 			case AFTER:
-				removeFromWishList();
+				AlertDialog.Builder builder = new AlertDialog.Builder(BookActivity.this);
+				builder.setTitle(getString(R.string.confirmation));
+				builder.setMessage(getString(R.string.confirm_delete_wish));
+				builder.setNegativeButton("キャンセル", null);
+				builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						removeFromWishList();
+					}
+				});
+				builder.show();
 				break;
 			}
 		}
@@ -280,7 +292,17 @@ public class BookActivity extends TabActivity {
 				addToLendList();
 				break;
 			case AFTER:
-				removeFromLendList();
+				AlertDialog.Builder builder = new AlertDialog.Builder(BookActivity.this);
+				builder.setTitle(getString(R.string.confirmation));
+				builder.setMessage(getString(R.string.confirm_delete_lend));
+				builder.setNegativeButton("キャンセル", null);
+				builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						removeFromLendList();
+					}
+				});
+				builder.show();
 				break;
 			}
 		}

@@ -42,9 +42,6 @@ public class MyPageActivity extends TabActivity {
 		UserView userView = (UserView)findViewById(R.id.user);
 		assert userView != null;
 		userView.bindView(mLoginUser);
-
-		View followButton = findViewById(R.id.follow_btn);
-		followButton.setVisibility(View.GONE);
 	}
 
 	@Override
@@ -69,9 +66,9 @@ public class MyPageActivity extends TabActivity {
 	protected BaseFragment createFragment(int index) {
 		switch (index) {
 		case INDEX_HISTORY:
-			return BookGridFragment.newInstance();
+			return BookGridFragment.newInstance(true);
 		case INDEX_STACK:
-			return BookGridFragment.newInstance();
+			return BookGridFragment.newInstance(true);
 		default:
 			return null;
 		}
@@ -105,7 +102,7 @@ public class MyPageActivity extends TabActivity {
 					History history = new History(obj);
 					Book book = history.book;
 					if (!TextUtils.isEmpty(book.title)) {
-						books.add(book);
+					books.add(book);
 					}
 				}
 			}

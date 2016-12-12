@@ -24,9 +24,12 @@ public class UserView extends RelativeLayout {
 		super(context, attrs, defStyleAttr);
 		initialize(context);
 	}
-	
+
+	protected int getLayoutResId() {
+		return R.layout.view_user;
+	}
 	private void initialize(Context context) {
-		inflate(context, R.layout.view_user, this);
+		inflate(context, getLayoutResId(), this);
 		mHolder = new UserViewHolder(this);
 	}
 	

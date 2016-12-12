@@ -31,9 +31,9 @@ public class RankingActivity extends TabActivity {
 	protected String getTabTitle(int index) {
 		switch (index) {
 		case INDEX_BOOK:
-			return "本";
+			return getString(R.string.title_book_ranking);
 		case INDEX_USER:
-			return "人";
+			return getString(R.string.title_user_ranking);
 		default:
 			return null;
 		}

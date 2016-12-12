@@ -36,8 +36,8 @@
     <string name="loading">通信中</string>
     <string name="empty_review">５段階評価は必須です</string>
     <string name="title_users_with_this_book">読んだ人一覧</string>
-    <string name="title_histories">シェアした本</string>
-    <string name="title_stacks">ウィッシュリスト</string>
+    <string name="title_stacks">読みたい本</string>
+    <string name="title_stacked_users">読みたい人たち</string>
     <string name="empty_book">情報の取得に時間がかかっています。\nしばらくしてからご確認ください</string>
     <string name="prompt_new">おすすめの本を\nみんなに教えてあげよう！</string>
     <string name="activity_all_users">登録ユーザ一覧</string>
@@ -73,19 +73,24 @@
     <string name="label_mine">自分のページ</string>
     <string name="activity_mypage">マイページ</string>
     <string name="label_lender">貸せます</string>
+    <string name="title_book_ranking">読まれた本</string>
+    <string name="title_user_ranking">読んだ人</string>
 
-    <string name="label_share_before">みんなに\n教えてあげる</string>
-    <string name="label_share_after">レビュー\nを編集する</string>
+    <string name="label_share_before">社内に\nシェアする</string>
+    <string name="label_share_after">レビューを\n編集する</string>
     <string name="message_posted_review">レビューを投稿しました！</string>
     <string name="message_updated_review">レビューを更新しました！</string>
 
-    <string name="label_wish_before">読みたいリストに\nに追加する</string>
-    <string name="label_wish_after">読みたいリストに登録中</string>
-    <string name="message_posted_wish">ウィッシュリストに追加しました！</string>
-    <string name="message_deleted_wish">ウィッシュリストから削除しました</string>
+
+    <string name="label_wish_before">読みたいリスト\nに追加する</string>
+    <string name="label_wish_after">読みたい登録中</string>
+    <string name="confirm_delete_wish">読みたいリストから削除しますか？</string>
+    <string name="message_posted_wish">読みたいリストに追加しました！</string>
+    <string name="message_deleted_wish">読みたいリストから削除しました</string>
 
     <string name="label_lend_before">貸出ＯＫ！</string>
     <string name="label_lend_after">貸出登録中</string>
+    <string name="confirm_delete_lend">貸出登録を解除しますか？</string>
     <string name="message_posted_rental">貸出登録を行いました！</string>
     <string name="message_deleted_rental">貸出登録を解除しました</string>
 
@@ -95,4 +100,8 @@
     <string name="label_followee">フォロー %d</string>
     <string name="activity_followers">フォロワー一覧</string>
     <string name="activity_followees">フォロー一覧</string>
+    <string name="confirm_unfollow">フォローを解除しますか？</string>
+    <string name="confirmation">確認</string>
+    <string name="title_histories">シェアした本</string>
 </resources>
+

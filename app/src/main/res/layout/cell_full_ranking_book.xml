@@ -46,11 +46,29 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:textSize="14sp"
+        android:textColor="#444444"
         android:maxLines="1"
         android:ellipsize="end"
         android:gravity="center_vertical|left"
         android:layout_alignBottom="@id/medal"
         android:layout_toRightOf="@id/medal"
+        />
+
+    <TextView
+        android:id="@+id/author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="4dp"
+        android:gravity="left|center_vertical"
+        android:textSize="14sp"
+        android:textColor="#444444"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:layout_alignLeft="@id/book_title"
+        android:layout_below="@id/book_title"
+        android:layout_alignParentRight="true"
         />
 
     <TextView

@@ -68,7 +68,7 @@ public class FullBookRankingListView extends RankingListView<Book> {
 
 			if (mScore != null && book.score > 0) {
 				String str = String.format(getContext().getString(R.string.format_score_book), book.score);
-				RelativeSizeSpan span = new RelativeSizeSpan(2f);
+				RelativeSizeSpan span = new RelativeSizeSpan(1f);
 				SpannableString scoreSpannable = new SpannableString(str);
 				int start = 0;
 				int end = str.indexOf("人");

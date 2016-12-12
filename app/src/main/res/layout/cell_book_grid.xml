@@ -27,7 +27,6 @@
             android:scaleType="centerInside"
             android:layout_alignParentBottom="true"
             app:radius="4dp"
-            android:background="@drawable/bg_book"
             />
     </RelativeLayout>
 

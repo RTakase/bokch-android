@@ -11,12 +11,18 @@ import tv.bokch.widget.BookListView;
 public class BookGridFragment extends BaseFragment<Book> {
 	@Override
 	protected BaseListView<Book> createListView(Context context) {
-		return new BookGridView(context);
+		boolean hide = getArguments().getBoolean("hide_book_title");
+		BookGridView listview = new BookGridView(context);
+		if (hide) {
+			listview.hideBookTitle();
+		}
+		return listview;
 	}
 
-	public static BookGridFragment newInstance() {
+	public static BookGridFragment newInstance(boolean hideBookTitle) {
 		BookGridFragment fragment = new BookGridFragment();
 		Bundle args = new Bundle();
+		args.putBoolean("hide_book_title", hideBookTitle);
 		fragment.setArguments(args);
 		return fragment;
 	}
