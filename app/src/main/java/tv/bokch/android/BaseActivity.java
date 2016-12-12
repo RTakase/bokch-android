@@ -45,7 +45,6 @@ public class BaseActivity extends AppCompatActivity {
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		ViewServer.get(this).addWindow(this);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	@Override
