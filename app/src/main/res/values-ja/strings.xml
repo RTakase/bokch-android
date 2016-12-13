@@ -82,11 +82,11 @@
     <string name="message_updated_review">レビューを更新しました！</string>
 
 
-    <string name="label_wish_before">読みたいリスト\nに追加する</string>
+    <string name="label_wish_before">読みたい本に\n追加する</string>
     <string name="label_wish_after">読みたい登録中</string>
-    <string name="confirm_delete_wish">読みたいリストから削除しますか？</string>
-    <string name="message_posted_wish">読みたいリストに追加しました！</string>
-    <string name="message_deleted_wish">読みたいリストから削除しました</string>
+    <string name="confirm_delete_wish">読みたい本から削除しますか？</string>
+    <string name="message_posted_wish">読みたい本に追加しました！</string>
+    <string name="message_deleted_wish">読みたい本から削除しました</string>
 
     <string name="label_lend_before">貸出ＯＫ！</string>
     <string name="label_lend_after">貸出登録中</string>

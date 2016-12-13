@@ -47,9 +47,11 @@
                     android:paddingLeft="16dp"
                     android:paddingRight="16dp"
                     android:textSize="13sp"
+                    android:gravity="center"
                     app:buttonColor="#ffa18320"
                     android:textColor="#ddfafafa"
                     android:layout_alignParentRight="true"
+                    style="@android:style/Widget.Material.Light.Button"
                     />
                 <tv.bokch.widget.RelationButton
                     android:id="@+id/followee_btn"
@@ -59,6 +61,7 @@
                     android:paddingLeft="8dp"
                     android:paddingRight="8dp"
                     android:textSize="13sp"
+                    android:gravity="center"
                     app:buttonColor="#ffa18320"
                     android:textColor="#ddfafafa"
                     android:layout_toLeftOf="@id/follower_btn"

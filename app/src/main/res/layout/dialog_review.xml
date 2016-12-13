@@ -110,6 +110,7 @@
                 android:stepSize="1"
                 android:isIndicator="true"
                 style="?android:attr/ratingBarStyleIndicator"
+                app:theme="@style/RatingBar"
                 />
         </LinearLayout>
 

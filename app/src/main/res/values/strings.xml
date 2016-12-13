@@ -81,7 +81,6 @@
     <string name="message_posted_review">レビューを投稿しました！</string>
     <string name="message_updated_review">レビューを更新しました！</string>
 
-
     <string name="label_wish_before">読みたいリスト\nに追加する</string>
     <string name="label_wish_after">読みたい登録中</string>
     <string name="confirm_delete_wish">読みたいリストから削除しますか？</string>
@@ -103,5 +102,6 @@
     <string name="confirm_unfollow">フォローを解除しますか？</string>
     <string name="confirmation">確認</string>
     <string name="title_histories">シェアした本</string>
+    <string name="barcode_status">バーコードの中心と赤線の中心を合わせてください</string>
 </resources>
 

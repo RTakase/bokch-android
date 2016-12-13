@@ -64,6 +64,7 @@
             android:isIndicator="false"
             android:layout_below="@id/label_rating"
             android:layout_centerHorizontal="true"
+            app:theme="@style/RatingBar"
             />
 
         <!--<ImageView-->

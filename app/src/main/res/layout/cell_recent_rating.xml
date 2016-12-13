@@ -118,6 +118,7 @@
         android:layout_alignParentBottom="true"
         android:layout_toLeftOf="@id/created"
         style="?android:attr/ratingBarStyleSmall"
+        app:theme="@style/RatingBar"
         />
 
 </RelativeLayout>
