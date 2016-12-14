@@ -16,7 +16,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import timber.log.Timber;
 import tv.bokch.App;
@@ -176,8 +175,6 @@ public class BookActivity extends TabActivity {
 					}
 				}
 			}
-			
-			Collections.reverse(histories);
 			if (mBookView != null) {
 				mBookView.setRatingAverageSuffix(String.format(getString(R.string.suffix_rating_average), ratingCount));
 			}
@@ -192,7 +189,6 @@ public class BookActivity extends TabActivity {
 					users.add(history.user);
 				}
 			}
-			Collections.reverse(users);
 			return users;
 		default:
 			return null;

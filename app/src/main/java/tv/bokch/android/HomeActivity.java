@@ -13,7 +13,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import timber.log.Timber;
 import tv.bokch.App;
@@ -158,8 +157,6 @@ public class HomeActivity extends TabActivity {
 					}
 				}
 			}
-			Collections.reverse(histories);
-			Collections.reverse(followeeHistories);
 			setData(INDEX_FOLLOW, followeeHistories);
 			return histories;
 		} else {

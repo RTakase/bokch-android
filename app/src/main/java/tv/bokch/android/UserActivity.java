@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -15,9 +14,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
-import info.hoang8f.widget.FButton;
 import timber.log.Timber;
 import tv.bokch.App;
 import tv.bokch.R;
@@ -172,7 +169,6 @@ public class UserActivity extends TabActivity {
 					}
 				}
 			}
-			Collections.reverse(histories);
 			return histories;
 		case INDEX_STACK:
 			ArrayList<Stack> stacks = new ArrayList<>();

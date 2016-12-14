@@ -3,14 +3,12 @@ package tv.bokch.android;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.view.View;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import tv.bokch.App;
 import tv.bokch.R;
@@ -106,7 +104,6 @@ public class MyPageActivity extends TabActivity {
 					}
 				}
 			}
-			Collections.reverse(books);
 			return books;
 		case INDEX_STACK:
 			books = new ArrayList<>();
