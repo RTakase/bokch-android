@@ -96,7 +96,15 @@ public abstract class BaseListView<Data> extends android.support.v7.widget.Recyc
 		if (mDataSet.size() == 0) {
 			return new ArrayList<>();
 		} else {
-			return new ArrayList<>(mDataSet.subList(1, mDataSet.size() - 1));
+			int start = 0;
+			int end = mDataSet.size();
+			if (mDataSet.get(0) == null) {
+				start += 1;
+			}
+			if (mDataSet.get(end - 1) == null) {
+				end -= 1;
+			}
+			return new ArrayList<>(mDataSet.subList(start, end));
 		}
 	}
 
