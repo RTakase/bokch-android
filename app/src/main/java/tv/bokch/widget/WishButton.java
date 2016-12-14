@@ -58,7 +58,7 @@ public class WishButton extends FButton {
 	private void initialize(Context context) {
 		State.BEFORE.label = context.getString(R.string.label_wish_before);
 		State.AFTER.label = context.getString(R.string.label_wish_after);
-		State.LOADING.label = context.getString(R.string.loading);
+		State.LOADING.label = context.getString(R.string.loading_button);
 		setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {

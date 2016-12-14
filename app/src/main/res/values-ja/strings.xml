@@ -88,11 +88,11 @@
     <string name="message_posted_wish">読みたい本に追加しました！</string>
     <string name="message_deleted_wish">読みたい本から削除しました</string>
 
-    <string name="label_lend_before">貸出ＯＫ！</string>
-    <string name="label_lend_after">貸出登録中</string>
-    <string name="confirm_delete_lend">貸出登録を解除しますか？</string>
-    <string name="message_posted_rental">貸出登録を行いました！</string>
-    <string name="message_deleted_rental">貸出登録を解除しました</string>
+    <string name="label_lend_before">貸せる本に\nに追加する</string>
+    <string name="label_lend_after">貸せる登録中</string>
+    <string name="confirm_delete_lend">貸せる本から削除しますか？</string>
+    <string name="message_posted_rental">貸せる本追加しました！</string>
+    <string name="message_deleted_rental">貸せる本から削除しました</string>
 
     <string name="format_score_book">%d人に読まれました</string>
     <string name="format_score_user">%d冊読みました</string>
