@@ -95,7 +95,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="#ff555555"
-            android:textSize="12sp"
+            android:textSize="15sp"
             android:minLines="3"
             android:gravity="left|top"
             android:layout_below="@id/label_comment"
