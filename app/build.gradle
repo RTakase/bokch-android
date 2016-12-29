@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 23
@@ -7,8 +8,8 @@ android {
         applicationId "tv.bokch"
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 2
-        versionName "1.0.1"
+        versionCode 9
+        versionName "1.0.8"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -29,16 +30,15 @@ dependencies {
     compile 'com.android.support:cardview-v7:23.4.0'
     compile 'com.android.support:recyclerview-v7:23.4.0'
     compile 'com.android.support:design:23.4.0'
-    compile 'com.android.support:design:23.4.0'
     compile 'com.jakewharton.timber:timber:3.1.0'
     compile 'com.journeyapps:zxing-android-embedded:3.2.0@aar'
     compile 'com.google.zxing:core:3.2.1'
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.jakewharton.picasso:picasso2-okhttp3-downloader:1.0.2'
-    compile 'com.drivemode:IntentLogger:1.0.4@aar'
     compile 'info.hoang8f:fbutton:1.0.5'
     compile 'com.android.support:percent:23.0.0'
+    compile 'com.google.android.gms:play-services-analytics:9.0.0'
     testCompile 'junit:junit:4.12'
 
 }
