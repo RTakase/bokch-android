@@ -134,7 +134,6 @@ public class SearchDialog extends BaseDialog {
 	}
 
 	private boolean checkCameraPermission() {
-		Timber.d("tks, check permission.");
 		if (Build.VERSION.SDK_INT < 23) {
 			return true;
 		}

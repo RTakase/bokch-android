@@ -1,10 +1,12 @@
-package tv.bokch.util;
+package tv.mixch.util;
 
+import android.os.Bundle;
 import android.text.TextUtils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 
@@ -17,7 +19,7 @@ public class JsonUtils {
 
 	public static void dump(Object obj) {
 		Timber.d("****************************************");
-		dump("root", obj);
+		dump("", obj);
 		Timber.d("****************************************");
 	}
 	public static void dump(String key, Object obj) {
@@ -42,8 +44,12 @@ public class JsonUtils {
 			dumpJsonArray((JSONArray)obj);
 			Timber.d("%s]", tab);
 			DEPTH--;
-		} else {
-			Timber.d("%s%s: %s", tab, key, obj.toString());
+		} else if (obj instanceof String) {
+			Timber.d("%s%s: %s", tab, key, (String)obj);
+		} else if (obj instanceof Integer) {
+			Timber.d("%s%s: %d", tab, key,(Integer)obj);
+		} else if (obj instanceof Float) {
+			Timber.d("%s%s: %f", tab, key, (Float)obj);
 		}
 	}
 	
@@ -66,5 +72,58 @@ public class JsonUtils {
 			Object obj = array.opt(i);
 			dump(String.valueOf(i), obj);
 		}
+	}
+	/**
+	 * JSONObject を Bundle に適切に変換して返す.
+	 * JSONArray は ArrayList<Bundle> に変換される.
+	 *
+	 * @param json JSONObject
+	 * @return Bundle
+	 */
+	public static Bundle toBundle(final JSONObject json) {
+		final Bundle bundle = new Bundle();
+		if (json != null) {
+			final Iterator<String> iterator = json.keys();
+			while (iterator.hasNext()) {
+				final String key = iterator.next();
+				if (json.isNull(key)) {
+					bundle.putString(key, null);
+					continue;
+				}
+				final Object value = json.opt(key);
+				if (value instanceof JSONObject) {
+					bundle.putBundle(key, toBundle((JSONObject)value));
+				} else if (value instanceof JSONArray) {
+					bundle.putParcelableArrayList(key, toBundle((JSONArray)value));
+				} else if (value instanceof Boolean) {
+					bundle.putBoolean(key, (boolean)value);
+				} else if (value instanceof String) {
+					bundle.putString(key, (String)value);
+				} else if (value instanceof Integer) {
+					bundle.putInt(key, (int)value);
+				} else if (value instanceof Long) {
+					bundle.putLong(key, (long)value);
+				} else if (value instanceof Double) {
+					bundle.putDouble(key, (double)value);
+				}
+			}
+		}
+		return bundle;
+	}
+
+	/**
+	 * JSONArray を ArrayList<Bundle> に適切に変換して返す.
+	 *
+	 * @param array JSONArray
+	 * @return ArrayList<Bundle>
+	 */
+	public static ArrayList<Bundle> toBundle(final JSONArray array) {
+		final ArrayList<Bundle> bundles = new ArrayList<>();
+		if (array != null) {
+			for (int i = 0, size = array.length(); i < size; i++) {
+				bundles.add(toBundle(array.optJSONObject(i)));
+			}
+		}
+		return bundles;
 	}
 }

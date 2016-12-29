@@ -93,18 +93,7 @@ public class LoginActivity extends BaseActivity {
 		mProgressBar = (ProgressBar)findViewById(R.id.progress);
 	}
 
-	private String getResponseCode(String response) {
-		String key = "code=";
-		int index = response.indexOf(key);
-		if (index > 0) {
-			return response.substring(index + key.length());
-		} else {
-			return null;
-		}
-	}
-
 	private String getUserId(String response) {
-		Timber.d("tks, response = %s", response);
 		if (response == null) {
 			return null;
 		}
@@ -143,7 +132,6 @@ public class LoginActivity extends BaseActivity {
 		@Override
 		public void onSuccess(JSONObject response) {
 			mLogining = false;
-			Timber.d("tks, %s", response.toString());
 			try {
 				if (response.isNull("user")) {
 					mMessageTextView.setText(getString(R.string.failed_login));

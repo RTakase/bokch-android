@@ -28,7 +28,6 @@ import tv.bokch.data.Review;
 import tv.bokch.data.Stack;
 import tv.bokch.data.User;
 import tv.bokch.util.ApiRequest;
-import tv.bokch.util.JsonUtils;
 import tv.bokch.util.ViewUtils;
 import tv.bokch.widget.BookView;
 import tv.bokch.widget.LendButton;
@@ -411,7 +410,6 @@ public class BookActivity extends TabActivity {
 			getMyBookStatus(mBook.bookId, new ApiRequest.ApiListener<JSONObject>() {
 				@Override
 				public void onSuccess(JSONObject response) {
-					JsonUtils.dump(response);
 					dismissSpinner();
 					try {
 						mMyBook = new MyBook(response);

@@ -29,7 +29,6 @@ import tv.bokch.data.MyBook;
 import tv.bokch.data.MyUser;
 import tv.bokch.data.User;
 import tv.bokch.util.ApiRequest;
-import tv.bokch.util.JsonUtils;
 import tv.bokch.util.ViewServer;
 import tv.bokch.util.ViewUtils;
 
@@ -178,11 +177,9 @@ public class BaseActivity extends AppCompatActivity {
 		getMyBookStatus(bookId, new ApiRequest.ApiListener<JSONObject>() {
 			@Override
 			public void onSuccess(JSONObject response) {
-				JsonUtils.dump(response);
 				dismissSpinner();
 				try {
 					MyBook myBook = new MyBook(response);
-					Timber.d("tks, 1");
 					startBookActivity(myBook, withReviewEdit);
 				} catch (JSONException e) {
 					Toast.makeText(BaseActivity.this, getString(R.string.failed_data_set), Toast.LENGTH_SHORT).show();
@@ -202,13 +199,10 @@ public class BaseActivity extends AppCompatActivity {
 	 * 本画面への遷移（ユーザステータスはもうある）
 	 */
 	protected void startBookActivity(MyBook myBook) {
-		Timber.d("tks, 2");
-		Timber.d("tks, %s", myBook.getClass().toString());
 		startBookActivity(myBook, false);
 	}
 	public void startBookActivity(MyBook myBook, boolean withReviewEdit) {
 		Intent intent = new Intent(BaseActivity.this, BookActivity.class);
-		Timber.d("tks, %s", myBook.getClass().toString());
 		intent.putExtra("my_book", myBook);
 		intent.putExtra("with_review_edit", withReviewEdit);
 		startActivity(intent);
@@ -237,9 +231,7 @@ public class BaseActivity extends AppCompatActivity {
 			}
 		});
 	}
-	/**
-	 * ユーザ画面への遷移（ステータスを取得してから）
-	 */
+
 	public void startUserActivity(User user) {
 		Intent intent = new Intent(BaseActivity.this, UserActivity.class);
 		intent.putExtra("data", user);

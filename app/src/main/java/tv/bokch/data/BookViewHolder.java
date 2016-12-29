@@ -6,10 +6,8 @@ import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import timber.log.Timber;
 import tv.bokch.R;
 import tv.bokch.widget.CircleNetworkImageView;
-import tv.bokch.widget.NetworkImageView;
 
 public class BookViewHolder {
 	public CircleNetworkImageView jacket;

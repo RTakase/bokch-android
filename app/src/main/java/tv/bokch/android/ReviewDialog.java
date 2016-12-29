@@ -18,7 +18,6 @@ import tv.bokch.data.MyBook;
 import tv.bokch.data.ReviewViewHolder;
 import tv.bokch.data.UserViewHolder;
 import tv.bokch.util.ApiRequest;
-import tv.bokch.util.JsonUtils;
 import tv.bokch.widget.ReviewButton;
 
 public class ReviewDialog extends BaseDialog {
@@ -74,7 +73,6 @@ public class ReviewDialog extends BaseDialog {
 					((BaseActivity)getActivity()).startBookActivity(mHistory.book);
 				} else {
 					((BaseActivity)getActivity()).startBookActivity(mMyBook);
-					Timber.d("tks, 5");
 				}
 				dismiss();
 			}
@@ -118,7 +116,6 @@ public class ReviewDialog extends BaseDialog {
 			@Override
 			public void onSuccess(JSONObject response) {
 				try {
-					JsonUtils.dump(response);
 					mMyBook = new MyBook(response);
 					if (mMyBook.review == null) {
 						//まだレビューを書いていない
@@ -146,7 +143,6 @@ public class ReviewDialog extends BaseDialog {
 			case BEFORE:
 				if (mMyBook != null) {
 					((BaseActivity)getActivity()).startBookActivity(mMyBook, true);
-					Timber.d("tks, 3");
 				}
 				dismiss();
 				break;
@@ -154,8 +150,6 @@ public class ReviewDialog extends BaseDialog {
 				if (mMyBook == null) {
 					((BaseActivity)getActivity()).startBookActivity(mHistory.book);
 				} else {
-					Timber.d("tks, 4");
-					Timber.d("tks, %s", mMyBook.getClass().toString());
 					((BaseActivity)getActivity()).startBookActivity(mMyBook);
 				}
 				dismiss();

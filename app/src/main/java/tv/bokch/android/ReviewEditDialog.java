@@ -23,7 +23,6 @@ import tv.bokch.data.History;
 import tv.bokch.data.Review;
 import tv.bokch.data.User;
 import tv.bokch.util.ApiRequest;
-import tv.bokch.util.JsonUtils;
 
 public class ReviewEditDialog extends BaseDialog {
 
@@ -171,14 +170,7 @@ public class ReviewEditDialog extends BaseDialog {
 		public void onError(final ApiRequest.ApiError error) {
 			dismissSpinner();
 			Toast.makeText(getActivity(), getString(R.string.failed_load), Toast.LENGTH_SHORT).show();
-			Timber.d("tks, %s", error.getLocalizedMessage());
 			Timber.w(error, null);
-			mExecutor.submit(new Runnable() {
-				@Override
-				public void run() {
-					Timber.d("tks, %s", error.getResponseBodyString());
-				}
-			});
 			//					try {
 			//						String message = "";
 			//						JSONObject obj = new JSONObject(error.getResponseBodyString());
@@ -207,7 +199,6 @@ public class ReviewEditDialog extends BaseDialog {
 		@Override
 		public void onSuccess(JSONObject response) {
 			dismissSpinner();
-			JsonUtils.dump(response);
 			mPostedReview.rating = (int)mRatingBar.getRating();
 			mPostedReview.comment = mEditor.getText().toString();
 			mSaved = true;

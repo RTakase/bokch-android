@@ -6,7 +6,6 @@ import android.os.Bundle;
 import tv.bokch.data.Book;
 import tv.bokch.widget.BaseListView;
 import tv.bokch.widget.BookGridView;
-import tv.bokch.widget.BookListView;
 
 public class BookGridFragment extends BaseFragment<Book> {
 	@Override

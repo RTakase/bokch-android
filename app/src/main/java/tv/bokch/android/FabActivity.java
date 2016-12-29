@@ -1,9 +1,7 @@
 package tv.bokch.android;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.LayoutRes;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.text.TextUtils;
 import android.view.View;
