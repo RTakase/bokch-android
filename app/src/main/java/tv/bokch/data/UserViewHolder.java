@@ -27,7 +27,7 @@ public class UserViewHolder {
 		}
 		if (userIcon != null) {
 			userIcon.setDefaultImageResId(R.drawable.mysteryman);
-			userIcon.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+			//userIcon.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 			userIcon.setImageUrl(user.iconUrl);
 		}
 		if (tag != null) {
