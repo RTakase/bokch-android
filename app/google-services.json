@@ -1,0 +1,43 @@
+{
+  "project_info": {
+    "project_number": "1017508730094",
+    "project_id": "firebase-bookschannel"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1017508730094:android:9c684b47b6678765",
+        "android_client_info": {
+          "package_name": "tv.bokch"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1017508730094-9jndqq8bgknh11r73pemvi34hi1c2krh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCitt0TuD4yGgF8gAzVmbtEIc1orIZN2oI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-89016810-1"
+          }
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

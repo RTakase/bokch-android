@@ -1,0 +1,15 @@
+<resources>
+    <integer name="ga_sessionTimeout">300</integer>
+
+    <!-- 自動アクティビティ計測を有効にする。 -->
+    <bool name="ga_autoActivityTracking">true</bool>
+
+    <!--
+        screenNameタグでActivityごとにAnalyticsでの表示名を設定する。
+        nameはフルパッケージ名で指定する。
+        screenNameを定義していない場合、Analyticsにはクラス名そのままで計上される。
+    -->
+
+    <!-- トラッキングID -->
+    <string name="ga_trackingId">UA-89016810-1</string>
+</resources>
