@@ -6,7 +6,7 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.transition.TransitionManager;
 import android.widget.Toast;
@@ -42,10 +42,10 @@ public abstract class TabActivity extends FabActivity {
 
 		ViewPager pager = (ViewPager)findViewById(R.id.pager);
 		assert pager != null;
-		pager.setAdapter(mAdapter);
 
 		TabLayout tab = (TabLayout)findViewById(R.id.tab);
 		assert tab != null;
+		pager.setAdapter(mAdapter);
 		tab.setupWithViewPager(pager);
 
 		for (int i = 0; i < mTabCount; i++) {
@@ -106,7 +106,8 @@ public abstract class TabActivity extends FabActivity {
 	protected abstract ArrayList<?> getData(int index, JSONArray array) throws JSONException;
 	protected abstract String getKey(int index);
 
-	FragmentPagerAdapter mAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
+	//FragmentPagerAdapter mAdapter = new FragmentPagerAdapter(getFragmentManager()) {
+	FragmentStatePagerAdapter mAdapter = new FragmentStatePagerAdapter(getSupportFragmentManager()) {
 		@Override
 		public Fragment getItem(int position) {
 			return mPages[position];

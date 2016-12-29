@@ -26,8 +26,10 @@ public class HomeActivity extends TabActivity {
 	protected static final int MENU_ID_RANKING = Menu.FIRST + 2;
 	protected static final int MENU_ID_MYPAGE = Menu.FIRST + 3;
 
+	protected static final int INDEX_PICKUP = 2;
 	protected static final int INDEX_HISTORY = 0;
 	protected static final int INDEX_FOLLOW = 1;
+
 
 	private boolean mDisableLoad;
 	private User mLoginUser;
@@ -94,12 +96,14 @@ public class HomeActivity extends TabActivity {
 
 	@Override
 	protected int getTabCount() {
-		return 2;
+		return 3;
 	}
 
 	@Override
 	protected String getTabTitle(int index) {
 		switch (index) {
+		case INDEX_PICKUP:
+			return getString(R.string.title_pickup);
 		case INDEX_HISTORY:
 			return getString(R.string.title_recent);
 		case INDEX_FOLLOW:
@@ -112,6 +116,7 @@ public class HomeActivity extends TabActivity {
 	@Override
 	protected BaseFragment createFragment(int index) {
 		switch (index) {
+		case INDEX_PICKUP:
 		case INDEX_HISTORY:
 			return RecentFragment.newInstance();
 		case INDEX_FOLLOW:
@@ -123,13 +128,20 @@ public class HomeActivity extends TabActivity {
 
 	@Override
 	protected boolean requestData(int index, TabApiListener listener) {
+		ApiRequest request;
 		switch (index) {
+		case INDEX_PICKUP:
+			request = new ApiRequest();
+			request.recent_pickup(listener);
+			return true;
 		case INDEX_HISTORY:
-			ApiRequest request = new ApiRequest();
+			request = new ApiRequest();
 			request.recent(null, null, mLoginUser.userId, listener);
 			return true;
 		case INDEX_FOLLOW:
-			return false;
+			request = new ApiRequest();
+			request.recent_follower(mLoginUser.userId, listener);
+			return true;
 		default:
 			return false;
 		}
@@ -137,9 +149,11 @@ public class HomeActivity extends TabActivity {
 
 	@Override
 	protected ArrayList<?> getData(int index, JSONArray array) throws JSONException {
-		if (index == INDEX_HISTORY) {
+		switch (index) {
+		case INDEX_PICKUP:
+		case INDEX_HISTORY:
+		case INDEX_FOLLOW:
 			ArrayList<History> histories = new ArrayList<>();
-			ArrayList<History> followeeHistories = new ArrayList<>();
 
 			for (int i = 0; i < array.length(); i++) {
 				JSONObject obj = array.optJSONObject(i);
@@ -149,17 +163,12 @@ public class HomeActivity extends TabActivity {
 						//コメントか評価のどちらかがあれば追加する
 						if (!TextUtils.isEmpty(history.review.comment) || history.review.rating > 0) {
 							histories.add(history);
-							boolean myFollowee = obj.optBoolean("my_followee");
-							if (myFollowee) {
-								followeeHistories.add(history);
-							}
 						}
 					}
 				}
 			}
-			setData(INDEX_FOLLOW, followeeHistories);
 			return histories;
-		} else {
+		default:
 			return null;
 		}
 	}
@@ -167,6 +176,7 @@ public class HomeActivity extends TabActivity {
 	@Override
 	protected String getKey(int index) {
 		switch (index) {
+		case INDEX_PICKUP:
 		case INDEX_FOLLOW:
 		case INDEX_HISTORY:
 			return "histories";

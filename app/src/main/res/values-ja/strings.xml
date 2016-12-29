@@ -104,5 +104,8 @@
     <string name="confirmation">確認</string>
     <string name="title_histories">シェアした本</string>
     <string name="barcode_status">バーコードの中心と赤線の中心を合わせてください</string>
+
+    <string name="title_pickup">運営イチオシ</string>
+    <string name="message_20">最新の30件のみ表示しています。\nさらに見たい方はユーザ一覧からお探しください</string>
 </resources>
 

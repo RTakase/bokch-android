@@ -32,6 +32,7 @@ public abstract class BaseFragment<Data extends Parcelable> extends Fragment {
 			}
 
 			if (mReservedData != null) {
+				content.setState(StatableListView.State.OK);
 				content.setData(mReservedData);
 				mReservedData = null;
 			} else {

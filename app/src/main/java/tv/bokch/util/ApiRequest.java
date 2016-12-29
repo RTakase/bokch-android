@@ -25,6 +25,8 @@ public class ApiRequest {
 	public static String API_HOME = "http://52.198.155.49/";
 	
 	public static String API_RECENT = "histories";
+	public static String API_RECENT_FOLLOWER = "histories/follower";
+	public static String API_RECENT_PICKUP = "histories/pickup";
 	public static String API_STACKS = "stacks";
 	public static String API_STACK = "stacks/%s";
 	public static String API_RENTALS = "rentals";
@@ -133,6 +135,19 @@ public class ApiRequest {
 		if (myUserId != null) {
 			url.addQueryParameter("my_user_id", myUserId);
 		}
+		getJsonObject(url.build(), listener);
+	}
+	
+	public void recent_follower(String myUserId, ApiListener<JSONObject> listener) {
+		HttpUrl.Builder url = getUrlBuilder(API_RECENT_FOLLOWER);
+		if (myUserId != null) {
+			url.addQueryParameter("my_user_id", myUserId);
+		}
+		getJsonObject(url.build(), listener);
+	}
+
+	public void recent_pickup(ApiListener<JSONObject> listener) {
+		HttpUrl.Builder url = getUrlBuilder(API_RECENT_PICKUP);
 		getJsonObject(url.build(), listener);
 	}
 

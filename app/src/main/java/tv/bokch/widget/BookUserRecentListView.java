@@ -45,7 +45,7 @@ public class BookUserRecentListView extends RecentListView {
 
 	@Override
 	protected int getFooterResId() {
-		return R.layout.cell_footer;
+		return R.layout.cell_footer_notify_more;
 	}
 
 	@Override
