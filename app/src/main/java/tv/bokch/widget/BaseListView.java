@@ -50,7 +50,12 @@ public abstract class BaseListView<Data> extends android.support.v7.widget.Recyc
 		mDataSet = new ArrayList<>();
 		mInflater = LayoutInflater.from(context);
 		mDisplay = new Display(context);
+		mAdapter.setHasStableIds(true);
 		setAdapter(mAdapter);
+		setHasFixedSize(true);
+		setDrawingCacheEnabled(true);
+		setItemViewCacheSize(20);
+		setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_LOW);
 
 		mManager = createLayoutManager(context);
 		setLayoutManager(mManager);
